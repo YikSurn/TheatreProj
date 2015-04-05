@@ -16,4 +16,8 @@ angular.module('0010FullstackMongoApp')
     $scope.post = function() {
     	$http.post('api/groups', {name: 'Hello'});
     };
+
+    $scope.remove = function(group) {
+    	$http.delete('api/groups/' + group._id);
+    };
   });
