@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('TheatreProj')
+angular.module('theatreProjApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {

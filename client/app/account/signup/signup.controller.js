@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('TheatreProj')
+angular.module('theatreProjApp')
   .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};

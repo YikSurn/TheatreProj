@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('TheatreProj')
+angular.module('theatreProjApp')
   .controller('GroupsCtrl', function ($scope, $http, socket) {
     $scope.message = 'Hello';
 

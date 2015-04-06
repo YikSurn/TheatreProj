@@ -1,5 +1,6 @@
+
 {
-  "name": "TheatreProj",
+  "name": "theatreProjApp",
   "version": "0.0.0",
   "dependencies": {
     "angular": ">=1.2.*",
