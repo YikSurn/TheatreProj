@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('TheatreProjApp', [
+angular.module('theatreProjApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
