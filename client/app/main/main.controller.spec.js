@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('0010FullstackMongoApp'));
+  beforeEach(module('TheatreProj'));
   beforeEach(module('socketMock'));
 
   var MainCtrl,

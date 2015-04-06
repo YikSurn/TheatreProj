@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp')
+angular.module('TheatreProj')
   .factory('Modal', function ($rootScope, $modal) {
     /**
      * Opens a modal

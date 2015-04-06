@@ -26,7 +26,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: '0010-fullstack-mongo-secret'
+    session: 'theatre-proj-secret'
   },
 
   // List of user roles

@@ -3,7 +3,7 @@
 describe('Controller: GroupsCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('0010FullstackMongoApp'));
+  beforeEach(module('TheatreProj'));
 
   var GroupsCtrl, scope;
 

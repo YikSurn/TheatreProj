@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp')
+angular.module('TheatreProj')
   .controller('GroupsCtrl', function ($scope, $http, socket) {
     $scope.message = 'Hello';
 
