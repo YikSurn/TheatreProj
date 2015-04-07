@@ -1,0 +1,14 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <legend>{{ getCurrentUser().name }}</legend>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="signup(form)" novalidate>
+      <label>Email:</label> {{ getCurrentUser().email }}
+    </div>
+  </div>
+</div>
+

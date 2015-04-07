@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp')
+angular.module('theatreProjApp')
   .controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users

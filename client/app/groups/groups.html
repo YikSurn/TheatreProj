@@ -1,0 +1,9 @@
+<div class="col-md-12">
+This is the groups view.
+</div>
+
+<button ng-click="post()">New</button>
+<p ng-repeat="group in groups">
+	{{group}}
+	<button ng-click="remove(group)">remove</button>
+</p>
