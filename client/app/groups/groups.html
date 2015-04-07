@@ -1,9 +1,10 @@
-<div class="col-md-12">
-This is the groups view.
-</div>
+<button ng-click="post()">New dummy group</button>
 
-<button ng-click="post()">New</button>
-<p ng-repeat="group in groups">
-	{{group}}
-	<button ng-click="remove(group)">remove</button>
-</p>
+<div class="jumbotron container">
+	<div class="row" ng-repeat="groupRow in groupRows">
+		<div class="col-md-4" ng-repeat="group in groupRow">
+			<a href="groups">{{group.name}}</a>
+			<button ng-click="remove(group)">remove</button>
+		</div>
+	</div>
+</div>
