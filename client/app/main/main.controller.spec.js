@@ -6,9 +6,7 @@ describe('Controller: MainCtrl', function () {
   beforeEach(module('theatreProjApp'));
   beforeEach(module('socketMock'));
 
-  var MainCtrl,
-      scope,
-      $httpBackend;
+  var MainCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
