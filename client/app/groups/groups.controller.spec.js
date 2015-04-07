@@ -4,6 +4,7 @@ describe('Controller: GroupsCtrl', function () {
 
   // load the controller's module
   beforeEach(module('theatreProjApp'));
+  beforeEach(module('socketMock'));
 
   var GroupsCtrl, scope;
 
