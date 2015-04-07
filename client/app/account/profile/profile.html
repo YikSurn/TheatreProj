@@ -3,11 +3,28 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <legend>{{ getCurrentUser().name }}</legend>
+      <legend>{{ name }}</legend>
     </div>
     <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="signup(form)" novalidate>
-      <label>Email:</label> {{ getCurrentUser().email }}
+      <label>Email:</label>
+        <div ng-hide="editorEnabled"> 
+          {{ email }}
+          <a href='#' ng-click="enableEditor()">Edit Email</a>
+        </div>
+        <div ng-show="editorEnabled">
+          <input ng-model="editableEmail" ng-show="editorEnabled">
+          <a href="#" ng-click="save()">Save</a>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </div>     
+    </div>
+    <div class="col-sm-12">
+      <br />
+      <label>Role:</label> {{ role }}
+    </div>
+    <div class="col-sm-12">
+      <br />
+      <label>User:</label> {{ user }}
     </div>
   </div>
 </div>
