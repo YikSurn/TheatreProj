@@ -7,13 +7,55 @@
     </div>
     <div class="col-sm-12">
       <label>Email:</label>
-        <div ng-hide="editorEnabled"> 
+        <div ng-hide="editorEnabledEmail"> 
           {{ email }}
-          <a href='#' ng-click="enableEditor()">Edit Email</a>
+          <a href='#' ng-click="enableEditorEmail()">Edit Email</a>
         </div>
-        <div ng-show="editorEnabled">
-          <input ng-model="editableEmail" ng-show="editorEnabled">
-          <a href="#" ng-click="save()">Save</a>
+        <div ng-show="editorEnabledEmail">
+          <input ng-model="newEmail" ng-show="editorEnabledEmail">
+          <a href="#" ng-click="saveEmail()">Save</a>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </div> 
+    </div>
+    <div class="col-sm-12">
+      <br />
+      <label>Phone:</label>
+        <div ng-hide="editorEnabledPhone"> 
+          {{ phone }}
+          <a href='#' ng-click="enableEditorPhone()">Edit Phone</a>
+        </div>
+        <div ng-show="editorEnabledPhone">
+          <input ng-model="newPhone" ng-show="editorEnabledPhone">
+          <a href="#" ng-click="savePhone()">Save</a>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </div>     
+    </div>
+    <div class="col-sm-12">
+      <br />
+      <label>Address Home:</label>
+        <div ng-hide="editorEnabledHome"> 
+          {{ home }}
+          <a href='#' ng-click="enableEditorHome()">Edit Address Home</a>
+        </div>
+        <div ng-show="editorEnabledHome">
+          <input ng-model="newHome" ng-show="editorEnabledHome">
+          <a href="#" ng-click="saveHome()">Save</a>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </div>     
+    </div>
+        <div class="col-sm-12">
+      <br />
+      <label>Address Term:</label>
+        <div ng-hide="editorEnabledTerm"> 
+          {{ term }}
+          <a href='#' ng-click="enableEditorTerm()">Edit Address Term</a>
+        </div>
+        <div ng-show="editorEnabledTerm">
+          <input ng-model="newTerm" ng-show="editorEnabledTerm">
+          <a href="#" ng-click="saveTerm()">Save</a>
           or
           <a href="#" ng-click="disableEditor()">cancel</a>
         </div>     
