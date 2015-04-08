@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ProfileCtrl', function ($scope, User, Auth) {
+  .controller('ProfileCtrl', function ($scope, User, Auth, $http, socket) {
   $scope.name = Auth.getCurrentUser().name;
   $scope.email = Auth.getCurrentUser().email;
   $scope.phone = Auth.getCurrentUser().phone;
@@ -10,6 +10,30 @@ angular.module('theatreProjApp')
   $scope.role = Auth.getCurrentUser().role;
   var user = Auth.getCurrentUser();
   $scope.user = user;
+  
+  $http.get('api/profiles').success(function(profiles) {
+    $scope.profiles = profiles;
+    socket.syncUpdates('profile', $scope.profiles);
+  });
+
+  $scope.$on('$destroy', function(){
+   socket.unsyncUpdates('profile');
+  });
+  
+  $scope.post = function() {
+    $http.post('api/profiles', {name: "test"});
+  };
+  
+  $scope.remove = function(profile) {
+    $http.delete('api/profiles/' + profile._id);
+  };
+  
+  for (profile in $scope.profiles) { 
+    if (profile.name == $scope.name) {
+      $scope.test = profile;
+    };
+  };
+  
   $scope.editorEnabledEmail = false;
   $scope.editorEnabledPhone = false;
   $scope.editorEnabledHome = false;
@@ -45,6 +69,7 @@ angular.module('theatreProjApp')
   $scope.saveEmail = function() {
     $scope.email = $scope.newEmail;
     user["email"] = $scope.email;
+    $http.put('api/profiles', {name: $scope.name})
     $scope.disableEditor();
   };
   
