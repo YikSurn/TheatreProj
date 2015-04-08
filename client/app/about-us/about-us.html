@@ -1,10 +1,12 @@
-<div class="mycontainer">
-    <div id="card" ng-class="{flipped: isFlipped}">
-      <figure class="front">1</figure>
-      <figure class="back">2</figure>
-    </div>
-  </div>
+<div class="carouselContainer" ng-style="carouselContainerStyle()">
+	<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
+		<figure ng-repeat="i in getPanelRepeat() track by $index" ng-style="panelStyle($index)">
+			<img src="assets/images/yeoman.png">
+		</figure>
+	</div>
+</div>
 
-  <div id="options">
-    <p><button id="flip" ng-click="flip()">Flip Card</button></p>
-  </div>
+<div id="options">
+	<p><button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button></p>
+	<p><button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button></p>
+</div>
