@@ -3,12 +3,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <legend>{{ name }}</legend>
+      <legend>{{ currProfile.name }}</legend>
     </div>
     <div class="col-sm-12">
       <label>Email:</label>
         <div ng-hide="editorEnabledEmail"> 
-          {{ email }}
+          {{ currProfile.email }}
           <a href='#' ng-click="enableEditorEmail()">Edit Email</a>
         </div>
         <div ng-show="editorEnabledEmail">
@@ -22,7 +22,7 @@
       <br />
       <label>Phone:</label>
         <div ng-hide="editorEnabledPhone"> 
-          {{ phone }}
+          {{ currProfile.phone }}
           <a href='#' ng-click="enableEditorPhone()">Edit Phone</a>
         </div>
         <div ng-show="editorEnabledPhone">
@@ -36,7 +36,7 @@
       <br />
       <label>Address Home:</label>
         <div ng-hide="editorEnabledHome"> 
-          {{ home }}
+          {{ currProfile.addressHome }}
           <a href='#' ng-click="enableEditorHome()">Edit Address Home</a>
         </div>
         <div ng-show="editorEnabledHome">
@@ -50,7 +50,7 @@
       <br />
       <label>Address Term:</label>
         <div ng-hide="editorEnabledTerm"> 
-          {{ term }}
+          {{ currProfile.addressTerm }}
           <a href='#' ng-click="enableEditorTerm()">Edit Address Term</a>
         </div>
         <div ng-show="editorEnabledTerm">
@@ -62,11 +62,7 @@
     </div>
     <div class="col-sm-12">
       <br />
-      <label>Role:</label> {{ role }}
-    </div>
-    <div class="col-sm-12">
-      <br />
-      <label>User:</label> {{ user }}
+      <label>Role:</label> {{ currProfile.role }}
     </div>
   </div>
 </div>
