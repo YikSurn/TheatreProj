@@ -18,6 +18,17 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/question/question.socket').register(socket);
+  require('../api/weblisting/weblisting.socket').register(socket);
+  require('../api/task/task.socket').register(socket);
+  require('../api/booking/booking.socket').register(socket);
+  require('../api/projectshow/projectshow.socket').register(socket);
+  require('../api/status/status.socket').register(socket);
+  require('../api/prodrole/prodrole.socket').register(socket);
+  require('../api/perftype/perftype.socket').register(socket);
+  require('../api/prodteam/prodteam.socket').register(socket);
+  require('../api/theatre/theatre.socket').register(socket);
+  require('../api/meeting/meeting.socket').register(socket);
   require('../api/profile/profile.socket').register(socket);
   require('../api/group/group.socket').register(socket);
 }
