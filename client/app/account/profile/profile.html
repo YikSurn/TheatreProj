@@ -12,10 +12,18 @@
           <a href='#' ng-click="enableEditorEmail()">Edit Email</a>
         </div>
         <div ng-show="editorEnabledEmail">
-          <input ng-model="newEmail" ng-show="editorEnabledEmail">
-          <a href="#" ng-click="saveEmail()">Save</a>
-          or
-          <a href="#" ng-click="disableEditor()">cancel</a>
+          <form name="email" ng-submit="email.$valid && saveEmail()" novalidate>
+            <input type="email" name= "uEmail" ng-model="newEmail" ng-show="editorEnabledEmail" required=""/>
+            <div class="form-group has-error" ng-show="email.$submitted || email.uEmail.$touched">
+              <span class="help-block" ng-show="email.uEmail.$error.required">Tell us your email.</span>
+              <span class="help-block" ng-show="email.uEmail.$error.email">This is not a valid email.</span>
+            </div>
+            <div>
+              <input type="submit" value="Save"/>
+              or
+              <a href="#" ng-click="disableEditor()">cancel</a>
+            </div>
+          </form>
         </div> 
     </div>
     <div class="col-sm-12">
@@ -26,11 +34,20 @@
           <a href='#' ng-click="enableEditorPhone()">Edit Phone</a>
         </div>
         <div ng-show="editorEnabledPhone">
-          <input ng-model="newPhone" ng-show="editorEnabledPhone">
-          <a href="#" ng-click="savePhone()">Save</a>
-          or
-          <a href="#" ng-click="disableEditor()">cancel</a>
-        </div>     
+          <form name="phone" ng-submit="phone.$valid && savePhone()" novalidate>
+            <input ng-pattern="/^(\d)+$/" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required=""/>
+            <div class="form-group has-error" ng-show="phone.$submitted || phone.uPhone.$touched">
+              <span class="help-block" ng-show="phone.uPhone.$error.required">Tell us your phone number.</span>
+              <span class="help-block" ng-show="phone.uPhone.$error.minlength || phone.uPhone.$error.maxlength">phone number should be 10 digits.</span>
+              <span class="help-block" ng-show="phone.uPhone.$error.pattern">This is not a valid phone number.</span>
+            </div>
+            <div>
+              <input type="submit" value="Save"/>
+              or
+              <a href="#" ng-click="disableEditor()">cancel</a>
+            </div>
+         </form> 
+       </div>     
     </div>
     <div class="col-sm-12">
       <br />
@@ -40,13 +57,20 @@
           <a href='#' ng-click="enableEditorHome()">Edit Address Home</a>
         </div>
         <div ng-show="editorEnabledHome">
-          <input ng-model="newHome" ng-show="editorEnabledHome">
-          <a href="#" ng-click="saveHome()">Save</a>
-          or
-          <a href="#" ng-click="disableEditor()">cancel</a>
-        </div>     
+          <form name="home" ng-submit="home.$valid && saveHome()" novalidate>
+            <input name="uHome" ng-model="newHome" ng-show="editorEnabledHome" required=""/>
+            <div class="form-group has-error" ng-show="home.$submitted || home.uHome.$touched">
+              <span class="help-block" ng-show="home.uHome.$error.required">Tell us your home address.</span>
+            </div>
+            <div>
+              <input type="submit" value="Save"/>
+              or
+              <a href="#" ng-click="disableEditor()">cancel</a>
+            </div>
+          </form>
+        </div>
     </div>
-        <div class="col-sm-12">
+    <div class="col-sm-12">
       <br />
       <label>Address Term:</label>
         <div ng-hide="editorEnabledTerm"> 
@@ -54,11 +78,18 @@
           <a href='#' ng-click="enableEditorTerm()">Edit Address Term</a>
         </div>
         <div ng-show="editorEnabledTerm">
-          <input ng-model="newTerm" ng-show="editorEnabledTerm">
-          <a href="#" ng-click="saveTerm()">Save</a>
-          or
-          <a href="#" ng-click="disableEditor()">cancel</a>
-        </div>     
+          <form name="term" ng-submit="term.$valid && saveTerm()" novalidate>
+            <input name="uTerm" ng-model="newTerm" ng-show="editorEnabledTerm" required=""/>
+            <div class="form-group has-error" ng-show="term.$submitted || term.uTerm.$touched">
+              <span class="help-block" ng-show="term.uTerm.$error.required">Tell us your home address.</span>
+            </div>
+            <div>
+              <input type="submit" value="Save"/>
+              or
+              <a href="#" ng-click="disableEditor()">cancel</a>
+            </div>
+          </form>
+      </div>
     </div>
     <div class="col-sm-12">
       <br />
