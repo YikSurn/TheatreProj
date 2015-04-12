@@ -6,7 +6,10 @@
 	</div>
 </div>
 
-<div id="options">
-	<p><button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button></p>
-	<p><button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button></p>
+<div class="jumbotron container">
+	<button class="btn" ng-click="setPanelCount(panelCount - 1)">-</button>
+	<button class="btn" ng-click="setPanelCount(panelCount + 1)">+</button>
+	<button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button>
+	<button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button>
+	<p>Inspired by <a href="http://desandro.github.io/3dtransforms/docs/carousel.html">http://desandro.github.io/3dtransforms/docs/carousel.html</a></p>
 </div>

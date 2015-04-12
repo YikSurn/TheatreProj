@@ -10,16 +10,19 @@ angular.module('theatreProjApp')
     $scope.panelMargin = 10;
 
     // derived params
-    $scope.carouselContainerH = $scope.carouselContainerW * $scope.heightRatio;
-    $scope.panelWidth = $scope.carouselContainerW - 2*$scope.panelMargin;
-    $scope.panelHeight = $scope.carouselContainerH - 2*$scope.panelMargin;
-  	$scope.degDelta = 360 / $scope.panelCount;
-  	$scope.r = Math.round( $scope.carouselContainerW/2 / Math.tan(Math.PI / $scope.panelCount));
+    $scope.refresh = function () {
+      $scope.carouselContainerH = $scope.carouselContainerW * $scope.heightRatio;
+      $scope.panelWidth = $scope.carouselContainerW - 2*$scope.panelMargin;
+      $scope.panelHeight = $scope.carouselContainerH - 2*$scope.panelMargin;
+    	$scope.degDelta = 360 / $scope.panelCount;
+    	$scope.r = Math.round( $scope.carouselContainerW/2 / Math.tan(Math.PI / $scope.panelCount));
+    };
+
+    $scope.refresh();
 
     $scope.getPanelRepeat = function () {
       return new Array($scope.panelCount);
     };
-
 
   	$scope.carouselContainerStyle = function (index) {
   		return {
@@ -47,6 +50,11 @@ angular.module('theatreProjApp')
   			transform: "rotateY(" + index*$scope.degDelta + "deg) translateZ(" + $scope.r + "px)"
   		};
   	};
+
+    $scope.setPanelCount = function (count) {
+      $scope.panelCount = count;
+      $scope.refresh();
+    };
 
   	$scope.setRotation = function (rotation) {
   		$scope.rotation = rotation;
