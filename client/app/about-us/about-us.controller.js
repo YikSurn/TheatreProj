@@ -3,7 +3,7 @@
 angular.module('theatreProjApp')
   .controller('AboutUsCtrl', function ($scope) {
     // independent params
-  	$scope.carouselContainerW = 400
+  	$scope.carouselContainerW = 400;
     $scope.heightRatio = 2/3;
   	$scope.rotation = 0;
     $scope.panelCount = 20;
@@ -24,30 +24,30 @@ angular.module('theatreProjApp')
       return new Array($scope.panelCount);
     };
 
-  	$scope.carouselContainerStyle = function (index) {
+  	$scope.carouselContainerStyle = function () {
   		return {
-  			width: $scope.carouselContainerW + "px",
-  			height: $scope.carouselContainerH + "px",
+  			width: $scope.carouselContainerW + 'px',
+  			height: $scope.carouselContainerH + 'px',
   		};
   	};
 
   	$scope.carouselStyle = function () {
   		return {
-  			transform: "translateZ(-" + $scope.r + "px) rotateY(" + $scope.rotation + "deg)",
+  			transform: 'translateZ(-' + $scope.r + 'px) rotateY(' + $scope.rotation + 'deg)',
   		};
   	};
 
   	$scope.panelStyle = function (index) {
   		return {
-  			width: $scope.panelWidth + "px",
-  			height: $scope.panelHeight + "px",
-  			left: $scope.panelMargin + "px",
-  			right: $scope.panelMargin + "px",
-  			top: $scope.panelMargin + "px",
+  			width: $scope.panelWidth + 'px',
+  			height: $scope.panelHeight + 'px',
+  			left: $scope.panelMargin + 'px',
+  			right: $scope.panelMargin + 'px',
+  			top: $scope.panelMargin + 'px',
         'font-size': $scope.carouselContainerH * 0.5,
-        'vertical-align': "middle",
-  			background: "hsla(" + index*$scope.degDelta + ", 100%, 50%, 0.8)",
-  			transform: "rotateY(" + index*$scope.degDelta + "deg) translateZ(" + $scope.r + "px)"
+        'vertical-align': 'middle',
+  			background: 'hsla(' + index*$scope.degDelta + ', 100%, 50%, 0.8)',
+  			transform: 'rotateY(' + index*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
   		};
   	};
 

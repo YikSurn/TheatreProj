@@ -7,19 +7,19 @@ angular.module('theatreProjApp')
    
     $http.get('api/profiles').success(function(profiles) {
       $scope.profiles = profiles;
-      var data = "no data";
+      var data = 'no data';
       var x;
       for (x in $scope.profiles) {
-        if ($scope.profiles[x]._id == user._id) {
+        if ($scope.profiles[x]._id === user._id) {
           data = $scope.profiles[x];
           {break;}
-        };
-      };
+        }
+      }
       $scope.currProfile = data;
-      if ($scope.currProfile == "no data") {
-      	$scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:"None Provided",addressHome:"None Provided",phone:"None Provided"};      
+      if ($scope.currProfile === 'no data') {
+      	$scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
         $http.post('api/profiles', $scope.currProfile);      
-      };
+      }
       socket.syncUpdates('profile', $scope.profiles);
     });
     
@@ -71,7 +71,7 @@ angular.module('theatreProjApp')
       $scope.email.$setPristine();
       $scope.email.$setUntouched();
       $scope.currEmail = $scope.newEmail;
-      $scope.currProfile["email"] = $scope.currEmail;
+      $scope.currProfile.email = $scope.currEmail;
       $scope.disableEditor();
     };
   
@@ -79,7 +79,7 @@ angular.module('theatreProjApp')
       $scope.phone.$setPristine();
       $scope.phone.$setUntouched();
       $scope.currPhone = $scope.newPhone;
-      $scope.currProfile["phone"] = $scope.currPhone;
+      $scope.currProfile.phone = $scope.currPhone;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
       $scope.disableEditor();
     };
@@ -88,7 +88,7 @@ angular.module('theatreProjApp')
       $scope.home.$setPristine();
       $scope.home.$setUntouched();
       $scope.currHome = $scope.newHome;
-      $scope.currProfile["addressHome"] = $scope.currHome;
+      $scope.currProfile.addressHome = $scope.currHome;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
       $scope.disableEditor();
     };
@@ -97,7 +97,7 @@ angular.module('theatreProjApp')
       $scope.term.$setPristine();
       $scope.term.$setUntouched();
       $scope.currTerm = $scope.newTerm;
-      $scope.currProfile["addressTerm"] = $scope.currTerm;
+      $scope.currProfile.addressTerm = $scope.currTerm;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
       $scope.disableEditor();
     };
