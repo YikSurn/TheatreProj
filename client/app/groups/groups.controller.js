@@ -27,7 +27,12 @@ angular.module('theatreProjApp')
     });
 
     $scope.post = function() {
-    	$http.post('api/groups', {name: 'Hello'});
+        var names = ['Group name',
+        'Lorem ipsum',
+        'Search me',
+        'Hi Mitchell',
+        'Bootstrap is the best'];
+    	$http.post('api/groups', {name: names[Math.floor(Math.random()*names.length)]});
     };
 
     $scope.remove = function(group) {

@@ -24,7 +24,12 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'groups/groups.scss';
 @import 'main/main.scss';
 @import 'production-meeting/production-meeting.scss';
-@import 'shows/shows.scss';
+@import 'show-prodmeeting/show-prodmeeting-people/show-prodmeeting-people.scss';
+@import 'show/show-booking/show-booking.scss';
+@import 'show/show-new/show-new.scss';
+@import 'show/show-prodmeeting/show-prodmeeting-proforma/show-prodmeeting-proforma.scss';
+@import 'show/show-prodmeeting/show-prodmeeting.scss';
+@import 'show/show.scss';
 @import 'venue-allocation/venue-allocation.scss';
 @import 'modal/modal.scss';
 // endinjector
