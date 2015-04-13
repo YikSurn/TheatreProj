@@ -33,4 +33,5 @@ angular.module('theatreProjApp')
     $scope.remove = function(group) {
     	$http.delete('api/groups/' + group._id);
     };
+    
   });
