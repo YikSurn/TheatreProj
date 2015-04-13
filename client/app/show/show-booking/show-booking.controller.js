@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ShowsCtrl', function ($scope) {
+  .controller('ShowBookingCtrl', function ($scope) {
     $scope.message = 'Hello';
   });

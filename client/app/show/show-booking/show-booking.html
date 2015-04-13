@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Bookings and Venues</title>
+
+</head>
+
+<body>
+<p>Confirm Show Booking Details</p>
+<form>
+  <p>
+    <label for="BookingID">Booking Id:</label>
+    <input name="BookingID" type="text" id="BookingID" placeholder="AutoPop" readonly>
+    <label for="ShowName">Show Name:</label>
+    <input name="ShowName" type="text" id="ShowName" placeholder="AutoPop" readonly>
+    <label for="GroupName">Group Name:</label>
+    <input name="GroupName" type="text" id="GroupName" placeholder="AutoPop" readonly>
+  </p>
+  <p>&nbsp;</p>
+  <p>Autofrom Venue Alloc?</p>
+  <p>
+    <label for="BookingStartDate">Booking Start Date:</label>
+    <input name="BookingStartDate" type="date" id="BookingStartDate" readonly>
+    <label for="BookingEndDate">Booking End Date:</label>
+    <input name="BookingEndDate" type="date" id="BookingEndDate" readonly>
+  </p>
+  <p>&nbsp;</p>
+  <p>
+    <label for="PerformanceType">Performance Type:</label>
+    <select name="PerformanceType" id="PerformanceType">
+    </select>
+  </p>
+  <p>&nbsp;</p>
+  <p>
+    <label for="VenueAgreementStatus">Venue Agreement Status:</label>
+    <select name="VenueAgreementStatus" disabled id="VenueAgreementStatus">
+    </select>
+  Set by admin, just for info</p>
+  <p>&nbsp;</p>
+  <p>
+    <label for="isInternal">Hirer Type:</label>
+    <select name="isInternal" multiple id="isInternal">
+      <option value="student">student</option>
+      <option value="internal">internal</option>
+      <option value="external">external</option>
+      <option value="uht">uht</option>
+    </select>
+  </p>
+</form>
+</body>
+</html>
