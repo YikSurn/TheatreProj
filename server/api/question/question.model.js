@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var QuestionSchema = new Schema({
   title: String,
   text: String,
-  snswer: String,
+  answer: String,
   dateAsked: Date,
   dateAnswered: Date,
   askedbyUser_id: String,
