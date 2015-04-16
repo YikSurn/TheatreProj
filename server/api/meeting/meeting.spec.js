@@ -4,16 +4,15 @@ var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
-describe('GET /api/meetings', function() {
+describe('GET /api/meeting', function() {
 
-  it('should respond with JSON array', function(done) {
+  it('should return status 200', function(done) {
     request(app)
-      .get('/api/meetings')
+      .get('/api/meeting')
       .expect(200)
-      .expect('Content-Type', /json/)
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
+
         done();
       });
   });

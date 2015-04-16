@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/0010fullstackmongo-dev'
+    uri: 'chris:chris@ds029630.mongolab.com:29630/theatre-proj-db'
   },
 
   seedDB: false

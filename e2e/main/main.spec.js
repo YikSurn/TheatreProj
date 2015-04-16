@@ -1,3 +1,4 @@
+
 'use strict';
 
 describe('Main View', function() {
@@ -8,9 +9,12 @@ describe('Main View', function() {
     page = require('./main.po');
   });
 
-  it('should include jumbotron with correct data', function() {
-    expect(page.h1El.getText()).toBe('\'Allo, \'Allo!');
-    expect(page.imgEl.getAttribute('src')).toMatch(/assets\/images\/yeoman.png$/);
-    expect(page.imgEl.getAttribute('alt')).toBe('I\'m Yeoman');
+  it('should load a valid page', function() {
+    .expect(200);
+    .end(function(err, res) {
+        if (err) return done(err);
+
+        done();
+
   });
 });
