@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp', [
+angular.module('theatreProjApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

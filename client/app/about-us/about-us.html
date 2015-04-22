@@ -1,0 +1,16 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="carouselContainer" ng-style="carouselContainerStyle()">
+	<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
+		<figure ng-repeat="i in getPanelRepeat() track by $index" ng-style="panelStyle($index)">
+			<img src="assets/images/yeoman.png">
+		</figure>
+	</div>
+</div>
+
+<div class="jumbotron container">
+	<button class="btn" ng-click="setPanelCount(panelCount - 1)">-</button>
+	<button class="btn" ng-click="setPanelCount(panelCount + 1)">+</button>
+	<button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button>
+	<button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button>
+	<p>Inspired by <a href="http://desandro.github.io/3dtransforms/docs/carousel.html">http://desandro.github.io/3dtransforms/docs/carousel.html</a></p>
+</div>

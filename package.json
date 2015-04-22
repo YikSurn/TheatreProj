@@ -1,5 +1,5 @@
 {
-  "name": "0010-fullstack-mongo",
+  "name": "theatreProjApp",
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {

@@ -1,0 +1,31 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+	<button class="btn" ng-click="post()">New dummy group</button>
+	<div class="form-group">
+		<div class="input-group">
+			<input class="form-control" ng-model="searchText" type="search" placeholder="Search groups">
+			<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+		</div>
+	</div>
+	<div class="row" ng-repeat="groupRow in groupRows">
+		<div class="col-md-4" ng-repeat="group in groupRow | filter: searchText" id="group">
+			<div class="panel panel-primary">
+				<div class="panel-heading" id="group-heading">
+					<h4>{{group.name}}</h4>
+				</div>
+				<div class="panel-body">
+					<div class="well well-sm">
+						<button class="btn btn-primary" ng-click="remove(group)">View</button>
+						<button class="btn btn-primary" ng-click="remove(group)">Remove</button>
+					</div>
+					<div>
+						<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

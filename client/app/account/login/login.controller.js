@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp')
+angular.module('theatreProjApp')
   .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};

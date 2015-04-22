@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('0010FullstackMongoApp')
+angular.module('theatreProjApp')
   .factory('User', function ($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'

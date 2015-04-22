@@ -9,7 +9,19 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
-  app.use('/api/things', require('./api/thing'));
+  app.use('/api/questions', require('./api/question'));
+  app.use('/api/weblistings', require('./api/weblisting'));
+  app.use('/api/tasks', require('./api/task'));
+  app.use('/api/bookings', require('./api/booking'));
+  app.use('/api/projectshows', require('./api/projectshow'));
+  app.use('/api/statuss', require('./api/status'));
+  app.use('/api/prodroles', require('./api/prodrole'));
+  app.use('/api/perftypes', require('./api/perftype'));
+  app.use('/api/prodteams', require('./api/prodteam'));
+  app.use('/api/theatres', require('./api/theatre'));
+  app.use('/api/meetings', require('./api/meeting'));
+  app.use('/api/profiles', require('./api/profile'));
+  app.use('/api/groups', require('./api/group'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
