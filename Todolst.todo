@@ -4,3 +4,4 @@ Testing:
     ☐ Autodeployment to openshift
   Tests:
     ☐ Search Function on groups page
+  ☐ kill karma tests
