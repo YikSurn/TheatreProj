@@ -1,4 +1,4 @@
-# theatreProjApp
+# theatreProjApp <img src="https://magnum.travis-ci.com/christopher-uber/TheatreProj.svg?token=eRy9vax3DdT5FYUvba5y&branch=master" />
 
 other contact info (email address, website, company name, address, etc)
 a brief history if it's a replacement or a fork of something else
