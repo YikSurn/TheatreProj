@@ -1,7 +1,20 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-md-12">
-This is the venue-allocation view.
+<div class="jumbotron container">
+	<h1>Application period</h1>
+
+	{{getElapsedDays()}}/{{getTotalDays()}} days passed, {{getRemainingDays()}} {{getRemainingDays_String()}}
+	<progressbar class="progress active" value="getProgressFraction()*100" type="{{getProgressType()}}"></progressbar>
+
+	<form class="form">
+		<div class="form-group">
+			<label>Start date</label>
+			<input type="datetime-local" class="form-control" ng-model="startDate">
+
+			<label>End Date</label>
+			<input type="datetime-local" class="form-control" ng-model="endDate">
+		</div>
+	</form>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
