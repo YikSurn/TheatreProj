@@ -11,6 +11,15 @@ exports.index = function(req, res) {
   });
 };
 
+// Get the most recent venueallocation (by ApplicationPeriodStartDate)
+exports.mostRecent = function(req, res) {
+  Venueallocation.find().sort({ApplicationPeriodStartDate: -1}).limit(1)
+    .exec(function (err, venueallocations) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, venueallocations[0]);
+    });
+}
+
 // Get a single venueallocation
 exports.show = function(req, res) {
   Venueallocation.findById(req.params.id, function (err, venueallocation) {

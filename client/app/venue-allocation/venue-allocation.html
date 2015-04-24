@@ -3,18 +3,18 @@
 <div class="jumbotron container">
 	<h1>Application period</h1>
 
-	{{getElapsedDays()}}/{{getTotalDays()}} days passed, {{getRemainingDays()}} {{getRemainingDays_String()}}
-	<progressbar class="progress active" value="getProgressFraction()*100" type="{{getProgressType()}}"></progressbar>
+	{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}
+	<progressbar class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
 
-	<form class="form">
-		<div class="form-group">
-			<label>Start date</label>
-			<input type="datetime-local" class="form-control" ng-model="startDate">
+	<div class="input-group">
+		<label>Start date</label>
+		<input type="datetime-local" class="form-control" ng-model="startDate" ng-change="refreshDates()">
+	</div>
 
-			<label>End Date</label>
-			<input type="datetime-local" class="form-control" ng-model="endDate">
-		</div>
-	</form>
+	<div class="input-group">
+		<label>End Date</label>
+		<input type="datetime-local" class="form-control" ng-model="endDate" ng-change="refreshDates()">
+	</div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
