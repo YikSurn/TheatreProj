@@ -96,6 +96,8 @@ angular.module('theatreProjApp')
 
     /* The progress fraction up to which the progress bar should be warning type. */
     $scope.warningThreshold = 0.80;
+
+    $scope.dateFormat = 'MMM d';
   	
     $http.get('api/venueallocation/mostrecent').success(function(allocation) {
         $scope.venueallocation = allocation;

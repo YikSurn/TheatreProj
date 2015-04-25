@@ -29,6 +29,18 @@
 
 	<div class="jumbotron">
 		<h1>Allocation</h1>
+
+		<div class="row">
+			<h4>Semester 1</h4>
+			<div class="col-md-1" ng-repeat="range in venueallocation.SemesterOneDateRanges">
+				<div>
+					{{range.StartDate | date:dateFormat}} - {{range.EndDate | date:dateFormat}}
+				</div>
+				<div class="well">
+					
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
