@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var VenueallocationrequestSchema = new Schema({
-	Group: [{type: ObjectId, ref: 'group'}],
+	Group: {type: ObjectId, ref: 'Group'},
 	StartDate: Date,
 	EndDate: Date,
 	Approved: { type: Boolean, default: false }

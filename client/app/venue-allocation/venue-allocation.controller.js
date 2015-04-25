@@ -99,6 +99,7 @@ angular.module('theatreProjApp')
 
     $scope.dateFormat = 'MMM d';
   	
+    /* Get the venueallocation object (which holds the application dates) */
     $http.get('api/venueallocation/mostrecent').success(function(allocation) {
         $scope.venueallocation = allocation;
         $scope.origStartDate = new Date(allocation.ApplicationPeriodStartDate);
@@ -106,5 +107,70 @@ angular.module('theatreProjApp')
         $scope.origEndDate = new Date(allocation.ApplicationPeriodEndDate);
         $scope.endDate = new Date(allocation.ApplicationPeriodEndDate);
         $scope.refreshDates();
+    });
+
+    $scope.origRequests = {};
+    $scope.requests = {};
+    /* Returns the request objects whose date range matches the given range.
+    @param range a json object with StartDate and EndDate (Date strings). */
+    $scope.getRequestsForDateRange = function(range) {
+        var ret = [];
+        for (var i = 0; i < $scope.requests.length; i++) {
+            var req = $scope.requests[i];
+            if (req.StartDate != range.StartDate || req.EndDate != range.EndDate) {continue;};
+            ret.push(req);
+        };
+
+        return ret;
+    };
+
+    /* Sets req.Approved to true, sets Approved to false for all other reqs from
+    the same Group, sets Approved to false for all other reqs in the same slot. */
+    $scope.selectReq = function(req, range) {
+        req.Approved = true;
+
+        for (var i = 0; i < $scope.requests.length; i++) {
+            var req2 = $scope.requests[i];
+            if (req2 == req) {continue;};
+
+            if (req2.Group.Name == req.Group.Name) {
+                req2.Approved = false;
+            }
+
+            else if (req2.StartDate == range.StartDate && req2.EndDate == range.EndDate) {
+                req2.Approved = false;
+            }
+        };
+    };
+
+    /* Returns true if any req.Approved is different from that of the original req. */
+    $scope.allocationChanged = function() {
+        for (var i = 0; i < $scope.requests.length; i++) {
+            var req = $scope.requests[i];
+            var origReq = $scope.origRequests[i];
+            if (req.Approved != origReq.Approved) {return true;};
+        };
+        return false;
+    };
+
+    $scope.cancelAllocationChanges = function() {
+        $scope.requests = angular.copy($scope.origRequests);
+    };
+
+    /* Updates db records for reqs that have changed. */
+    $scope.applyAllocationChanges = function() {
+        for (var i = 0; i < $scope.requests.length; i++) {
+            var req = $scope.requests[i];
+            var origReq = $scope.origRequests[i];
+            if (req.Approved == origReq.Approved) {continue;};
+            $http.put('api/venueallocationrequests/' + req._id, req);
+        };
+        $scope.origRequests = angular.copy($scope.requests);
+    };
+
+    /* Get the allocation requests */
+    $http.get('api/venueallocationrequests').success(function(reqs) {
+        $scope.origRequests = angular.copy(reqs);
+        $scope.requests = reqs;
     });
   });

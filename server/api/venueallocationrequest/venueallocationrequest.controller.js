@@ -5,7 +5,11 @@ var Venueallocationrequest = require('./venueallocationrequest.model');
 
 // Get list of venueallocationrequests
 exports.index = function(req, res) {
-  Venueallocationrequest.find(function (err, venueallocationrequests) {
+  Venueallocationrequest.find().populate({
+    path: 'Group',
+    select: 'Name -_id'
+  })
+  .exec(function (err, venueallocationrequests) {
     if(err) { return handleError(res, err); }
     return res.json(200, venueallocationrequests);
   });
@@ -34,6 +38,7 @@ exports.update = function(req, res) {
   Venueallocationrequest.findById(req.params.id, function (err, venueallocationrequest) {
     if (err) { return handleError(res, err); }
     if(!venueallocationrequest) { return res.send(404); }
+    delete req.body.Group; // this was made lean and wasn't changed anyway.
     var updated = _.merge(venueallocationrequest, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
