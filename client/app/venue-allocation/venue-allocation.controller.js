@@ -141,6 +141,33 @@ angular.module('theatreProjApp')
                 req2.Approved = false;
             }
         };
+
+        refreshApprovedGroups();
+    };
+
+    /* An array containing the names of groups that have at least one approved request. */
+    var approvedGroups = [];
+
+    /* Refreshes the approvedGroups array based on $scope.requests. */
+    var refreshApprovedGroups = function() {
+        approvedGroups = [];
+
+        for (var i = 0; i < $scope.requests.length; i++) {
+            var req = $scope.requests[i];
+            if (req.Approved) {approvedGroups.push(req.Group.Name)};
+        };
+    };
+
+    /* Returns a string for btn styling based on request status.
+    Returns 'btn-success' if the request is approved.
+    Returns 'btn-danger' if the request is not approved AND no other requests of the same
+    group are approved.
+    Returns '' if the request is not approved but another request of the same group is
+    approved. */
+    $scope.getRequestBtnClass = function(req) {
+        if (req.Approved) {return 'btn-success';}
+        else if (approvedGroups.indexOf(req.Group.Name) == -1) {return 'btn-danger';}
+        else return '';
     };
 
     /* Returns true if any req.Approved is different from that of the original req. */
@@ -172,5 +199,7 @@ angular.module('theatreProjApp')
     $http.get('api/venueallocationrequests').success(function(reqs) {
         $scope.origRequests = angular.copy(reqs);
         $scope.requests = reqs;
+
+        refreshApprovedGroups();
     });
   });
