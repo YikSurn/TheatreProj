@@ -1,19 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="jumbotron container">
+<div class="jumbotron container" id="application-period">
 	<h1>Application period</h1>
+	<h4>{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}</h4>
 
-	{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}
-	<progressbar class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
+	<div class="row" id="dates">
+		<div class="col-md-4">
+			<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="startDate"></datetimepicker>
+		</div>
 
-	<div class="input-group">
-		<label>Start date</label>
-		<input type="datetime-local" class="form-control" ng-model="startDate" ng-change="refreshDates()">
-	</div>
+		<div class="col-md-4">
+			<progressbar id="progressbar" class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
+		</div>
 
-	<div class="input-group">
-		<label>End Date</label>
-		<input type="datetime-local" class="form-control" ng-model="endDate" ng-change="refreshDates()">
+		<div class="col-md-4">
+			<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="endDate"></datetimepicker>
+		</div>
 	</div>
 </div>
 

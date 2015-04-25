@@ -61,6 +61,14 @@ angular.module('theatreProjApp')
         $scope.remainingDaysString = getRemainingDays_String();
     };
 
+    $scope.$watch('startDate', function() {
+        $scope.refreshDates();   
+    });
+
+    $scope.$watch('endDate', function() {
+        $scope.refreshDates();   
+    });
+
     /* The progress fraction up to which the progress bar should be success type. */
     $scope.successThreshold = 0.50;
 
