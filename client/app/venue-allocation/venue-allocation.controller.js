@@ -14,29 +14,29 @@ angular.module('theatreProjApp')
     };
 
     /* Returns the number of days in the application period. */
-    var getTotalDays = function () {
+    var getTotalDays = function() {
         return dayDiff($scope.startDate, $scope.endDate);
     };
 
     /* Returns the number of elapsed days in the application period. */
-    var getElapsedDays = function () {
+    var getElapsedDays = function() {
         return dayDiff($scope.startDate, new Date());
     };
 
     /* Returns the number of remaining days in the application period. */
-    var getRemainingDays = function () {
+    var getRemainingDays = function() {
         return dayDiff(new Date(), $scope.endDate);
     };
 
     /* Returns 'day remaining' if getRemainingDays == 1,
     returns 'days remaining' otherwise. */
-    var getRemainingDays_String = function () {
+    var getRemainingDays_String = function() {
         if (getRemainingDays() == 1) { return 'day remaining'; }
         else return 'days remaining';
     };
 
     /* Returns the progress from startDate to endDate as a two-digit precision float. */
-    var getProgressFraction = function () {
+    var getProgressFraction = function() {
         var totalTime = timeDiff($scope.startDate, $scope.endDate);
         var elapsedTime = timeDiff($scope.startDate, new Date());
         var diff = elapsedTime / totalTime;
@@ -45,14 +45,14 @@ angular.module('theatreProjApp')
 
     /* Returns a string used by bootstrap-ui progress bars for styling, based on
     the application period progress. */
-    var getProgressType = function () {
+    var getProgressType = function() {
         var frac = getProgressFraction();
         if (frac <= $scope.successThreshold) { return 'success'; }
         else if (frac <= $scope.warningThreshold) { return 'warning'; }
         else return 'danger';
     };
 
-    $scope.refreshDates = function () {
+    $scope.refreshDates = function() {
         $scope.progressFraction = getProgressFraction();
         $scope.progressType = getProgressType();
         $scope.elapsedDays = getElapsedDays();
@@ -69,6 +69,28 @@ angular.module('theatreProjApp')
         $scope.refreshDates();   
     });
 
+    $scope.datesChanged = function() {
+        if ($scope.startDate == null) { return false; };
+        if ($scope.origStartDate == null) { return false; };
+        if ($scope.endDate == null) { return false; };
+        if ($scope.origEndDate == null) { return false; };
+        return ($scope.startDate.getTime() != $scope.origStartDate.getTime()) ||
+        ($scope.endDate.getTime() != $scope.origEndDate.getTime());
+    };
+
+    $scope.applyDateChanges = function() {
+        $scope.origStartDate = new Date($scope.startDate.getTime());
+        $scope.origEndDate = new Date($scope.endDate.getTime());
+        $scope.venueallocation.ApplicationPeriodStartDate = $scope.startDate;
+        $scope.venueallocation.ApplicationPeriodEndDate = $scope.endDate;
+        $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+    }
+
+    $scope.cancelDateChanges = function() {
+        $scope.startDate = new Date($scope.origStartDate.getTime());
+        $scope.endDate = new Date($scope.origEndDate.getTime());
+    }
+
     /* The progress fraction up to which the progress bar should be success type. */
     $scope.successThreshold = 0.50;
 
@@ -76,7 +98,10 @@ angular.module('theatreProjApp')
     $scope.warningThreshold = 0.80;
   	
     $http.get('api/venueallocation/mostrecent').success(function(allocation) {
+        $scope.venueallocation = allocation;
+        $scope.origStartDate = new Date(allocation.ApplicationPeriodStartDate);
         $scope.startDate = new Date(allocation.ApplicationPeriodStartDate);
+        $scope.origEndDate = new Date(allocation.ApplicationPeriodEndDate);
         $scope.endDate = new Date(allocation.ApplicationPeriodEndDate);
         $scope.refreshDates();
     });
