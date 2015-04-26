@@ -31,6 +31,24 @@
 		<h1>Allocation</h1>
 
 		<div class="row">
+			<h4>Edit date ranges</h4>
+			<div class="well col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
+				<div>
+					<h4>{{$index + 1}}</h4>
+				</div>
+				<div class="input-group" ng-init="startOpen = false; endOpen = false">
+					<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="startOpen = true" ng-model="range.StartDate" is-open="startOpen" close-text="Close" />
+					<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="endOpen = true" ng-model="range.EndDate" is-open="endOpen" close-text="Close" />
+				</div>
+			</div>
+
+			<div class="col-md-4 col-md-offset-4">
+				<button class="btn btn-primary" ng-click="applyDateRangeChanges()">APPLY CHANGES</button>
+				<button class="btn btn-danger" ng-click="cancelDateRangeChanges()">CANCEL CHANGES</button>
+			</div>
+		</div>
+
+		<div class="row">
 			<h4>Semester 1</h4>
 			<div class="col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
 				<div>

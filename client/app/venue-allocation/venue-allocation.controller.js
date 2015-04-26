@@ -109,6 +109,10 @@ angular.module('theatreProjApp')
         $scope.refreshDates();
     });
 
+    $scope.applyDateRangeChanges = function() {
+        $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+    };
+
     $scope.origRequests = {};
     $scope.requests = {};
     /* Returns the request objects whose date range matches the given range.

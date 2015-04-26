@@ -43,7 +43,7 @@ exports.update = function(req, res) {
   Venueallocation.findById(req.params.id, function (err, venueallocation) {
     if (err) { return handleError(res, err); }
     if(!venueallocation) { return res.send(404); }
-    var updated = _.merge(venueallocation, req.body);
+    var updated = _.assign(venueallocation, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, venueallocation);
