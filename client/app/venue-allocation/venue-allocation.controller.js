@@ -98,16 +98,6 @@ angular.module('theatreProjApp')
     $scope.warningThreshold = 0.80;
 
     $scope.dateFormat = 'MMM d';
-  	
-    /* Get the venueallocation object (which holds the application dates) */
-    $http.get('api/venueallocation/mostrecent').success(function(allocation) {
-        $scope.venueallocation = allocation;
-        $scope.origStartDate = new Date(allocation.ApplicationPeriodStartDate);
-        $scope.startDate = new Date(allocation.ApplicationPeriodStartDate);
-        $scope.origEndDate = new Date(allocation.ApplicationPeriodEndDate);
-        $scope.endDate = new Date(allocation.ApplicationPeriodEndDate);
-        $scope.refreshDates();
-    });
 
     $scope.applyDateRangeChanges = function() {
         $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
@@ -199,15 +189,39 @@ angular.module('theatreProjApp')
         $scope.origRequests = angular.copy($scope.requests);
     };
 
-    /* Get the allocation requests */
-    $http.get('api/venueallocationrequests').success(function(reqs) {
-        $scope.origRequests = angular.copy(reqs);
-        $scope.requests = reqs;
+    $scope.venueallocationLoaded = false;
+    $scope.requestsLoaded = false;
+    $scope.pendingGroupsLoaded = false;
 
-        refreshApprovedGroups();
-    });
+    var populateData = function () {
+        /* Get the venueallocation object (which holds the application dates) */
+        $http.get('api/venueallocation/mostrecent').success(function(allocation) {
+            $scope.venueallocation = allocation;
+            $scope.origStartDate = new Date(allocation.ApplicationPeriodStartDate);
+            $scope.startDate = new Date(allocation.ApplicationPeriodStartDate);
+            $scope.origEndDate = new Date(allocation.ApplicationPeriodEndDate);
+            $scope.endDate = new Date(allocation.ApplicationPeriodEndDate);
+            $scope.refreshDates();
 
-    $http.get('api/venueallocationpendinggroups').success(function(pendinggroups) {
-        $scope.pendinggroups = pendinggroups;
-    });
+            $scope.venueallocationLoaded = true;
+        });
+
+        /* Get the allocation requests */
+        $http.get('api/venueallocationrequests').success(function(reqs) {
+            $scope.origRequests = angular.copy(reqs);
+            $scope.requests = reqs;
+
+            refreshApprovedGroups();
+
+            $scope.requestsLoaded = true;
+        });
+
+        $http.get('api/venueallocationpendinggroups').success(function(pendinggroups) {
+            $scope.pendinggroups = pendinggroups;
+
+            $scope.pendingGroupsLoaded = true;
+        });
+    };
+
+    populateData();
   });

@@ -1,80 +1,86 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container" id="venueallocation">
-	<div class="jumbotron" id="application-period">
-		<h1>Application period</h1>
-		<h4>{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}</h4>
-
-		<div class="row" id="dates">
-			<div class="col-md-4">
-				<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="startDate"></datetimepicker>
-			</div>
-
-			<div class="col-md-4">
-				<progressbar id="progressbar" class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
-			</div>
-
-			<div class="col-md-4">
-				<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="endDate"></datetimepicker>
-			</div>
-		</div>
-
-		<div class="row" ng-show="datesChanged()">
-			<div class="col-md-4 col-md-offset-4">
-				<button class="btn btn-primary" ng-click="applyDateChanges()">APPLY CHANGES</button>
-				<button class="btn btn-danger" ng-click="cancelDateChanges()">CANCEL CHANGES</button>
-			</div>
-		</div>
+	<div class="jumbotron" ng-hide="venueallocationLoaded && requestsLoaded && pendingGroupsLoaded">
+		<h1>Loading...</h1>
 	</div>
 
-	<div class="jumbotron">
-		<h1>Allocation</h1>
+	<div ng-show="venueallocationLoaded && requestsLoaded && pendingGroupsLoaded">
+		<div class="jumbotron" id="application-period">
+			<h1>Application period</h1>
+			<h4>{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}</h4>
 
-		<div class="row">
-			<h4>Edit date ranges</h4>
-			<div class="well col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
-				<div>
-					<h4>{{$index + 1}}</h4>
+			<div class="row" id="dates">
+				<div class="col-md-4">
+					<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="startDate"></datetimepicker>
 				</div>
-				<div class="input-group" ng-init="startOpen = false; endOpen = false">
-					<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="startOpen = true" ng-model="range.StartDate" is-open="startOpen" close-text="Close" />
-					<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="endOpen = true" ng-model="range.EndDate" is-open="endOpen" close-text="Close" />
+
+				<div class="col-md-4">
+					<progressbar id="progressbar" class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
+				</div>
+
+				<div class="col-md-4">
+					<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="endDate"></datetimepicker>
 				</div>
 			</div>
 
-			<div class="col-md-4 col-md-offset-4">
-				<button class="btn btn-primary" ng-click="applyDateRangeChanges()">APPLY CHANGES</button>
-				<button class="btn btn-danger" ng-click="cancelDateRangeChanges()">CANCEL CHANGES</button>
+			<div class="row" ng-show="datesChanged()">
+				<div class="col-md-4 col-md-offset-4">
+					<button class="btn btn-primary" ng-click="applyDateChanges()">APPLY CHANGES</button>
+					<button class="btn btn-danger" ng-click="cancelDateChanges()">CANCEL CHANGES</button>
+				</div>
 			</div>
 		</div>
 
-		<div class="row">
-			<h4>Semester 1</h4>
-			<div class="col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
-				<div>
-					{{range.StartDate | date:dateFormat}} - {{range.EndDate | date:dateFormat}}
-				</div>
-				<div class="well">
+		<div class="jumbotron">
+			<h1>Allocation</h1>
+
+			<div class="row">
+				<h4>Edit date ranges</h4>
+				<div class="well col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
 					<div>
-						<button ng-click="selectReq(req, range)" ng-repeat="req in getRequestsForDateRange(range)" class="btn btn-default btn-block" ng-class="getRequestBtnClass(req)">{{req.Group.Name}}</button>
+						<h4>{{$index + 1}}</h4>
+					</div>
+					<div class="input-group" ng-init="startOpen = false; endOpen = false">
+						<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="startOpen = true" ng-model="range.StartDate" is-open="startOpen" close-text="Close" />
+						<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="endOpen = true" ng-model="range.EndDate" is-open="endOpen" close-text="Close" />
+					</div>
+				</div>
+
+				<div class="col-md-4 col-md-offset-4">
+					<button class="btn btn-primary" ng-click="applyDateRangeChanges()">APPLY CHANGES</button>
+					<button class="btn btn-danger" ng-click="cancelDateRangeChanges()">CANCEL CHANGES</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<h4>Semester 1</h4>
+				<div class="col-md-4" ng-repeat="range in venueallocation.SemesterOneDateRanges">
+					<div>
+						{{range.StartDate | date:dateFormat}} - {{range.EndDate | date:dateFormat}}
+					</div>
+					<div class="well">
+						<div>
+							<button ng-click="selectReq(req, range)" ng-repeat="req in getRequestsForDateRange(range)" class="btn btn-default btn-block" ng-class="getRequestBtnClass(req)">{{req.Group.Name}}</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="row" ng-show="allocationChanged()">
-			<div class="col-md-4 col-md-offset-4">
-				<button class="btn btn-primary" ng-click="applyAllocationChanges()">APPLY CHANGES</button>
-				<button class="btn btn-danger" ng-click="cancelAllocationChanges()">CANCEL CHANGES</button>
+			<div class="row" ng-show="allocationChanged()">
+				<div class="col-md-4 col-md-offset-4">
+					<button class="btn btn-primary" ng-click="applyAllocationChanges()">APPLY CHANGES</button>
+					<button class="btn btn-danger" ng-click="cancelAllocationChanges()">CANCEL CHANGES</button>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="jumbotron">
-		<h1>Groups who haven't applied yet</h1>
+		<div class="jumbotron">
+			<h1>Groups who haven't applied yet</h1>
 
-		<div ng-repeat="group in pendinggroups">
-			<h3>{{group.Group.Name}}</h3>
+			<div ng-repeat="group in pendinggroups">
+				<h3>{{group.Group.Name}}</h3>
+			</div>
 		</div>
 	</div>
 </div>
