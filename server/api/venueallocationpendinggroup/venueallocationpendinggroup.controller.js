@@ -5,10 +5,16 @@ var Venueallocationpendinggroup = require('./venueallocationpendinggroup.model')
 
 // Get list of venueallocationpendinggroups
 exports.index = function(req, res) {
-  Venueallocationpendinggroup.find(function (err, venueallocationpendinggroups) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, venueallocationpendinggroups);
-  });
+  Venueallocationpendinggroup
+    .find()
+    .populate({
+      path: 'Group',
+      select: 'Name -_id'
+    })
+    .exec(function (err, pendinggroups) {
+      if (err) {return handleError(res, err); };
+      return res.json(200, pendinggroups);
+    });
 };
 
 // Get a single venueallocationpendinggroup

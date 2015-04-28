@@ -3,10 +3,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+var ObjectId = mongoose.Schema.Types.ObjectId;
+
 var VenueallocationpendinggroupSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+	Group: {type: ObjectId, ref: 'Group'}
 });
 
 module.exports = mongoose.model('Venueallocationpendinggroup', VenueallocationpendinggroupSchema);
