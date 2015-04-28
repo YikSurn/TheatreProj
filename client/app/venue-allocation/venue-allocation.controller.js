@@ -206,4 +206,8 @@ angular.module('theatreProjApp')
 
         refreshApprovedGroups();
     });
+
+    $http.get('api/venueallocationpendinggroups').success(function(pendinggroups) {
+        $scope.pendinggroups = pendinggroups;
+    });
   });

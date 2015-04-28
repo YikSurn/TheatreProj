@@ -69,6 +69,14 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="jumbotron">
+		<h1>Groups who haven't applied yet</h1>
+
+		<div ng-repeat="group in pendinggroups">
+			<h3>{{group.Group.Name}}</h3>
+		</div>
+	</div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
