@@ -1,12 +1,23 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <script type="text/ng-template" id="groupViewModal.html">
-    <div class="modal-header"> 
-      <h3 class="modal-title">{{groupName}}</h3>
+    <div ng-hide="editorEnabledName" class="modal-header"> 
+      <h3 class="modal-title">{{currGroup.name}}
+      <a href='#' ng-click="enableEditorName()">Edit Name</a></h3>
     </div>
+    <div ng-show="editorEnabledName">
+      <form name="name" ng-submit="saveName()" novalidate>
+        <input type="text" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+        <div>
+          <input type="submit" value="Save"/>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </div>
+      </form>
+    </div> 
     <div class="modal-body">
     <tabset>
-      <tab heading="Members"><h4>Group Members</h4><div class="row-md-4" ng-repeat="member in groupMembers"> {{member}} <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button></div></tab>
+      <tab heading="Members"><h4>Group Members</h4><div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button></div><div> {{position}}{{currGroup}}</div></tab>
       <tab heading="Assign Group Task">Group Task Stuff</tab>
       <tab heading="Send Message">Send Message Stuff</tab>
       <tab heading="Send Form">Form Stuff</tab>

@@ -51,24 +51,35 @@ angular.module('theatreProjApp')
                 }
             }
         });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
     };
 });
 
 angular.module('theatreProjApp')
   .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, group) {
-    $scope.groupName = group.name;
-    $scope.groupMembers = group.members;
-    
+    $scope.currGroup = group;
+    $scope.editorEnabledName = false;
+    $scope.enableEditorName = function() {
+      $scope.editorEnabledName = true;
+      $scope.newName = $scope.currGroup.name;
+    };
+
+    $scope.saveName = function() {
+      $scope.name.$setPristine();
+      $scope.name.$setUntouched();
+      $scope.currName = $scope.newName;
+      $scope.currGroup.name = $scope.currName;
+      $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+      $scope.disableEditor();
+    };
+
+    $scope.disableEditor = function() {
+      $scope.editorEnabledName = false;
+    };
+
     $scope.removeMember = function(member) {
         var position = group.members.indexOf(member);
         group.members.splice(position, 1);
-        $http.put('api/groups/' + group.name, group);
+        $http.put('api/groups/' + group._id, group);
     };
 
     $scope.close = function () {
