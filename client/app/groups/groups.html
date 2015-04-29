@@ -1,12 +1,12 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <script type="text/ng-template" id="groupViewModal.html">
-    <div class="modal-header">
-        <h3 class="modal-title">{{groupName}}</h3>
+    <div class="modal-header"> 
+      <h3 class="modal-title">{{groupName}}</h3>
     </div>
     <div class="modal-body">
     <tabset>
-      <tab heading="Members">Members Stuff</tab>
+      <tab heading="Members"><h4>Group Members</h4><div class="row-md-4" ng-repeat="member in groupMembers"> {{member}} <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button></div></tab>
       <tab heading="Assign Group Task">Group Task Stuff</tab>
       <tab heading="Send Message">Send Message Stuff</tab>
       <tab heading="Send Form">Form Stuff</tab>

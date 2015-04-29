@@ -32,15 +32,12 @@ angular.module('theatreProjApp')
         'Search me',
         'Hi Mitchell',
         'Bootstrap is the best'];
-    	$http.post('api/groups', {name: names[Math.floor(Math.random()*names.length)]});
+    	$http.post('api/groups', {name: names[Math.floor(Math.random()*names.length)], members: ["hello", "test", "hi"]});
     };
 
     $scope.remove = function(group) {
     	$http.delete('api/groups/' + group._id);
     };
-
-
-    $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.open = function (group) {
 
@@ -64,8 +61,15 @@ angular.module('theatreProjApp')
 });
 
 angular.module('theatreProjApp')
-  .controller('ModalInstanceCtrl', function ($scope, $modalInstance, group) {
+  .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, group) {
     $scope.groupName = group.name;
+    $scope.groupMembers = group.members;
+    
+    $scope.removeMember = function(member) {
+        var position = group.members.indexOf(member);
+        group.members.splice(position, 1);
+        $http.put('api/groups/' + group.name, group);
+    };
 
     $scope.close = function () {
         $modalInstance.close();
