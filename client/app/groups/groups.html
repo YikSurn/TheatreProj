@@ -1,18 +1,16 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <script type="text/ng-template" id="groupViewModal.html">
-    <div ng-hide="editorEnabledName" class="modal-header"> 
-      <h3 class="modal-title">{{currGroup.name}}
-      <a href='#' ng-click="enableEditorName()">Edit Name</a></h3>
+    <div class="modal-header"> 
+      <h3 ng-hide="editorEnabledName" class="modal-title">{{currGroup.name}}
+      <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
     </div>
     <div ng-show="editorEnabledName">
       <form name="name" ng-submit="saveName()" novalidate>
         <input type="text" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
-        <div>
-          <input type="submit" value="Save"/>
-          or
-          <a href="#" ng-click="disableEditor()">cancel</a>
-        </div>
+        <input type="submit" value="Save"/>
+        or
+        <a href="#" ng-click="disableEditor()">cancel</a>
       </form>
     </div> 
     <div class="modal-body">

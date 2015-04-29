@@ -77,9 +77,9 @@ angular.module('theatreProjApp')
     };
 
     $scope.removeMember = function(member) {
-        var position = group.members.indexOf(member);
-        group.members.splice(position, 1);
-        $http.put('api/groups/' + group._id, group);
+        $scope.position = $scope.currGroup.members.indexOf(member);
+        $scope.currGroup.members.splice($scope.position, 1);
+        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
     };
 
     $scope.close = function () {
