@@ -5,8 +5,12 @@ var mongoose = require('mongoose'),
 
 var GroupSchema = new Schema({
   name: String,
-  info: String,
-  active: Boolean
+  establishedDate: Date,
+  members: Array,
+  websiteURL: String,
+  facebookURL: String,
+  socialMediaURL: String,
+  affiliationDate: Date
 });
 
 module.exports = mongoose.model('Group', GroupSchema);
