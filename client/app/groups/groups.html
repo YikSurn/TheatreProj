@@ -24,12 +24,24 @@
       <tab heading="Tasks"><legend>Group Tasks</legend>
         <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	    <div collapse="viewIsCollapsed">
-		  <div class="well well-lg" ng-repeat="task in currTasks">
+		  <div class="well well-lg" ng-repeat="task in iTasks">
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
 		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
 		    <div>Deadline: {{task.deadline}}</div>
-		    <button class="btn btn-primary" id="deleteTask" ng-click="removeTask(task)">Remove Task</button>
+		    <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
+		    <button class="btn btn-primary" id="task-button" ng-click="removeTask(task)">Remove Task</button>
+		  </div> 
+	    </div>
+	    <hr>
+	    <button class="btn btn-default" ng-click="completeIsCollapsed = !completeIsCollapsed">View Completed Tasks</button>
+	    <div collapse="completeIsCollapsed">
+		  <div class="well well-lg" ng-repeat="task in cTasks">
+		    <div>Description: {{task.description}}</div>
+		    <div>Status: {{task.status}}</div>
+		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		    <div>Deadline: {{task.deadline}}</div>
+		    <button class="btn btn-primary" id="task-button" ng-click="removeTask(task)">Remove Task</button>
 		  </div> 
 	    </div>
 	    <hr>

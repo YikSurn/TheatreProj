@@ -63,17 +63,21 @@ angular.module('theatreProjApp')
     $scope.editorEnabledName = false;
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
+    $scope.completeIsCollapsed = true;
     $scope.enableEditorName = function() {
       $scope.editorEnabledName = true;
       $scope.newName = $scope.currGroup.name;
     };
 
-    $scope.getOne = function() {
+    $scope.getTasks = function() {
         var x;
-        $scope.currTasks = [];
+        $scope.iTasks = [];
+        $scope.cTasks = [];
         for (x in $scope.tasks) {
-          if ($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) {
-            $scope.currTasks[$scope.currTasks.length] = $scope.tasks[x];
+          if (($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[x].status === "Incomplete")) {
+            $scope.iTasks[$scope.iTasks.length] = $scope.tasks[x];
+          } else {
+            $scope.cTasks[$scope.cTasks.length] = $scope.tasks[x];
           }
         }
     };
@@ -81,9 +85,9 @@ angular.module('theatreProjApp')
     /*Get all tasks*/
     $http.get('api/tasks').success(function(tasks) {
         $scope.tasks = tasks;
-        $scope.getOne();
+        $scope.getTasks();
         socket.syncUpdates('task', $scope.tasks, function(event, task, tasks) {
-            $scope.getOne(); 
+            $scope.getTasks(); 
         });
     });
 
@@ -125,6 +129,12 @@ angular.module('theatreProjApp')
       $scope.minDate = $scope.minDate ? null : new Date();
     };
     $scope.toggleMin();
+
+    /*Function to change task to complete*/
+    $scope.changeStatus = function(task) {
+        task.status = "Completed";
+        $http.put('api/tasks/' + task._id, task);
+    }
 
     /*Function to remove a current task*/
     $scope.removeTask = function(task) {
