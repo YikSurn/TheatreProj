@@ -6,7 +6,7 @@
       <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
       <div ng-show="editorEnabledName">
         <form name="name" ng-submit="saveName()" novalidate>
-          <input type="text" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+          <input type="text" class="form-control" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
           <input type="submit" value="Save"/>
           or
           <a href="#" ng-click="disableEditor()">cancel</a>
@@ -27,6 +27,8 @@
 		  <div class="well well-lg" ng-repeat="task in currTasks">
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
+		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		    <div>Deadline: {{task.deadline}}</div>
 		    <button class="btn btn-primary" id="deleteTask" ng-click="removeTask(task)">Remove Task</button>
 		  </div> 
 	    </div>
@@ -34,9 +36,14 @@
 	    <button class="btn btn-default" ng-click="assignIsCollapsed = !assignIsCollapsed">Create New Task</button>
 	    <div collapse="assignIsCollapsed">
 		  <div class="well well-lg">
-		    <form name="assignTask" ng-submit="createTask(taskDesc)" novalidate>
+		    <form name="assignTask" ng-submit="createTask(taskDesc, dt)" novalidate>
 		      <label>Description:</label>
-		      <input type="text" name="tName" ng-model="taskDesc"/>
+		      <input type="text" class="form-control" name="tName" ng-model="taskDesc"/>
+		      <div style="display:inline-block; min-height:290px;">
+		      	<label>Completion Date: </label>
+		        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+ 				<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+              </div>
 		      <div><input type="submit" value="Assign"/></div>
 		    </form>
 		  </div> 

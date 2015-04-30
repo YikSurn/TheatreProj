@@ -57,7 +57,7 @@ angular.module('theatreProjApp')
 
 /*Controller for modal dialog*/
 angular.module('theatreProjApp')
-  .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, group) {
+  .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, Auth, group) {
     
     $scope.currGroup = group;
     $scope.editorEnabledName = false;
@@ -110,12 +110,21 @@ angular.module('theatreProjApp')
     };
 
     /*Function to assign a new task*/
-    $scope.createTask = function(taskDesc) {
+    $scope.createTask = function(taskDesc, dt) {
         $scope.taskDesc = taskDesc;
-        $http.post('api/tasks', {description: $scope.taskDesc, assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
+        $scope.deadline = dt;
+        var user = Auth.getCurrentUser();
+        $scope.user = user;
+        $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
         alert("Task Created");
         $scope.assignTask.$setPristine();
-    }
+    };
+
+    /*Ensures date must be selected from todays date*/
+    $scope.toggleMin = function() {
+      $scope.minDate = $scope.minDate ? null : new Date();
+    };
+    $scope.toggleMin();
 
     /*Function to remove a current task*/
     $scope.removeTask = function(task) {
