@@ -36,7 +36,10 @@ angular.module('theatreProjApp')
     };
 
     $scope.remove = function(group) {
-    	$http.delete('api/groups/' + group._id);
+    	var confGroup = confirm("Are you sure you want to remove " + group.name + "?");
+        if (confGroup == true) {
+            $http.delete('api/groups/' + group._id);
+        };
     };
 
     /*Opens Modal Dialog with new controller*/
@@ -64,11 +67,13 @@ angular.module('theatreProjApp')
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
+    
     $scope.enableEditorName = function() {
       $scope.editorEnabledName = true;
       $scope.newName = $scope.currGroup.name;
     };
 
+    /*Get tasks for selected group and organize tasks into completed and incompleted*/
     $scope.getTasks = function() {
         var x;
         $scope.iTasks = [];
@@ -116,7 +121,7 @@ angular.module('theatreProjApp')
     /*Function to assign a new task*/
     $scope.createTask = function(taskDesc, dt) {
         $scope.taskDesc = taskDesc;
-        $scope.deadline = dt;
+        $scope.deadline = dt.toDateString();
         var user = Auth.getCurrentUser();
         $scope.user = user;
         $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
