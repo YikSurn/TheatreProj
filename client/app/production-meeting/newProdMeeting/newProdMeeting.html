@@ -1,0 +1,18 @@
+<div class="col-md-12">
+Create a new production meeting.
+  <form class="new-meeting-form">
+
+    Production Meeting Title: <input type="text" ng-model="newMeeting.title" /><br />
+    <label>Group:</label>
+    <select ng-model="newMeeting.group" ng-options="group._id as group.name for group in groups">
+      <option value="">Select a theatre group</option>
+    </select>
+    <br />
+
+    Info: <input type="text" ng-model="newMeeting.info" /><br />
+    <input type="button" ng-click="createNewMeeting()" value="Create">
+    <input type="button" ng-click="cancel()" value="Cancel">
+    
+  </form>
+
+</div>
