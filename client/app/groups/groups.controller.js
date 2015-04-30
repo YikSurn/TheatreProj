@@ -39,6 +39,7 @@ angular.module('theatreProjApp')
     	$http.delete('api/groups/' + group._id);
     };
 
+    /*Opens Modal Dialog with new controller*/
     $scope.open = function (group) {
 
         var modalInstance = $modal.open({
@@ -47,22 +48,47 @@ angular.module('theatreProjApp')
             size: "lg",
             resolve: {
                 group: function () {
-                    return group;
+                    return group; 
                 }
             }
         });
     };
 });
 
+/*Controller for modal dialog*/
 angular.module('theatreProjApp')
   .controller('ModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, group) {
+    
     $scope.currGroup = group;
     $scope.editorEnabledName = false;
+    $scope.viewIsCollapsed = true;
+    $scope.assignIsCollapsed = true;
     $scope.enableEditorName = function() {
       $scope.editorEnabledName = true;
       $scope.newName = $scope.currGroup.name;
     };
 
+    $scope.getOne = function() {
+        var x;
+        $scope.currTasks = [];
+        for (x in $scope.tasks) {
+          if ($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) {
+            $scope.currTasks[$scope.currTasks.length] = $scope.tasks[x];
+          }
+        }
+    };
+
+    /*Get all tasks*/
+    $http.get('api/tasks').success(function(tasks) {
+        $scope.tasks = tasks;
+        $scope.getOne();
+        socket.syncUpdates('task', $scope.tasks, function(event, task, tasks) {
+            $scope.getOne(); 
+        });
+    });
+
+
+    /*Function to save Group Name edits*/
     $scope.saveName = function() {
       $scope.name.$setPristine();
       $scope.name.$setUntouched();
@@ -76,10 +102,27 @@ angular.module('theatreProjApp')
       $scope.editorEnabledName = false;
     };
 
+    /*Function to remove group members*/
     $scope.removeMember = function(member) {
         $scope.position = $scope.currGroup.members.indexOf(member);
         $scope.currGroup.members.splice($scope.position, 1);
         $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+    };
+
+    /*Function to assign a new task*/
+    $scope.createTask = function(taskDesc) {
+        $scope.taskDesc = taskDesc;
+        $http.post('api/tasks', {description: $scope.taskDesc, assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
+        alert("Task Created");
+        $scope.assignTask.$setPristine();
+    }
+
+    /*Function to remove a current task*/
+    $scope.removeTask = function(task) {
+        var confTask = confirm("Are you sure you want to remove this task?");
+        if (confTask == true) {
+            $http.delete('api/tasks/' + task._id);
+        }
     };
 
     $scope.close = function () {

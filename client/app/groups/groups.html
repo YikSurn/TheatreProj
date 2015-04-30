@@ -1,26 +1,51 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <script type="text/ng-template" id="groupViewModal.html">
-    <div class="modal-header"> 
+    <div class="modal-header" id="group-heading"> 
       <h3 ng-hide="editorEnabledName" class="modal-title">{{currGroup.name}}
       <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
-    </div>
-    <div ng-show="editorEnabledName">
-      <form name="name" ng-submit="saveName()" novalidate>
-        <input type="text" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
-        <input type="submit" value="Save"/>
-        or
-        <a href="#" ng-click="disableEditor()">cancel</a>
-      </form>
+      <div ng-show="editorEnabledName">
+        <form name="name" ng-submit="saveName()" novalidate>
+          <input type="text" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+          <input type="submit" value="Save"/>
+          or
+          <a href="#" ng-click="disableEditor()">cancel</a>
+        </form>
+      </div>
     </div> 
     <div class="modal-body">
     <tabset>
-      <tab heading="Members"><h4>Group Members</h4><div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button></div><div> {{position}}{{currGroup}}</div></tab>
-      <tab heading="Assign Group Task">Group Task Stuff</tab>
-      <tab heading="Send Message">Send Message Stuff</tab>
-      <tab heading="Send Form">Form Stuff</tab>
-      <tab heading="Projects">Projects Stuff</tab>
-      <tab heading="Production Meeting">Production Meeting Stuff</tab>
+      <tab heading="Members"><legend>Group Members</legend>
+        <div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} 
+          <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button>
+        </div>
+        <div>{{position}}{{currGroup}}</div>
+      </tab>
+      <tab heading="Tasks"><legend>Group Tasks</legend>
+        <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
+	    <div collapse="viewIsCollapsed">
+		  <div class="well well-lg" ng-repeat="task in currTasks">
+		    <div>Description: {{task.description}}</div>
+		    <div>Status: {{task.status}}</div>
+		    <button class="btn btn-primary" id="deleteTask" ng-click="removeTask(task)">Remove Task</button>
+		  </div> 
+	    </div>
+	    <hr>
+	    <button class="btn btn-default" ng-click="assignIsCollapsed = !assignIsCollapsed">Create New Task</button>
+	    <div collapse="assignIsCollapsed">
+		  <div class="well well-lg">
+		    <form name="assignTask" ng-submit="createTask(taskDesc)" novalidate>
+		      <label>Description:</label>
+		      <input type="text" name="tName" ng-model="taskDesc"/>
+		      <div><input type="submit" value="Assign"/></div>
+		    </form>
+		  </div> 
+	    </div>
+	  </tab>
+      <tab heading="Send Message"><legend>Send A New Message</legend></tab>
+      <tab heading="Send Form"><legend>Send A New Form</legend></tab>
+      <tab heading="Projects"><legend>Current Projects</legend></tab>
+      <tab heading="Production Meeting"><legend>Current Scheduled Meeting</legend></tab>
     </tabset>
 
     <div class="modal-footer">
