@@ -76,7 +76,7 @@ angular.module('theatreProjApp')
         for (x in $scope.tasks) {
           if (($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[x].status === "Incomplete")) {
             $scope.iTasks[$scope.iTasks.length] = $scope.tasks[x];
-          } else {
+          } else if ($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) {
             $scope.cTasks[$scope.cTasks.length] = $scope.tasks[x];
           }
         }
