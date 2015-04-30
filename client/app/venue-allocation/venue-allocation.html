@@ -1,7 +1,47 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-md-12">
-This is the venue-allocation view.
+<div class="container" id="venueallocation">
+	<div class="jumbotron" id="application-period">
+		<h1>Application period</h1>
+		<h4>{{elapsedDays}}/{{totalDays}} days passed, {{remainingDays}} {{remainingDaysString}}</h4>
+
+		<div class="row" id="dates">
+			<div class="col-md-4">
+				<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="startDate"></datetimepicker>
+			</div>
+
+			<div class="col-md-4">
+				<progressbar id="progressbar" class="progress active" value="progressFraction*100" type="{{progressType}}"></progressbar>
+			</div>
+
+			<div class="col-md-4">
+				<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="endDate"></datetimepicker>
+			</div>
+		</div>
+
+		<div class="row" ng-show="datesChanged()">
+			<div class="col-md-4 col-md-offset-4">
+				<button class="btn btn-primary" ng-click="applyDateChanges()">APPLY CHANGES</button>
+				<button class="btn btn-danger" ng-click="cancelDateChanges()">CANCEL CHANGES</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="jumbotron">
+		<h1>Allocation</h1>
+
+		<div class="row">
+			<h4>Semester 1</h4>
+			<div class="col-md-1" ng-repeat="range in venueallocation.SemesterOneDateRanges">
+				<div>
+					{{range.StartDate | date:dateFormat}} - {{range.EndDate | date:dateFormat}}
+				</div>
+				<div class="well">
+					
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

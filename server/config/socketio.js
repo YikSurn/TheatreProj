@@ -19,6 +19,8 @@ function onConnect(socket) {
 
   // Insert sockets below
   require('../api/prodmeeting/prodmeeting.socket').register(socket);
+  require('../api/venueallocationrequest/venueallocationrequest.socket').register(socket);
+  require('../api/venueallocation/venueallocation.socket').register(socket);
   require('../api/question/question.socket').register(socket);
   require('../api/weblisting/weblisting.socket').register(socket);
   require('../api/task/task.socket').register(socket);
