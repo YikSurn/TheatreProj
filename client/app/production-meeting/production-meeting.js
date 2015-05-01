@@ -8,7 +8,7 @@ angular.module('theatreProjApp')
         templateUrl: 'app/production-meeting/production-meeting.html',
         controller: 'ProductionMeetingCtrl',
         resolve: {
-          prodMeetingPromise: ['prodMeetings', function(prodMeetings) {
+          prodMeetingPromise: ['prodMeetings', function (prodMeetings) {
             return prodMeetings.getAll();
           }]
         }
@@ -19,7 +19,7 @@ angular.module('theatreProjApp')
         controller: 'MeetingDetailsCtrl',
         resolve: {
           prodMeeting: ['$stateParams', 'prodMeetings', 
-          function($stateParams, prodMeetings) {
+          function ($stateParams, prodMeetings) {
             return prodMeetings.get($stateParams.groupName, $stateParams.meetingTitle);
           }]
         }

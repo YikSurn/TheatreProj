@@ -7,13 +7,13 @@ angular.module('theatreProjApp')
 
     $scope.newMeeting = {};
 
-    $scope.createNewMeeting = function() {
+    $scope.createNewMeeting = function () {
       prodMeetings.create($scope.newMeeting);
       $scope.newMeeting = {};
       $modalInstance.dismiss('cancel');
     };
 
-    $scope.cancel = function() {
+    $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     }
   }]);
