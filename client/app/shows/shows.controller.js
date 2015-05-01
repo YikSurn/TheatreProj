@@ -27,19 +27,10 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('projectshow');
     });
 
-    $scope.post = function() {
-        var names = ['projectshow name',
-        'The best!',
-        'Great project',
-        'Must see',
-        'Are you missing out?'];
-    	$http.post('api/projectshows', {showName: names[Math.floor(Math.random()*names.length)], showStatus: "Pre-production"});
-    };
-
-    $scope.remove = function(projectshow) {
-    	var confprojectshow = confirm("Are you sure you want to remove " + projectshow.name + "?");
+    $scope.remove = function(project) {
+    	var confprojectshow = confirm("Are you sure you want to remove " + project.showName + "?");
         if (confprojectshow == true) {
-            $http.delete('api/projectshows/' + projectshow._id);
+            $http.delete('api/projectshows/' + project._id);
         };
     };
 
