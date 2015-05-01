@@ -1,7 +1,64 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="col-md-12">
-This is the shows view.
+<div class="container">
+    <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
+	 <div collapse="createIsCollapsed">
+        <div class="well well-lg">
+            <form name="newProject" role="form" ng-submit="createProject(showName, showStatus, dt)" class="form-horizontal" novalidate>
+                <div class="form-group">
+                    <label for="showName" class="col-xs-3 col-sm-2 control-label">Show Name:</label>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" name="name" ng-model="showName" id="showName" placeholder="Working Title" required/>
+                    </div>
+                	<label for="showStatus" class="col-xs-3 col-sm-2 control-label">Status:</label>
+                	<div class="col-xs-3">
+                	    <select name="showStatus" class="form-control" ng-model="showStatus" id="showStatus" required>
+                    		<option value="Proposed" selected>Proposed</option>
+                    		<option value="Planned">Planned</option>
+                    		<option value="Confirmed">Confirmed</option>
+                    		<option value="Underway">Underway</option>
+                    		<option value="Concluded">Concluded</option>
+                    		<option value="Archive">Archive</option>
+                		</select>
+                    </div>
+                </div>
+                <div class="form-group" style="display:inline-block; min-height:290px;">
+		      		<label for="showDate" class="col-xs-2 control-label">Show Date: </label>
+		      		<div class="col-xs-10">
+		        	    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" id="showDate"></datepicker>
+ 					    <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+ 					</div>
+                </div>
+                <div>
+                	<button class="btn btn-primary" type="submit">Create Show</button>
+                	<button class="btn btn-primary" type="reset">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+	<div class="form-project">
+		<div class="input-project">
+			<input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
+			<div class="input-project-addon"><span class="glyphicon glyphicon-search"></span></div>
+		</div>
+	</div>
+	<div class="row" ng-repeat="projectRow in projectshowRows">
+		<div class="col-md-4" ng-repeat="project in projectRow | filter: searchText" id="project">
+			<div class="panel panel-primary">
+				<div class="panel-heading" id="project-heading">
+					<h4>{{project.showName}}</h4>
+				</div>
+				<div class="panel-body">
+					<div class="well well-sm">
+						<div>{{project.showName}}, {{project.showStatus}}</div>
+						<button class="btn btn-primary" ng-click="open(project)">View</button>
+						<button class="btn btn-primary" ng-click="remove(project)">Remove</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
 
 <div ng-include="'components/footer/footer.html'"></div>
