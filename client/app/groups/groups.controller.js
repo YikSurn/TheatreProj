@@ -3,6 +3,7 @@
 angular.module('theatreProjApp')
   .controller('GroupsCtrl', function ($scope, $http, socket, $modal, $log) {
     $scope.groupRows = [];
+    $scope.createIsCollapsed = true;
 
     var sliceGroupList = function(groups) {
         $scope.groupRows = [];
@@ -22,17 +23,15 @@ angular.module('theatreProjApp')
         });
     });
 
-    $scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function() {
     	socket.unsyncUpdates('group');
     });
 
-    $scope.post = function() {
-        var names = ['Group name',
-        'Lorem ipsum',
-        'Search me',
-        'Hi Mitchell',
-        'Bootstrap is the best'];
-    	$http.post('api/groups', {name: names[Math.floor(Math.random()*names.length)], members: ["hello", "test", "hi"]});
+    $scope.createGroup = function() {
+        $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
+        alert("Group Created");
+        $scope.createIsCollapsed = true;
+        $scope.createGroup.$setPristine();
     };
 
     $scope.remove = function(group) {
