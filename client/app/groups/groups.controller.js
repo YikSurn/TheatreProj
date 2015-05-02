@@ -17,7 +17,7 @@ angular.module('theatreProjApp')
         if ($scope.newGroupName == "") {return false;};
         for (var i = 0; i < $scope.groups.length; i++) {
             var group = $scope.groups[i];
-            if ($scope.newGroupName == group.Name) {return false;};
+            if ($scope.newGroupName == group.name) {return false;};
         };
         return true;
     };

@@ -4,14 +4,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GroupSchema = new Schema({
-	Name: String,
-	EstablishedDate: Date,
-	// TODO OfficebearersID
-	// TODO Other members
-	WebsiteURL: String,
-	FacebookURL: String,
-	SocialMediaURL: String,
-	AffiliationDate: Date
+	name: String,
+	establishedDate: Date,
+	members: Array,
+	websiteURL: String,
+	facebookURL: String,
+	socialMediaURL: String,
+	affiliationDate: Date
 });
 
 module.exports = mongoose.model('Group', GroupSchema);

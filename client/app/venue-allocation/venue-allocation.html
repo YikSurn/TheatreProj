@@ -61,7 +61,7 @@
 					</div>
 					<div class="well">
 						<div>
-							<button ng-click="selectReq(req, range)" ng-repeat="req in getRequestsForDateRange(range)" class="btn btn-default btn-block" ng-class="getRequestBtnClass(req)">{{req.Group.Name}}</button>
+							<button ng-click="selectReq(req, range)" ng-repeat="req in getRequestsForDateRange(range)" class="btn btn-default btn-block" ng-class="getRequestBtnClass(req)">{{req.Group.name}}</button>
 						</div>
 					</div>
 				</div>
@@ -79,7 +79,7 @@
 			<h1>Groups who haven't applied yet</h1>
 
 			<div ng-repeat="group in pendinggroups">
-				<h3>{{group.Group.Name}}</h3>
+				<h3>{{group.Group.name}}</h3>
 			</div>
 		</div>
 	</div>

@@ -7,7 +7,7 @@ var Venueallocationrequest = require('./venueallocationrequest.model');
 exports.index = function(req, res) {
   Venueallocationrequest.find().populate({
     path: 'Group',
-    select: 'Name -_id'
+    select: 'name -_id'
   })
   .exec(function (err, venueallocationrequests) {
     if(err) { return handleError(res, err); }
