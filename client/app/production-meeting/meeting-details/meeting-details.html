@@ -1,0 +1,14 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<p> Data: {{prodMeeting}} </p>
+
+<div class="col-md-12">
+  <p><b>{{prodMeeting.title}}</b> of {{prodMeeting.group.name}} theatre group</p>
+</div>
+
+<div class="col-md-12">
+  <p>This is a newly created production meeting. Start the meeting?</p>
+  <button ng-click="startMeeting()">Start</button>
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>
