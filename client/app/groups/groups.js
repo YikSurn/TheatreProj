@@ -6,6 +6,7 @@ angular.module('theatreProjApp')
       .state('groups', {
         url: '/groups',
         templateUrl: 'app/groups/groups.html',
-        controller: 'GroupsCtrl'
+        controller: 'GroupsCtrl',
+        authenticate: true
       });
   });
