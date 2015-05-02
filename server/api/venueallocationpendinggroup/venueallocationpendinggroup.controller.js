@@ -9,7 +9,7 @@ exports.index = function(req, res) {
     .find()
     .populate({
       path: 'Group',
-      select: 'Name -_id'
+      select: 'name -_id'
     })
     .exec(function (err, pendinggroups) {
       if (err) {return handleError(res, err); };
