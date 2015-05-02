@@ -9,7 +9,7 @@ angular.module('theatreProjApp')
     $scope.createNewProdMeeting = function () {
       // Create new production meeting here
       var newProdMeeting = $modal.open({
-        templateUrl: "app/production-meeting/newProdMeeting/newProdMeeting.html",
+        templateUrl: "app/production-meeting/new-prod-meeting/new-prod-meeting.html",
         controller: "NewProdMeetingCtrl",
         size: 'lg',
         resolve: {

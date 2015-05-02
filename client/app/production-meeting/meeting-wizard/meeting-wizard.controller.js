@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('MeetingDetailsCtrl', ['prodMeeting', '$scope', 
+  .controller('MeetingWizardCtrl', ['prodMeeting', '$scope', 
   function (prodMeeting, $scope) {
     $scope.prodMeeting = prodMeeting;
 
