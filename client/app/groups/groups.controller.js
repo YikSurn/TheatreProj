@@ -88,6 +88,17 @@ angular.module('theatreProjApp')
         }
     };
 
+    /*Get projects for selected group*/
+    $scope.getProjects = function() {
+        var y;
+        $scope.gProjects = [];  
+        for (y in $scope.projectshows) {
+          if (($scope.projectshows[y].group_id === $scope.currGroup._id)) {
+            $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[y];
+          }
+        }
+    };
+
     /*Get all tasks*/
     $http.get('api/tasks').success(function(tasks) {
         $scope.tasks = tasks;
@@ -97,6 +108,14 @@ angular.module('theatreProjApp')
         });
     });
 
+    /*Get all projects*/
+    $http.get('api/projectshows').success(function(projectshows) {
+        $scope.projectshows = projectshows;
+        $scope.getProjects();
+        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
+            $scope.getProjects();
+        });
+    });
 
     /*Function to save Group Name edits*/
     $scope.saveName = function() {

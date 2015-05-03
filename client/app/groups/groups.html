@@ -79,7 +79,14 @@
 	  </tab>
       <tab heading="Send Message"><legend id="heading">Send A New Message</legend></tab>
       <tab heading="Send Form"><legend id="heading">Send A New Form</legend></tab>
-      <tab heading="Projects"><legend id="heading">Current Projects</legend></tab>
+      <tab heading="Projects">
+      	<legend id="heading">Current Projects</legend>
+      	<div class="well well-lg" ng-repeat="project in gProjects">
+		    <div>Project Name: {{project.showName}}</div>
+		    <div>Status: {{project.showStatus}}</div>
+		    <div>Production Date: {{project.prodDate}}</div>
+		 </div>
+      </tab>
       <tab heading="Production Meeting"><legend id="heading">Current Scheduled Meeting</legend></tab>
     </tabset>
 
