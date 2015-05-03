@@ -36,12 +36,13 @@
             </form>
         </div>
     </div>
-	<div class="form-project">
-		<div class="input-project">
-			<input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
-			<div class="input-project-addon"><span class="glyphicon glyphicon-search"></span></div>
-		</div>
-	</div>
+    <hr>
+    <div class="form-group">
+        <div class="input-group">
+            <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+        </div>
+    </div>
 	<div class="row" ng-repeat="projectRow in projectshowRows">
 		<div class="col-md-4" ng-repeat="project in projectRow | filter: searchText" id="project">
 			<div class="panel panel-primary">
