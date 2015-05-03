@@ -50,21 +50,29 @@
 	    <div collapse="assignIsCollapsed">
 		  <div class="well well-lg">
 		    <form name="assignTask" ng-submit="createTask(taskDesc, dt)" novalidate>
-		      <label>Project:</label>
-		      <select>
-  			    <option value="volvo">Volvo</option>
-  			    <option value="saab">Saab</option>
-  			    <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-              </select> 
-		      <label>Description:</label>
-		      <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Description"/>
-		      <div style="display:inline-block; min-height:290px;">
+		      <div class="form-group">
+		        <label>Project:</label>
+		        <select>
+  			      <option value="volvo">Volvo</option>
+  			      <option value="saab">Saab</option>
+  			      <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select> 
+              </div>
+     	      <div class="form-group">
+		        <label>Description:</label>
+		        <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Description"/>
+		      </div>
+		      <div class="form-group">
+		        <div style="display:inline-block; min-height:290px;">
 		      	<label>Completion Date: </label>
 		        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
  				<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
-              </div>
-		      <div><button class="btn btn-primary" type="submit">Assign</button></div>
+                </div>
+		      </div>
+   	          <div class="form-group">
+		        <button class="btn btn-primary" type="submit">Assign</button>
+		      </div>
 		    </form>
 		  </div> 
 	    </div>
