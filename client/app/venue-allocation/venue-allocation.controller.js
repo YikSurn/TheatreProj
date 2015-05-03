@@ -112,7 +112,7 @@ angular.module('theatreProjApp')
         });
 
         modalInstance.result.then(function (dateRanges) {
-            // $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+            $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
         }, function () {
         });
     };
