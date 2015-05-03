@@ -4,7 +4,7 @@
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
 	 <div collapse="createIsCollapsed">
         <div class="well well-lg">
-            <form name="newProject" role="form" ng-submit="createProject(showName, showStatus, dt)" class="form-horizontal" novalidate>
+            <form name="newProject" role="form" ng-submit="createProject(showName, showGroup, showStatus, dt)" class="form-horizontal" novalidate>
                 <div class="form-group">
                     <label for="showName" class="col-xs-3 col-sm-2 control-label">Show Name:</label>
                     <div class="col-xs-3">
@@ -22,9 +22,17 @@
                 		</select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="showGroup" class="col-xs-3 col-sm-2 control-label">Group:</label>
+                    <div class="col-xs-3">
+                        <select name="showGroup" class="form-control" ng-model="showGroup" id="showGroup" required>
+                            <option ng-repeat="group in groups | orderBy:'name'" value="{{group._id}}">{{group.name}}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group" style="display:inline-block; min-height:290px;">
-		      		<label for="showDate" class="col-xs-2 control-label">Show Date: </label>
-		      		<div class="col-xs-10">
+		      		<label for="showDate" class="col-xs-3 col-sm-5 control-label">Show Date: </label>
+		      		<div class="col-xs-9">
 		        	    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" id="showDate"></datepicker>
  					    <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
  					</div>
@@ -53,13 +61,12 @@
 					<div class="well well-sm">
 						<div>{{project.showName}}, {{project.showStatus}}</div>
 						<button class="btn btn-primary" ng-click="open(project)">View</button>
-						<button class="btn btn-primary" ng-click="remove(project)">Remove</button>
+						<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 <div ng-include="'components/footer/footer.html'"></div>

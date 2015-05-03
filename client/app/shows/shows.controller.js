@@ -23,6 +23,12 @@ angular.module('theatreProjApp')
         });
     });
 
+    $http.get('api/groups').success(function(groups) {
+        $scope.groups = groups;
+        socket.syncUpdates('group', $scope.groups)
+    });
+
+
     $scope.$on('$destroy', function(){
     	socket.unsyncUpdates('projectshow');
     });
@@ -41,11 +47,12 @@ angular.module('theatreProjApp')
     $scope.toggleMin();
 
     /*Function to create a new show*/
-    $scope.createProject = function(showName, showStatus, dt) {
+    $scope.createProject = function(showName, showGroup, showStatus, dt) {
         $scope.showName = showName;
+        $scope.showGroup = showGroup;
         $scope.showStatus = showStatus;
         $scope.prodDate = dt.toDateString();
-        $http.post('api/projectshows', {showName: $scope.showName, showStatus: $scope.showStatus, prodDate: $scope.prodDate});
+        $http.post('api/projectshows', {showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup ,prodDate: $scope.prodDate});
         alert("Project Created");
         $scope.newProject.$setPristine();
         $scope.createIsCollapsed = true;

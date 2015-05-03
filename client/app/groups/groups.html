@@ -8,7 +8,7 @@
         <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
           <input type="text" class="form-control" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
           <button class="btn btn-primary" type="submit">Save</button>
-          <button class="btn btn-primary" ng-click="disableEditor()">cancel</button>
+          <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
         </form>
       </div>
     </div> 
@@ -16,7 +16,7 @@
     <tabset>
       <tab heading="Members"><legend id="heading">Group Members</legend>
         <div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} 
-          <button class="btn btn-primary" ng-click="removeMember(member)">Remove Member</button>
+          <button class="btn btn-danger" ng-click="removeMember(member)">Remove Member</button>
         </div>
         <div>{{position}}{{currGroup}}</div>
       </tab>
@@ -30,7 +30,7 @@
 		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
 		    <div>Deadline: {{task.deadline}}</div>
 		    <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
-		    <button class="btn btn-primary" id="task-button" ng-click="removeTask(task)">Remove Task</button>
+		    <button class="btn btn-danger" id="task-button" ng-click="removeTask(task)">Remove Task</button>
 		  </div> 
 	    </div>
 	    <hr>
@@ -42,7 +42,7 @@
 		    <div>Status: {{task.status}}</div>
 		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
 		    <div>Deadline: {{task.deadline}}</div>
-		    <button class="btn btn-primary" id="task-button" ng-click="removeTask(task)">Remove Task</button>
+		    <button class="btn btn-danger" id="task-button" ng-click="removeTask(task)">Remove Task</button>
 		  </div> 
 	    </div>
 	    <hr>
@@ -137,7 +137,7 @@
 				<div class="panel-body">
 					<div class="well well-sm">
 						<button class="btn btn-primary" ng-click="open(group)">View</button>
-						<button class="btn btn-primary" ng-click="remove(group)">Remove</button>
+						<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
 					</div>
 					<div>
 						<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
