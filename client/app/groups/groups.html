@@ -136,7 +136,7 @@
 		</div>
 	</div>
 	<div class="row" ng-repeat="groupRow in groupRows">
-		<div class="col-md-4" ng-repeat="group in groupRow | filter: searchText" id="group">
+		<div class="col-md-4" ng-repeat="group in groupRow | filter:{name:searchText}" id="group">
 			<div class="panel panel-primary">
 				<div class="panel-heading" id="group-heading">
 					<h4>{{group.name}}</h4>

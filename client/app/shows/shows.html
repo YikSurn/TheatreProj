@@ -52,7 +52,7 @@
         </div>
     </div>
 	<div class="row" ng-repeat="projectRow in projectshowRows">
-		<div class="col-md-4" ng-repeat="project in projectRow | filter: searchText" id="project">
+		<div class="col-md-4" ng-repeat="project in projectRow | filter:{showName:searchText}" id="project">
 			<div class="panel panel-primary">
 				<div class="panel-heading" id="project-heading">
 					<h4>{{project.showName}}</h4>
