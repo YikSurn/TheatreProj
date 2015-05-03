@@ -51,18 +51,16 @@
             <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
         </div>
     </div>
-	<div class="row" ng-repeat="projectRow in projectshowRows">
-		<div class="col-md-4" ng-repeat="project in projectRow | filter:{showName:searchText}" id="project">
-			<div class="panel panel-primary">
-				<div class="panel-heading" id="project-heading">
-					<h4>{{project.showName}}</h4>
-				</div>
-				<div class="panel-body">
-					<div class="well well-sm">
-						<div>{{project.showName}}, {{project.showStatus}}</div>
-						<button class="btn btn-primary" ng-click="open(project)">View</button>
-						<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
-					</div>
+	<div class="col-md-4" ng-repeat="project in projectshows | filter:{showName:searchText}" id="project">
+		<div class="panel panel-primary">
+			<div class="panel-heading" id="project-heading">
+				<h4>{{project.showName}}</h4>
+			</div>
+			<div class="panel-body">
+				<div class="well well-sm">
+					<div>{{project.showName}}, {{project.showStatus}}</div>
+					<button class="btn btn-primary" ng-click="open(project)">View</button>
+					<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
 				</div>
 			</div>
 		</div>

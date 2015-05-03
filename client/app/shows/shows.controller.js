@@ -2,25 +2,11 @@
 
 angular.module('theatreProjApp')
   .controller('ShowsCtrl', function ($scope, $http, socket, $modal, $log) {
-    $scope.projectshowRows = [];
     $scope.createIsCollapsed = true;
-
-    var sliceprojectshowList = function(projectshows) {
-        $scope.projectshowRows = [];
-        var len = projectshows.length;
-        var chunkSize = 3;
-        for(var i = 0; i < len; i += chunkSize) {
-            $scope.projectshowRows.push(projectshows.slice(i,i+chunkSize));
-        }
-        console.log($scope.projectshowRows);
-    };
 
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
-        sliceprojectshowList(projectshows);
-        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
-            sliceprojectshowList(projectshows);
-        });
+        socket.syncUpdates('projectshow', $scope.projectshows);
     });
 
     $http.get('api/groups').success(function(groups) {

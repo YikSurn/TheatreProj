@@ -135,24 +135,23 @@
 			<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 		</div>
 	</div>
-	<div class="row" ng-repeat="groupRow in groupRows">
-		<div class="col-md-4" ng-repeat="group in groupRow | filter:{name:searchText}" id="group">
-			<div class="panel panel-primary">
-				<div class="panel-heading" id="group-heading">
-					<h4>{{group.name}}</h4>
+    <div class="col-md-4" ng-repeat="group in groups | filter:{name:searchText}" id="group">
+		<div class="panel panel-primary">
+			<div class="panel-heading" id="group-heading">
+				<h4>{{group.name}}</h4>
+			</div>
+			<div class="panel-body">
+				<div class="well well-sm">
+					<button class="btn btn-primary" ng-click="open(group)">View</button>
+					<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
 				</div>
-				<div class="panel-body">
-					<div class="well well-sm">
-						<button class="btn btn-primary" ng-click="open(group)">View</button>
-						<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
-					</div>
-					<div>
-						<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
-					</div>
+				<div>
+					<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+{{groups}}
 <div ng-include="'components/footer/footer.html'"></div>
