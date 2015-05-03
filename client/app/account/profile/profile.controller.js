@@ -69,7 +69,6 @@ angular.module('theatreProjApp')
   
     $scope.saveEmail = function() {
       $scope.email.$setPristine();
-      $scope.email.$setUntouched();
       $scope.currEmail = $scope.newEmail;
       $scope.currProfile.email = $scope.currEmail;
       $scope.disableEditor();
@@ -77,7 +76,6 @@ angular.module('theatreProjApp')
   
     $scope.savePhone = function() {
       $scope.phone.$setPristine();
-      $scope.phone.$setUntouched();
       $scope.currPhone = $scope.newPhone;
       $scope.currProfile.phone = $scope.currPhone;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
@@ -86,7 +84,6 @@ angular.module('theatreProjApp')
   
     $scope.saveHome = function() {
       $scope.home.$setPristine();
-      $scope.home.$setUntouched();
       $scope.currHome = $scope.newHome;
       $scope.currProfile.addressHome = $scope.currHome;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
@@ -95,7 +92,6 @@ angular.module('theatreProjApp')
   
     $scope.saveTerm = function() {
       $scope.term.$setPristine();
-      $scope.term.$setUntouched();
       $scope.currTerm = $scope.newTerm;
       $scope.currProfile.addressTerm = $scope.currTerm;
       $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);

@@ -28,10 +28,12 @@ angular.module('theatreProjApp')
     });
 
     $scope.createGroup = function() {
-        $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
-        alert("Group Created");
-        $scope.createIsCollapsed = true;
-        $scope.createGroup.$setPristine();
+        $scope.submitted = true;
+        if($scope.cGroup.$valid) {
+            $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
+            alert("Group Created");
+            $scope.createIsCollapsed = true;
+        };
     };
 
     $scope.remove = function(group) {
@@ -99,7 +101,6 @@ angular.module('theatreProjApp')
     /*Function to save Group Name edits*/
     $scope.saveName = function() {
       $scope.name.$setPristine();
-      $scope.name.$setUntouched();
       $scope.currName = $scope.newName;
       $scope.currGroup.name = $scope.currName;
       $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
