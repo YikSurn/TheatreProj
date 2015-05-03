@@ -141,17 +141,16 @@
 				<h4>{{group.name}}</h4>
 			</div>
 			<div class="panel-body">
-				<div class="well well-sm">
-					<button class="btn btn-primary" ng-click="open(group)">View</button>
-					<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
-				</div>
 				<div>
 					<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
+				</div>
+				<div class="well well-sm" id="inner-elements">
+					<button class="btn btn-primary" ng-click="open(group)">View</button>
+					<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-{{groups}}
 <div ng-include="'components/footer/footer.html'"></div>
