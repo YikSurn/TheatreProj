@@ -126,7 +126,6 @@ angular.module('theatreProjApp')
         $scope.user = user;
         $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
         alert("Task Created");
-        $scope.assignTask.$setPristine();
     };
 
     /*Ensures date must be selected from todays date*/

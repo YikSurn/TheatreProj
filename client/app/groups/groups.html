@@ -7,9 +7,9 @@
       <div ng-show="editorEnabledName">
         <form name="name" ng-submit="saveName()" novalidate>
           <input type="text" class="form-control" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
-          <input type="submit" value="Save"/>
+          <button class="btn btn-primary" type="submit">Save</button>
           or
-          <a href="#" ng-click="disableEditor()">cancel</a>
+          <button class="btn btn-primary" ng-click="disableEditor()">cancel</button>
         </form>
       </div>
     </div> 
@@ -114,6 +114,7 @@
 		    </form>
         </div> 
 	</div>
+	<hr>
 	<div class="form-group">
 		<div class="input-group">
 			<input class="form-control" ng-model="searchText" type="search" placeholder="Search groups">
