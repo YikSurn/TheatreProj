@@ -1,5 +1,23 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<script type="text/ng-template" id="projectViewModal.html">
+    <div class="modal-header" id="project-heading">
+        <h3 ng-hide="editorEnabledName" class="modal-title">{{currProject.showName}}
+        <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
+        <div ng-show="editorEnabledName">
+            <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
+                <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-body">Body</div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</script>
+
 <div class="container">
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
 	 <div collapse="createIsCollapsed">
