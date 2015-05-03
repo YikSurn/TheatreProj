@@ -5,10 +5,9 @@
       <h3 ng-hide="editorEnabledName" class="modal-title">{{currGroup.name}}
       <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
       <div ng-show="editorEnabledName">
-        <form name="name" ng-submit="saveName()" novalidate>
+        <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
           <input type="text" class="form-control" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
           <button class="btn btn-primary" type="submit">Save</button>
-          or
           <button class="btn btn-primary" ng-click="disableEditor()">cancel</button>
         </form>
       </div>
