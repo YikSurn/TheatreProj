@@ -2,25 +2,11 @@
 
 angular.module('theatreProjApp')
   .controller('GroupsCtrl', function ($scope, $http, socket, $modal, $log) {
-    $scope.groupRows = [];
     $scope.createIsCollapsed = true;
-
-    var sliceGroupList = function(groups) {
-        $scope.groupRows = [];
-        var len = groups.length;
-        var chunkSize = 3;
-        for(var i = 0; i < len; i += chunkSize) {
-            $scope.groupRows.push(groups.slice(i,i+chunkSize));
-        }
-        console.log($scope.groupRows);
-    };
 
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
-        sliceGroupList(groups);
-        socket.syncUpdates('group', $scope.groups, function(event, group, groups) {
-            sliceGroupList(groups);
-        });
+        socket.syncUpdates('group', $scope.groups);
     });
 
     $scope.$on('$destroy', function() {
@@ -28,10 +14,12 @@ angular.module('theatreProjApp')
     });
 
     $scope.createGroup = function() {
-        $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
-        alert("Group Created");
-        $scope.createIsCollapsed = true;
-        $scope.createGroup.$setPristine();
+        $scope.submitted = true;
+        if($scope.cGroup.$valid) {
+            $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
+            alert("Group Created");
+            $scope.createIsCollapsed = true;
+        };
     };
 
     $scope.remove = function(group) {
@@ -86,6 +74,17 @@ angular.module('theatreProjApp')
         }
     };
 
+    /*Get projects for selected group*/
+    $scope.getProjects = function() {
+        var y;
+        $scope.gProjects = [];  
+        for (y in $scope.projectshows) {
+          if (($scope.projectshows[y].group_id === $scope.currGroup._id)) {
+            $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[y];
+          }
+        }
+    };
+
     /*Get all tasks*/
     $http.get('api/tasks').success(function(tasks) {
         $scope.tasks = tasks;
@@ -95,11 +94,18 @@ angular.module('theatreProjApp')
         });
     });
 
+    /*Get all projects*/
+    $http.get('api/projectshows').success(function(projectshows) {
+        $scope.projectshows = projectshows;
+        $scope.getProjects();
+        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
+            $scope.getProjects();
+        });
+    });
 
     /*Function to save Group Name edits*/
     $scope.saveName = function() {
       $scope.name.$setPristine();
-      $scope.name.$setUntouched();
       $scope.currName = $scope.newName;
       $scope.currGroup.name = $scope.currName;
       $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
@@ -125,7 +131,6 @@ angular.module('theatreProjApp')
         $scope.user = user;
         $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
         alert("Task Created");
-        $scope.assignTask.$setPristine();
     };
 
     /*Ensures date must be selected from todays date*/

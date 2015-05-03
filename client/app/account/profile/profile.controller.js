@@ -52,11 +52,17 @@ angular.module('theatreProjApp')
   
     $scope.enableEditorHome = function() {
       $scope.editorEnabledHome = true;
+      if($scope.currProfile.addressHome === "None Provided") {
+        $scope.currProfile.addressHome = "";
+      }
       $scope.newHome = $scope.currProfile.addressHome;
     };
   
     $scope.enableEditorTerm = function() {
       $scope.editorEnabledTerm = true;
+            if($scope.currProfile.addressTerm === "None Provided") {
+        $scope.currProfile.addressTerm = "";
+      }
       $scope.newTerm = $scope.currProfile.addressTerm;
     }; 
   
@@ -64,42 +70,56 @@ angular.module('theatreProjApp')
       $scope.editorEnabledPhone = false;
       $scope.editorEnabledEmail = false;
       $scope.editorEnabledHome = false;
+      if($scope.currProfile.addressHome === "") {
+        $scope.currProfile.addressHome = "None Provided";
+      }
       $scope.editorEnabledTerm = false;
+      if($scope.currProfile.addressTerm === "") {
+        $scope.currProfile.addressTerm = "None Provided";
+      }
     };
   
     $scope.saveEmail = function() {
-      $scope.email.$setPristine();
-      $scope.email.$setUntouched();
-      $scope.currEmail = $scope.newEmail;
-      $scope.currProfile.email = $scope.currEmail;
-      $scope.disableEditor();
+      $scope.emailSubmitted = true;
+      if($scope.email.$valid) {
+        $scope.email.$setPristine();
+        $scope.currEmail = $scope.newEmail;
+        $scope.currProfile.email = $scope.currEmail;
+        $scope.disableEditor();
+      };
     };
   
     $scope.savePhone = function() {
-      $scope.phone.$setPristine();
-      $scope.phone.$setUntouched();
-      $scope.currPhone = $scope.newPhone;
-      $scope.currProfile.phone = $scope.currPhone;
-      $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
-      $scope.disableEditor();
+      $scope.phoneSubmitted = true;
+      if($scope.phone.$valid) {
+        $scope.phone.$setPristine();
+        $scope.currPhone = $scope.newPhone;
+        $scope.currProfile.phone = $scope.currPhone;
+        $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
+        $scope.disableEditor();
+      };
     };
   
     $scope.saveHome = function() {
-      $scope.home.$setPristine();
-      $scope.home.$setUntouched();
-      $scope.currHome = $scope.newHome;
-      $scope.currProfile.addressHome = $scope.currHome;
-      $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
-      $scope.disableEditor();
+      $scope.homeSubmitted = true;
+      if($scope.home.$valid) {
+        $scope.home.$setPristine();
+        $scope.currHome = $scope.newHome;
+        $scope.currProfile.addressHome = $scope.currHome;
+        $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
+        $scope.disableEditor();
+      };
     };
   
     $scope.saveTerm = function() {
-      $scope.term.$setPristine();
-      $scope.term.$setUntouched();
-      $scope.currTerm = $scope.newTerm;
-      $scope.currProfile.addressTerm = $scope.currTerm;
-      $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
-      $scope.disableEditor();
+      $scope.termSubmitted = true;
+      if($scope.term.$valid) {
+        $scope.term.$setPristine();
+        $scope.currTerm = $scope.newTerm;
+        $scope.currProfile.addressTerm = $scope.currTerm;
+        $http.put('api/profiles/' + $scope.currProfile._id, $scope.currProfile);
+        $scope.disableEditor();
+      };
     };
   });   
   

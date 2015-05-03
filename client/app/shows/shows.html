@@ -1,10 +1,28 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<script type="text/ng-template" id="projectViewModal.html">
+    <div class="modal-header" id="project-heading">
+        <h3 ng-hide="editorEnabledName" class="modal-title">{{currProject.showName}}
+        <button class="btn btn-primary" ng-click="enableEditorName()">Edit Name</button></h3>
+        <div ng-show="editorEnabledName">
+            <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
+                <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal-body">Body</div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</script>
+
 <div class="container">
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
 	 <div collapse="createIsCollapsed">
         <div class="well well-lg">
-            <form name="newProject" role="form" ng-submit="createProject(showName, showStatus, dt)" class="form-horizontal" novalidate>
+            <form name="newProject" role="form" ng-submit="createProject(showName, showGroup, showStatus, dt)" class="form-horizontal" novalidate>
                 <div class="form-group">
                     <label for="showName" class="col-xs-3 col-sm-2 control-label">Show Name:</label>
                     <div class="col-xs-3">
@@ -22,9 +40,17 @@
                 		</select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="showGroup" class="col-xs-3 col-sm-2 control-label">Group:</label>
+                    <div class="col-xs-3">
+                        <select name="showGroup" class="form-control" ng-model="showGroup" id="showGroup" required>
+                            <option ng-repeat="group in groups | orderBy:'name'" value="{{group._id}}">{{group.name}}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group" style="display:inline-block; min-height:290px;">
-		      		<label for="showDate" class="col-xs-2 control-label">Show Date: </label>
-		      		<div class="col-xs-10">
+		      		<label for="showDate" class="col-xs-3 col-sm-5 control-label">Show Date: </label>
+		      		<div class="col-xs-9">
 		        	    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" id="showDate"></datepicker>
  					    <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
  					</div>
@@ -36,29 +62,27 @@
             </form>
         </div>
     </div>
-	<div class="form-project">
-		<div class="input-project">
-			<input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
-			<div class="input-project-addon"><span class="glyphicon glyphicon-search"></span></div>
-		</div>
-	</div>
-	<div class="row" ng-repeat="projectRow in projectshowRows">
-		<div class="col-md-4" ng-repeat="project in projectRow | filter: searchText" id="project">
-			<div class="panel panel-primary">
-				<div class="panel-heading" id="project-heading">
-					<h4>{{project.showName}}</h4>
-				</div>
-				<div class="panel-body">
-					<div class="well well-sm">
-						<div>{{project.showName}}, {{project.showStatus}}</div>
-						<button class="btn btn-primary" ng-click="open(project)">View</button>
-						<button class="btn btn-primary" ng-click="remove(project)">Remove</button>
-					</div>
+    <hr>
+    <div class="form-group">
+        <div class="input-group">
+            <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+        </div>
+    </div>
+	<div class="col-md-4" ng-repeat="project in projectshows | filter:{showName:searchText}" id="project">
+		<div class="panel panel-primary">
+			<div class="panel-heading" id="project-heading">
+				<h4>{{project.showName}}</h4>
+			</div>
+			<div class="panel-body">
+				<div class="well well-sm" id="inner-elements">
+					<div>{{project.showName}}, {{project.showStatus}}</div>
+					<button class="btn btn-primary" ng-click="open(project)">View</button>
+					<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 <div ng-include="'components/footer/footer.html'"></div>
