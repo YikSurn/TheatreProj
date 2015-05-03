@@ -1,0 +1,21 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+
+  <!-- <p> Data: {{prodMeeting}} </p> -->
+
+  <div class="col-md-12">
+    <h3><u><b>{{prodMeeting.title}}</b> of {{prodMeeting.group.name}} theatre group</u></h3>
+    <br />
+  </div>
+
+  <div class="col-md-12">
+    <p>This is a newly created production meeting. Start the meeting?</p>
+    <a href="/production-meeting/{{prodMeeting.group.name}}/{{prodMeeting.title}}/wizard">
+      <button class="btn btn-primary">Start</button>
+    </a>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>
