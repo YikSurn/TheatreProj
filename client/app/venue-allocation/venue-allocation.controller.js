@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('VenueAllocationCtrl', function ($scope, $http) {
+  .controller('VenueAllocationCtrl', function ($scope, $http, $modal) {
     var timeDiff = function (startDate, endDate) {
     	var timeDiff = endDate.getTime() - startDate.getTime();
 		return timeDiff;
@@ -99,8 +99,22 @@ angular.module('theatreProjApp')
 
     $scope.dateFormat = 'MMM d';
 
-    $scope.applyDateRangeChanges = function() {
-        $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+    $scope.editDateRanges = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'app/venue-allocation/edit-date-ranges/edit-date-ranges.html',
+            controller: 'EditDateRangesCtrl',
+            size: 'lg',
+            resolve: {
+                dateRanges: function () {
+                    return $scope.venueallocation.SemesterOneDateRanges;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (dateRanges) {
+            // $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+        }, function () {
+        });
     };
 
     $scope.origRequests = {};

@@ -1,0 +1,19 @@
+<div class="modal-header">
+	<h3>Edit date ranges</h3>
+</div>
+<div class="row modal-body">
+	<div class="well col-md-4" ng-repeat="range in dateRanges">
+		<div>
+			<h4>{{$index + 1}}</h4>
+		</div>
+		<div class="input-group" ng-init="startOpen = false; endOpen = false">
+			<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="startOpen = true" ng-model="range.StartDate" is-open="startOpen" close-text="Close" />
+			<input type="text" class="form-control" datepicker-popup="dd-MMM-yyyy" ng-click="endOpen = true" ng-model="range.EndDate" is-open="endOpen" close-text="Close" />
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+	<button class="btn btn-danger" ng-click="cancel()">CANCEL</button>
+</div>
