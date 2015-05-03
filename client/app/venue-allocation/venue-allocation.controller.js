@@ -121,11 +121,11 @@ angular.module('theatreProjApp')
     $scope.requests = {};
     /* Returns the request objects whose date range matches the given range.
     @param range a json object with StartDate and EndDate (Date strings). */
-    $scope.getRequestsForDateRange = function(range) {
+    $scope.getRequestsForDateRange = function(rangeIndex) {
         var ret = [];
         for (var i = 0; i < $scope.requests.length; i++) {
             var req = $scope.requests[i];
-            if (req.StartDate != range.StartDate || req.EndDate != range.EndDate) {continue;};
+            if (req.RangeIndex != rangeIndex) {continue;};
             ret.push(req);
         };
 

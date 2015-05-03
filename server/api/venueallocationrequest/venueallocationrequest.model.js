@@ -7,8 +7,8 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var VenueallocationrequestSchema = new Schema({
 	Group: {type: ObjectId, ref: 'Group'},
-	StartDate: Date,
-	EndDate: Date,
+	VenueAllocation: ObjectId,
+	RangeIndex: Number,
 	Approved: { type: Boolean, default: false }
 });
 
