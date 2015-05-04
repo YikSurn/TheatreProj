@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('VenueAllocationCtrl', function ($scope, $http) {
+  .controller('VenueAllocationCtrl', function ($scope, $http, $modal) {
     var timeDiff = function (startDate, endDate) {
     	var timeDiff = endDate.getTime() - startDate.getTime();
 		return timeDiff;
@@ -99,19 +99,33 @@ angular.module('theatreProjApp')
 
     $scope.dateFormat = 'MMM d';
 
-    $scope.applyDateRangeChanges = function() {
-        $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+    $scope.editDateRanges = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'app/venue-allocation/edit-date-ranges/edit-date-ranges.html',
+            controller: 'EditDateRangesCtrl',
+            size: 'lg',
+            resolve: {
+                dateRanges: function () {
+                    return $scope.venueallocation.SemesterOneDateRanges;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (dateRanges) {
+            $http.put('api/venueallocation/' + $scope.venueallocation._id, $scope.venueallocation);
+        }, function () {
+        });
     };
 
     $scope.origRequests = {};
     $scope.requests = {};
     /* Returns the request objects whose date range matches the given range.
     @param range a json object with StartDate and EndDate (Date strings). */
-    $scope.getRequestsForDateRange = function(range) {
+    $scope.getRequestsForDateRange = function(rangeIndex) {
         var ret = [];
         for (var i = 0; i < $scope.requests.length; i++) {
             var req = $scope.requests[i];
-            if (req.StartDate != range.StartDate || req.EndDate != range.EndDate) {continue;};
+            if (req.RangeIndex != rangeIndex) {continue;};
             ret.push(req);
         };
 
