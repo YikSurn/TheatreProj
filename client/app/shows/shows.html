@@ -18,9 +18,13 @@
     </div>
 </script>
 
-<div class="container">
+<div class="container" ng-show="!isAdmin()">
+    <p>The projects route is restricted to users with the 'admin' role.</p>
+</div>  
+
+<div class="container" ng-show="isAdmin()">
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
-	 <div collapse="createIsCollapsed">
+	<div collapse="createIsCollapsed">
         <div class="well well-lg">
             <form name="newProject" role="form" ng-submit="createProject(showName, showGroup, showStatus, dt)" class="form-horizontal" novalidate>
                 <div class="form-group">
