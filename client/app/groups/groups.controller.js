@@ -4,6 +4,7 @@ angular.module('theatreProjApp')
   .controller('GroupsCtrl', function ($scope, Auth, $http, socket, $modal, $log) {
     $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
+    $scope.groupsLoaded = false;
 
     /*Function to get all groups*/
     $http.get('api/groups').success(function(groups) {
@@ -12,6 +13,7 @@ angular.module('theatreProjApp')
         socket.syncUpdates('group', $scope.groups, function(event, group, groups) {
             $scope.testGroupData();
         });
+        $scope.groupsLoaded = true;
     });
 
     $scope.testGroupData = function() {
