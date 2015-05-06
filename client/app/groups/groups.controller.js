@@ -79,17 +79,17 @@ angular.module('theatreProjApp')
 
     /*Get tasks for selected group and organize tasks into completed and incompleted*/
     $scope.getTasks = function() {
-        var x;
+        var task;
         $scope.iTaskData = false;
         $scope.cTaskData = false;
         $scope.iTasks = [];
         $scope.cTasks = [];
-        for (x in $scope.tasks) {
-          if (($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[x].status === "Incomplete")) {
-            $scope.iTasks[$scope.iTasks.length] = $scope.tasks[x];
+        for (task in $scope.tasks) {
+          if (($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[task].status === "Incomplete")) {
+            $scope.iTasks[$scope.iTasks.length] = $scope.tasks[task];
             $scope.iTaskData = true;
-          } else if ($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) {
-            $scope.cTasks[$scope.cTasks.length] = $scope.tasks[x];
+          } else if ($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) {
+            $scope.cTasks[$scope.cTasks.length] = $scope.tasks[task];
             $scope.cTaskData = true;
           }
         }
@@ -97,17 +97,16 @@ angular.module('theatreProjApp')
 
     /*Get projects for selected group*/
     $scope.getProjects = function() {
-        var y;
+        var proj;
         $scope.projectData = true;
         $scope.gProjects = [];  
-        for (y in $scope.projectshows) {
-          if (($scope.projectshows[y].group_id === $scope.currGroup._id)) {
-            $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[y];
+        for (proj in $scope.projectshows) {
+          if (($scope.projectshows[proj].group_id === $scope.currGroup._id)) {
+            $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[proj];
           }
         }
         if($scope.gProjects.length === 0) {
             $scope.projectData = false;
-            $scope.gProjects = "No Projects";
         }
     };
 
