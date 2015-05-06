@@ -23,7 +23,10 @@
       <tab heading="Tasks"><legend id="heading">Group Tasks</legend>
         <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	    <div collapse="viewIsCollapsed">
-		  <div class="well well-lg" ng-repeat="task in iTasks">
+	      <div ng-show="!iTaskData">
+	      	<p>This group currently has no assigned tasks</p>
+	      </div>
+		  <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
 		    <div>Project: {{task.show_id}}</div>
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
@@ -36,7 +39,10 @@
 	    <hr>
 	    <button class="btn btn-default" ng-click="completeIsCollapsed = !completeIsCollapsed">View Completed Tasks</button>
 	    <div collapse="completeIsCollapsed">
-		  <div class="well well-lg" ng-repeat="task in cTasks">
+	      <div ng-show="!cTaskData">
+	      	<p>This group currently has no completed tasks</p>
+	      </div>
+		  <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
 		    <div>Project: {{show_id}}</div>
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
