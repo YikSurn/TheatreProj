@@ -95,7 +95,10 @@
     </div>
 </script>
 
-<div class="container">
+<div class="container" ng-show="!isAdmin()">
+	<p>The groups route is restricted to users with the 'admin' role.</p>
+</div>
+<div class="container" ng-show="isAdmin()">
 	<button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Group</button>
 	<div collapse="createIsCollapsed">
         <div class="well well-lg">

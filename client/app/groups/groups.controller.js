@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('GroupsCtrl', function ($scope, $http, socket, $modal, $log) {
+  .controller('GroupsCtrl', function ($scope, Auth, $http, socket, $modal, $log) {
+    $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
 
     $http.get('api/groups').success(function(groups) {
