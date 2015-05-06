@@ -9,7 +9,7 @@
       <label>Email:</label>
       <div ng-hide="editorEnabledEmail"> 
         {{currProfile.email}}
-        <button class="btn btn-primary" ng-click="enableEditorEmail()">Edit</button>
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorEmail()">Edit</button>
       </div>
       <div ng-show="editorEnabledEmail">
         <form name="email" ng-submit="saveEmail()" novalidate>
@@ -32,7 +32,7 @@
       <label>Phone:</label>
       <div ng-hide="editorEnabledPhone"> 
         {{currProfile.phone}}
-        <button class="btn btn-primary" ng-click="enableEditorPhone()">Edit</button>
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorPhone()">Edit</button>
       </div>
       <div ng-show="editorEnabledPhone">
         <form name="phone" ng-submit="savePhone()" novalidate>
@@ -54,7 +54,7 @@
       <label>Home Address:</label>
       <div ng-hide="editorEnabledHome"> 
         {{currProfile.addressHome}}
-        <button class="btn btn-primary" ng-click="enableEditorHome()">Edit</button>
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorHome()">Edit</button>
       </div>
       <div ng-show="editorEnabledHome">
         <form name="home" ng-submit="saveHome()" novalidate>
@@ -74,7 +74,7 @@
       <label>Term Address:</label>
       <div ng-hide="editorEnabledTerm"> 
         {{currProfile.addressTerm}}
-        <button class="btn btn-primary" ng-click="enableEditorTerm()">Edit</button>
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorTerm()">Edit</button>
       </div>
       <div ng-show="editorEnabledTerm">
         <form name="term" ng-submit="saveTerm()" novalidate>
