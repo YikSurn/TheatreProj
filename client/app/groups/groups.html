@@ -49,19 +49,22 @@
 	    <button class="btn btn-default" ng-click="assignIsCollapsed = !assignIsCollapsed">Create New Task</button>
 	    <div collapse="assignIsCollapsed">
 		  <div class="well well-lg">
-		    <form name="assignTask" ng-submit="createTask(taskDesc, dt)" novalidate>
+		    <form name="assignTask" ng-submit="createTask(taskDesc, dt, showProject)" novalidate>
 		      <div class="form-group">
-		        <label>Project:</label>
-		        <select>
-  			      <option value="volvo">Volvo</option>
-  			      <option value="saab">Saab</option>
-  			      <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
-                </select> 
-              </div>
+                <label>Project:</label>
+                  <div ng-show="!projectData">
+                    <p>This group has no projects. Task will be assigned to group.</p>
+                  </div>
+                  <div ng-show="projectData">
+                  	<p>You can assign tasks to a group project by selecting a project below. Leave project blank to assign task to group.</p>
+                    <select name="showProject" class="form-control" ng-model="showProject" id="showProject">
+                      <option ng-repeat="project in gProjects | orderBy:'name'" value="{{project._id}}">{{project.showName}}</option>
+                    </select>
+                  </div>
+                </div>
      	      <div class="form-group">
 		        <label>Description:</label>
-		        <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Description"/>
+		        <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description"/>
 		      </div>
 		      <div class="form-group">
 		        <div style="display:inline-block; min-height:290px;">

@@ -78,11 +78,16 @@ angular.module('theatreProjApp')
     /*Get projects for selected group*/
     $scope.getProjects = function() {
         var y;
+        $scope.projectData = true;
         $scope.gProjects = [];  
         for (y in $scope.projectshows) {
           if (($scope.projectshows[y].group_id === $scope.currGroup._id)) {
             $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[y];
           }
+        }
+        if($scope.gProjects.length === 0) {
+            $scope.projectData = false;
+            $scope.gProjects = "No Projects";
         }
     };
 
@@ -125,12 +130,17 @@ angular.module('theatreProjApp')
     };
 
     /*Function to assign a new task*/
-    $scope.createTask = function(taskDesc, dt) {
+    $scope.createTask = function(taskDesc, dt, showProject) {
         $scope.taskDesc = taskDesc;
         $scope.deadline = dt.toDateString();
+        if(showProject) {
+            $scope.show_id = showProject; 
+        } else {
+            $scope.show_id = "No project assigned";
+        }
         var user = Auth.getCurrentUser();
         $scope.user = user;
-        $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete"});
+        $http.post('api/tasks', {description: $scope.taskDesc, deadline: $scope.deadline, assignedByUser_id: $scope.user.name, dateCreated: new Date(), assignedToUser_id: $scope.currGroup._id, status: "Incomplete", show_id: $scope.show_id});
         alert("Task Created");
     };
 
