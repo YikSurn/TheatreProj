@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 var TaskSchema = new Schema({
   description: String,
   roleID: String, 
-  assignedToUser_id: String, 
+  assignedToUser_id: Array, 
   assignedByUser_id: String,
   deadline: String,
   status: String,

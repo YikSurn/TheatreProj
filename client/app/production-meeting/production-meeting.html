@@ -1,31 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
-
-  <div>
-    <div ng-click="createNewProdMeeting()">
-      <button class="btn btn-default">New production meeting</button>
-      <br /><br />
-    </div>
-  </div>
-  
-  <div ng-repeat="meeting in prodMeetings" class="col-xs-12 col-sm-4 col-md-4">
-
-    <div class="panel panel-primary">
-      <div class="panel-heading" id="group-heading" >
-        <h4>
-          <a style="color: white;" href="/production-meeting/{{meeting.group.name}}/{{meeting.title}}">
-            <button class="btn btn-primary">{{meeting.title}}</button>
-          </a>
-        </h4>
-      </div>
-      <div class="panel-body">
-        Show: {{meeting.show}}<br />
-        Theatre Group: {{meeting.group.name}}
-      </div>
-    </div>
-  </div>
-
+<div class="col-md-12">
+This is the production-meeting view.
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>
