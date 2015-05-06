@@ -23,7 +23,7 @@
       <tab heading="Tasks"><legend id="heading">Group Tasks</legend>
         <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	    <div collapse="viewIsCollapsed">
-	      <div ng-show="!iTaskData">
+	      <div ng-hide="iTaskData">
 	      	<p>This group currently has no assigned tasks</p>
 	      </div>
 		  <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
@@ -39,7 +39,7 @@
 	    <hr>
 	    <button class="btn btn-default" ng-click="completeIsCollapsed = !completeIsCollapsed">View Completed Tasks</button>
 	    <div collapse="completeIsCollapsed">
-	      <div ng-show="!cTaskData">
+	      <div ng-hide="cTaskData">
 	      	<p>This group currently has no completed tasks</p>
 	      </div>
 		  <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
@@ -58,7 +58,7 @@
 		    <form name="assignTask" ng-submit="createTask(taskDesc, dt, showProject)" novalidate>
 		      <div class="form-group">
                 <label>Project:</label>
-                  <div ng-show="!projectData">
+                  <div ng-hide="projectData">
                     <p>This group has no projects. Task will be assigned to group.</p>
                   </div>
                   <div ng-show="projectData">
@@ -104,7 +104,7 @@
     </div>
 </script>
 
-<div class="container" ng-show="!isAdmin()">
+<div class="container" ng-hide="isAdmin()">
 	<p>The groups route is restricted to users with the 'admin' role.</p>
 </div>
 <div class="container" ng-show="isAdmin()">
@@ -154,7 +154,16 @@
 				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 			</div>
 		</div>
-    	<div class="col-md-4" ng-show="groupData" ng-repeat="group in groups | filter:{name:searchText}" id="group">
+		<div class="form-group">	
+			<div class="input-group">
+				<label>Sort by:</label>
+				<select name="groupCat" class="form-control" ng-model="groupCategory" id="groupCategory">
+                    <option value="name">Group Name</option>
+                    <option value="establishedDate">Established Date</option>
+                </select>
+			</div>
+		</div>
+    	<div class="col-md-4" ng-show="groupData" ng-repeat="group in groups | orderBy:groupCategory | filter:{name:searchText}" id="group">
 			<div class="panel panel-primary">	
 				<div class="panel-heading" id="group-heading">
 					<h4>{{group.name}}</h4>
