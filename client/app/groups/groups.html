@@ -24,7 +24,7 @@
         <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	    <div collapse="viewIsCollapsed">
 		  <div class="well well-lg" ng-repeat="task in iTasks">
-		    <div>Project: {{show_id}}</div>
+		    <div>Project: {{task.show_id}}</div>
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
 		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
