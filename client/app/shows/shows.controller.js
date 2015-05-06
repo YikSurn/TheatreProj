@@ -44,9 +44,8 @@ angular.module('theatreProjApp')
         $scope.createIsCollapsed = true;
     };
 
-    /*Opens Modal Dialog with new controller*/
-    $scope.open = function (project) {
-
+    /*Opens modal dialog with new controller*/
+    $scope.open = function(project) {
         var modalInstance = $modal.open({
             templateUrl: 'projectViewModal.html',
             controller: 'ProjModalInstanceCtrl',

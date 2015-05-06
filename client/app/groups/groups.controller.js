@@ -45,9 +45,8 @@ angular.module('theatreProjApp')
         };
     };
 
-    /*Opens Modal Dialog with new controller*/
-    $scope.open = function (group) {
-
+    /*Opens modal dialog with new controller*/
+    $scope.open = function(group) {
         var modalInstance = $modal.open({
             templateUrl: 'groupViewModal.html',
             controller: 'ModalInstanceCtrl',

@@ -1,12 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<script type="text/ng-template" id="userViewModal.html">
+    <div class="modal-header" id="user-heading">Heading</div>
+    <div class="modal-body">Body</div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</script>
+
 <div class="container">
-  <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
-        <strong>{{user.name}}</strong><br>
-        <span class="text-muted">{{user.email}}</span>
-        <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
-    </li>
-  </ul>
+    <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="user in users">
+            <strong>{{user.name}}</strong><br>
+            <span class="text-muted">{{user.email}}</span>
+            <button ng-click="delete(user)" class="trash">Delete <span class="glyphicon glyphicon-trash"></span></button>
+            <button ng-click="open()" class="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+        </li>
+    </ul>
 </div>
