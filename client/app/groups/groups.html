@@ -43,7 +43,7 @@
 	      	<p>This group currently has no completed tasks</p>
 	      </div>
 		  <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
-		    <div>Project: {{show_id}}</div>
+		    <div>Project: {{task.show_id}}</div>
 		    <div>Description: {{task.description}}</div>
 		    <div>Status: {{task.status}}</div>
 		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
@@ -90,7 +90,10 @@
       <tab heading="Send Form"><legend id="heading">Send A New Form</legend></tab>
       <tab heading="Projects">
       	<legend id="heading">Current Projects</legend>
-      	<div class="well well-lg" ng-repeat="project in gProjects">
+      	<div ng-hide="projectData">
+          <p>This group has no projects.</p>
+        </div>
+      	<div ng-show="projectData" class="well well-lg" ng-repeat="project in gProjects">
 		    <div>Project Name: {{project.showName}}</div>
 		    <div>Status: {{project.showStatus}}</div>
 		    <div>Production Date: {{project.prodDate}}</div>
@@ -141,13 +144,13 @@
         </div> 
 	</div>
 	<hr>
-	<div class="container" ng-hide="groupData">
+	<div ng-hide="groupData">
 		<p>There are currently no groups to display.</p>
 	</div>
 	<div class="jumbotron" ng-hide="groupsLoaded">
 		<h1>Loading...</h1>
 	</div>
-	<div class="container" ng-show="groupData && groupsLoaded">
+	<div ng-show="groupData && groupsLoaded">
 		<div class="form-group">
 			<div class="input-group">
 				<input class="form-control" ng-model="searchText" type="search" placeholder="Search groups">
@@ -163,6 +166,7 @@
                 </select>
 			</div>
 		</div>
+		<hr>
     	<div class="col-md-4" ng-show="groupData" ng-repeat="group in groups | orderBy:groupCategory | filter:{name:searchText}" id="group">
 			<div class="panel panel-primary">	
 				<div class="panel-heading" id="group-heading">
