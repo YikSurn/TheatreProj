@@ -5,15 +5,27 @@ angular.module('theatreProjApp')
     $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
 
+    /*Function to get all groups*/
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
-        socket.syncUpdates('group', $scope.groups);
+        $scope.testGroupData();
+        socket.syncUpdates('group', $scope.groups, function(event, group, groups) {
+            $scope.testGroupData();
+        });
     });
+
+    $scope.testGroupData = function() {
+        $scope.groupData = true;
+        if($scope.groups.length === 0) {
+            $scope.groupData = false;
+        }
+    };
 
     $scope.$on('$destroy', function() {
     	socket.unsyncUpdates('group');
     });
 
+    /*Function to create a group*/
     $scope.createGroup = function() {
         $scope.submitted = true;
         if($scope.cGroup.$valid) {
@@ -23,6 +35,7 @@ angular.module('theatreProjApp')
         };
     };
 
+    /*Function to delete a group*/
     $scope.remove = function(group) {
     	var confGroup = confirm("Are you sure you want to remove " + group.name + "?");
         if (confGroup == true) {
@@ -56,6 +69,7 @@ angular.module('theatreProjApp')
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
     
+    /*Displays editor for group names*/
     $scope.enableEditorName = function() {
       $scope.editorEnabledName = true;
       $scope.newName = $scope.currGroup.name;
@@ -122,6 +136,7 @@ angular.module('theatreProjApp')
       $scope.disableEditor();
     };
 
+    /*Disables editor for group names*/
     $scope.disableEditor = function() {
       $scope.editorEnabledName = false;
     };
@@ -168,6 +183,7 @@ angular.module('theatreProjApp')
         }
     };
 
+    /*Closes the modal dialog*/
     $scope.close = function () {
         $modalInstance.close();
     };
