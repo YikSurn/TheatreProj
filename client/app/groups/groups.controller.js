@@ -64,13 +64,17 @@ angular.module('theatreProjApp')
     /*Get tasks for selected group and organize tasks into completed and incompleted*/
     $scope.getTasks = function() {
         var x;
+        $scope.iTaskData = false;
+        $scope.cTaskData = false;
         $scope.iTasks = [];
         $scope.cTasks = [];
         for (x in $scope.tasks) {
           if (($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[x].status === "Incomplete")) {
             $scope.iTasks[$scope.iTasks.length] = $scope.tasks[x];
+            $scope.iTaskData = true;
           } else if ($scope.tasks[x].assignedToUser_id === $scope.currGroup._id) {
             $scope.cTasks[$scope.cTasks.length] = $scope.tasks[x];
+            $scope.cTaskData = true;
           }
         }
     };
