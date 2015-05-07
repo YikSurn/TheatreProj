@@ -5,7 +5,7 @@ angular.module('theatreProjApp')
     $stateProvider
       .state('group', {
         url: '/group',
-        templateUrl: 'app/groups/group/group.html',
-        controller: 'GroupCtrl'
+        templateUrl: 'app/groups/view-group/view-group.html',
+        controller: 'ViewGroupCtrl'
       });
   });

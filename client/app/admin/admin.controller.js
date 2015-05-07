@@ -19,10 +19,10 @@ angular.module('theatreProjApp')
     };
 
     /*Opens modal dialog with new controller*/
-    $scope.open = function(user) {
+    $scope.viewProfile = function() {
         var modalInstance = $modal.open({
-            templateUrl: 'userViewModal.html',
-            controller: 'UserModalInstanceCtrl',
+            templateUrl: 'app/admin/view-profile/view-profile.html',
+            controller: 'ViewProfileCtrl',
             size: "lg",
             resolve: {
                 user: function () {
@@ -31,14 +31,4 @@ angular.module('theatreProjApp')
             }
         });
     };
-});
-
-/*Controller for modal dialog*/
-angular.module('theatreProjApp')
-  .controller('UserModalInstanceCtrl', function ($scope, $modalInstance, user) {
-
-    $scope.close = function () {
-        $modalInstance.close();
-    };
-
 });

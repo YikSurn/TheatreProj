@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('GroupCtrl', function ($scope) {
+  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, group) {
     $scope.currGroup = group;
     $scope.editorEnabledName = false;
     $scope.viewIsCollapsed = true;

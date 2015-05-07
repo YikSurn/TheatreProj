@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: GroupCtrl', function () {
+describe('Controller: ViewProjectCtrl', function () {
 
   // load the controller's module
   beforeEach(module('theatreProjApp'));
 
-  var GroupCtrl, scope;
+  var ViewProjectCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    GroupCtrl = $controller('GroupCtrl', {
+    ViewProjectCtrl = $controller('ViewProjectCtrl', {
       $scope: scope
     });
   }));
