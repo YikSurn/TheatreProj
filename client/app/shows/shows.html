@@ -1,6 +1,6 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container" ng-show="!isAdmin()">
+<div class="container" ng-hide="isAdmin()">
     <p>The projects route is restricted to users with the 'admin' role.</p>
 </div>  
 
@@ -14,6 +14,11 @@
                     <div class="col-xs-3">
                         <input type="text" class="form-control" name="name" ng-model="showName" id="showName" placeholder="Working Title" required/>
                     </div>
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="newProject.name.$error.required && submitted">
+                        Please enter a Project Name.
+                        </p>
+                    </div>
                 	<label for="showStatus" class="col-xs-3 col-sm-2 control-label">Status:</label>
                 	<div class="col-xs-3">
                 	    <select name="showStatus" class="form-control" ng-model="showStatus" id="showStatus" required>
@@ -24,6 +29,11 @@
                     		<option value="Concluded">Concluded</option>
                     		<option value="Archive">Archive</option>
                 		</select>
+                    </div>
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="newProject.showStatus.$error.required && submitted">
+                        Please select a status.
+                        </p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,26 +59,34 @@
         </div>
     </div>
     <hr>
-    <div class="form-group">
-        <div class="input-group">
-            <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-        </div>
+    <div class="jumbotron" ng-hide="projectsLoaded">
+        <h1>Loading...</h1>
     </div>
-	<div class="col-md-4" ng-repeat="project in projectshows | filter:{showName:searchText}" id="project">
-		<div class="panel panel-primary">
-			<div class="panel-heading" id="project-heading">
-				<h4>{{project.showName}}</h4>
-			</div>
-			<div class="panel-body">
-				<div class="well well-sm" id="inner-elements">
-					<div>{{project.showName}}, {{project.showStatus}}</div>
-					<button class="btn btn-primary" ng-click="open(project)">View</button>
-					<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div ng-hide="projectData">
+        <p>There are currently no projects to display.</p>
+    </div>
+    <div ng-show="projectData && projectsLoaded">
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            </div>
+        </div>
+	    <div class="col-md-4" ng-repeat="project in projectshows | filter:{showName:searchText}" id="project">
+		    <div class="panel panel-primary">
+			    <div class="panel-heading" id="project-heading">
+				    <h4>{{project.showName}}</h4>
+			    </div>
+			    <div class="panel-body">
+				    <div class="well well-sm" id="inner-elements">
+					    <div>{{project.showName}}, {{project.showStatus}}</div>
+					    <button class="btn btn-primary" ng-click="open(project)">View</button>
+					    <button class="btn btn-danger" ng-click="remove(project)">Remove</button>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+    </div>
 </div>
 
 <div ng-include="'components/footer/footer.html'"></div>

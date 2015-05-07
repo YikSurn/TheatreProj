@@ -3,6 +3,7 @@
 <div class="container" ng-hide="isAdmin()">
 	<p>The groups route is restricted to users with the 'admin' role.</p>
 </div>
+
 <div class="container" ng-show="isAdmin()">
 	<button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Group</button>
 	<div collapse="createIsCollapsed">
@@ -37,11 +38,11 @@
         </div> 
 	</div>
 	<hr>
-	<div ng-hide="groupData">
-		<p>There are currently no groups to display.</p>
-	</div>
 	<div class="jumbotron" ng-hide="groupsLoaded">
 		<h1>Loading...</h1>
+	</div>
+	<div ng-hide="groupData">
+		<p>There are currently no groups to display.</p>
 	</div>
 	<div ng-show="groupData && groupsLoaded">
 		<div class="form-group">
