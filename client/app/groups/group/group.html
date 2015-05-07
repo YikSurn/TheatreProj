@@ -1,0 +1,104 @@
+<div class="modal-header" id="group-heading"> 
+      <h3 ng-hide="editorEnabledName" class="modal-title">{{currGroup.name}}
+      <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">Edit Name</button></h3>
+      <div ng-show="editorEnabledName">
+        <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
+          <input type="text" class="form-control" name= "gName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+        </form>
+      </div>
+    </div> 
+    <div class="modal-body">
+    <tabset>
+      <tab heading="Members"><legend id="heading">Group Members</legend>
+        <div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} 
+          <button class="btn btn-danger" ng-click="removeMember(member)">Remove Member</button>
+        </div>
+        <div>{{position}}{{currGroup}}</div>
+      </tab>
+      <tab heading="Tasks"><legend id="heading">Group Tasks</legend>
+        <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
+	    <div collapse="viewIsCollapsed">
+	      <div ng-hide="iTaskData">
+	      	<p>This group currently has no assigned tasks</p>
+	      </div>
+		  <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
+		    <div>Project: {{task.show_id}}</div>
+		    <div>Description: {{task.description}}</div>
+		    <div>Status: {{task.status}}</div>
+		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		    <div>Deadline: {{task.deadline}}</div>
+		    <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
+		    <button class="btn btn-danger" id="task-button" ng-click="removeTask(task)">Remove Task</button>
+		  </div> 
+	    </div>
+	    <hr>
+	    <button class="btn btn-default" ng-click="completeIsCollapsed = !completeIsCollapsed">View Completed Tasks</button>
+	    <div collapse="completeIsCollapsed">
+	      <div ng-hide="cTaskData">
+	      	<p>This group currently has no completed tasks</p>
+	      </div>
+		  <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
+		    <div>Project: {{task.show_id}}</div>
+		    <div>Description: {{task.description}}</div>
+		    <div>Status: {{task.status}}</div>
+		    <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		    <div>Deadline: {{task.deadline}}</div>
+		    <button class="btn btn-danger" id="task-button" ng-click="removeTask(task)">Remove Task</button>
+		  </div> 
+	    </div>
+	    <hr>
+	    <button class="btn btn-default" ng-click="assignIsCollapsed = !assignIsCollapsed">Create New Task</button>
+	    <div collapse="assignIsCollapsed">
+		  <div class="well well-lg">
+		    <form name="assignTask" ng-submit="createTask(taskDesc, dt, showProject)" novalidate>
+		      <div class="form-group">
+                <label>Project:</label>
+                  <div ng-hide="projectData">
+                    <p>This group has no projects. Task will be assigned to group.</p>
+                  </div>
+                  <div ng-show="projectData">
+                  	<p>You can assign tasks to a group project by selecting a project below. Leave project blank to assign task to group.</p>
+                    <select name="showProject" class="form-control" ng-model="showProject" id="showProject">
+                      <option ng-repeat="project in gProjects | orderBy:'name'" value="{{project._id}}">{{project.showName}}</option>
+                    </select>
+                  </div>
+                </div>
+     	      <div class="form-group">
+		        <label>Description:</label>
+		        <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description"/>
+		      </div>
+		      <div class="form-group">
+		        <div style="display:inline-block; min-height:290px;">
+		      	<label>Completion Date: </label>
+		        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+ 				<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+                </div>
+		      </div>
+   	          <div class="form-group">
+		        <button class="btn btn-primary" type="submit">Assign</button>
+		      </div>
+		    </form>
+		  </div> 
+	    </div>
+	  </tab>
+      <tab heading="Send Message"><legend id="heading">Send A New Message</legend></tab>
+      <tab heading="Send Form"><legend id="heading">Send A New Form</legend></tab>
+      <tab heading="Projects">
+      	<legend id="heading">Current Projects</legend>
+      	<div ng-hide="projectData">
+          <p>This group has no projects.</p>
+        </div>
+      	<div ng-show="projectData" class="well well-lg" ng-repeat="project in gProjects">
+		    <div>Project Name: {{project.showName}}</div>
+		    <div>Status: {{project.showStatus}}</div>
+		    <div>Production Date: {{project.prodDate}}</div>
+		 </div>
+      </tab>
+      <tab heading="Production Meeting"><legend id="heading">Current Scheduled Meeting</legend></tab>
+    </tabset>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
