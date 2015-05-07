@@ -4,24 +4,11 @@ angular.module('theatreProjApp')
   .controller('ShowsCtrl', function ($scope, Auth, $http, socket, $modal, $log) {
     $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
-    $scope.projectsLoaded = false;
-
 
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
-        $scope.testProjectData();
-        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
-            $scope.testProjectData();
-        });
-        $scope.projectsLoaded = true;
+        socket.syncUpdates('projectshow', $scope.projectshows);
     });
-
-    $scope.testProjectData = function() {
-        $scope.projectData = true;
-        if($scope.projectshows.length === 0) {
-            $scope.projectData = false;
-        }
-    };
 
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
@@ -47,17 +34,14 @@ angular.module('theatreProjApp')
 
     /*Function to create a new project*/
     $scope.createProject = function(showName, showGroup, showStatus, dt) {
-        $scope.submitted = true;
         $scope.showName = showName;
         $scope.showGroup = showGroup;
         $scope.showStatus = showStatus;
         $scope.prodDate = dt.toDateString();
-        if($scope.cGroup.$valid) {
-            $http.post('api/projectshows', {showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup ,prodDate: $scope.prodDate});
-            alert("Project Created");
-            $scope.newProject.$setPristine();
-            $scope.createIsCollapsed = true;
-        };
+        $http.post('api/projectshows', {showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup ,prodDate: $scope.prodDate});
+        alert("Project Created");
+        $scope.newProject.$setPristine();
+        $scope.createIsCollapsed = true;
     };
 
     /*Opens modal dialog with new controller*/
