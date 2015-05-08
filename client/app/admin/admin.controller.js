@@ -6,6 +6,8 @@ angular.module('theatreProjApp')
     /*Use the User $resource to fetch all users*/
     $scope.users = User.query();
 
+    $scope.isAdmin = Auth.isAdmin;
+
     $scope.delete = function(user) {
       var confUser = confirm("Are you sure you want to delete " + user.name + "?");
       if (confUser == true) {
