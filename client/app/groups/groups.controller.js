@@ -38,8 +38,8 @@ angular.module('theatreProjApp')
     };
 
     /*Function to delete a group*/
-    $scope.remove = function(group) {
-    	var confGroup = confirm("Are you sure you want to remove " + group.name + "?");
+    $scope.delete = function(group) {
+    	var confGroup = confirm("Are you sure you want to delete " + group.name + "?");
         if (confGroup == true) {
             $http.delete('api/groups/' + group._id);
         };
