@@ -49,7 +49,13 @@
         </div>
     </div>
     <hr>
-    <div class="form-group">
+    <div class="jumbotron" ng-hide="projectsLoaded">
+        <h1>Loading...</h1>
+    </div>
+    <div ng-hide="projectData">
+        <p>There are currently no projects to display.</p>
+    </div>
+    <div ng-show="projectData && projectsLoaded">
         <div class="input-group">
             <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
             <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>

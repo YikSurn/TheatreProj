@@ -7,8 +7,19 @@ angular.module('theatreProjApp')
 
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
-        socket.syncUpdates('projectshow', $scope.projectshows);
+        $scope.testProjectData();
+        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
+            $scope.testProjectData();
+        });
+        $scope.projectsLoaded = true;
     });
+
+    $scope.testProjectData = function() {
+        $scope.projectData = true;
+        if($scope.projectshows.length === 0) {
+            $scope.projectData = false;
+        }
+    };
 
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
