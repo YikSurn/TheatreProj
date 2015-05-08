@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('AdminCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminCtrl', function ($scope, $http, $modal, Auth, User) {
 
     /*Use the User $resource to fetch all users*/
     $scope.users = User.query();
@@ -19,7 +19,7 @@ angular.module('theatreProjApp')
     };
 
     /*Opens modal dialog with new controller*/
-    $scope.viewProfile = function() {
+    $scope.open = function(user) {
         var modalInstance = $modal.open({
             templateUrl: 'app/admin/view-profile/view-profile.html',
             controller: 'ViewProfileCtrl',

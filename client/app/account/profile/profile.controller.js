@@ -27,10 +27,6 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('profile');
     });
 
-    $scope.post = function() {
-    	$http.post('api/profiles', {name: 'Hello'});
-    };
-
     $scope.remove = function(profile) {
     	$http.delete('api/profiles/' + profile._id);
     };
