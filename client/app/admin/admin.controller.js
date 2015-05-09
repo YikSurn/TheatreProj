@@ -1,17 +1,36 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('AdminCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminCtrl', function ($scope, $http, $modal, Auth, User) {
 
-    // Use the User $resource to fetch all users
+    /*Use the User $resource to fetch all users*/
     $scope.users = User.query();
 
+    $scope.isAdmin = Auth.isAdmin;
+
     $scope.delete = function(user) {
-      User.remove({ id: user._id });
-      angular.forEach($scope.users, function(u, i) {
-        if (u === user) {
-          $scope.users.splice(i, 1);
-        }
-      });
+      var confUser = confirm("Are you sure you want to delete " + user.name + "?");
+      if (confUser == true) {
+        User.remove({ id: user._id });
+        angular.forEach($scope.users, function(u, i) {
+          if (u === user) {
+            $scope.users.splice(i, 1);
+          }
+        });
+      }
     };
-  });
+
+    /*Opens modal dialog with new controller*/
+    $scope.open = function(user) {
+        var modalInstance = $modal.open({
+            templateUrl: 'app/admin/view-profile/view-profile.html',
+            controller: 'ViewProfileCtrl',
+            size: "lg",
+            resolve: {
+                user: function () {
+                    return user; 
+                }
+            }
+        });
+    };
+});

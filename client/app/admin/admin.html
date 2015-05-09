@@ -1,12 +1,31 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
-  <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
-        <strong>{{user.name}}</strong><br>
-        <span class="text-muted">{{user.email}}</span>
-        <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
-    </li>
-  </ul>
+    <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
+    <div ng-show="isAdmin()">
+    	<div class="form-group">
+			<div class="input-group">
+				<input class="form-control" ng-model="searchText" type="search" placeholder="Search users">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+			</div>
+		</div>
+		<div class="form-group">	
+			<div class="input-group">
+				<label>Sort by:</label>
+				<select name="userCat" class="form-control" ng-model="userCategory" id="userCategory">
+   		            <option value="name">User Name</option>
+   	    	        <option value="email">User Email</option>
+   	        	    <option value="id">Registered Date</option>
+            	</select>
+			</div>
+		</div>
+    	<ul class="list-group">
+       		<li class="list-group-item" ng-repeat="user in users | orderBy:userCategory | filter:{name:searchText}">
+            	<strong>{{user.name}}</strong><br>
+            	<span class="text-muted">{{user.email}}</span>
+            	<button ng-click="delete(user)" class="trash">Delete <span class="glyphicon glyphicon-trash"></span></button>
+            	<button ng-click="open(user)" class="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+        	</li>
+    	</ul>
+	</div>
 </div>

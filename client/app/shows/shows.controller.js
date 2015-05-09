@@ -1,13 +1,25 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ShowsCtrl', function ($scope, $http, socket, $modal, $log) {
+  .controller('ShowsCtrl', function ($scope, Auth, $http, socket, $modal, $log) {
+    $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
 
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
-        socket.syncUpdates('projectshow', $scope.projectshows);
+        $scope.testProjectData();
+        socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
+            $scope.testProjectData();
+        });
+        $scope.projectsLoaded = true;
     });
+
+    $scope.testProjectData = function() {
+        $scope.projectData = true;
+        if($scope.projectshows.length === 0) {
+            $scope.projectData = false;
+        }
+    };
 
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
@@ -43,12 +55,11 @@ angular.module('theatreProjApp')
         $scope.createIsCollapsed = true;
     };
 
-    /*Opens Modal Dialog with new controller*/
-    $scope.open = function (project) {
-
+    /*Opens modal dialog with new controller*/
+    $scope.open = function(project) {
         var modalInstance = $modal.open({
-            templateUrl: 'projectViewModal.html',
-            controller: 'ProjModalInstanceCtrl',
+            templateUrl: 'app/shows/view-project/view-project.html',
+            controller: 'ViewProjectCtrl',
             size: "lg",
             resolve: {
                 project: function () {
@@ -56,34 +67,5 @@ angular.module('theatreProjApp')
                 }
             }
         });
-    };
-});
-
-/*Controller for modal dialog*/
-angular.module('theatreProjApp')
-  .controller('ProjModalInstanceCtrl', function ($scope, $modalInstance, $http, socket, Auth, project) {
-
-    $scope.currProject = project;
-    $scope.editorEnabledName = false;
-
-    $scope.enableEditorName = function() {
-      $scope.editorEnabledName = true;
-      $scope.newName = $scope.currProject.showName;
-    };
-
-    $scope.disableEditor = function() {
-      $scope.editorEnabledName = false;
-    };
-
-    $scope.saveName = function() {
-      $scope.name.$setPristine();
-      $scope.currName = $scope.newName;
-      $scope.currProject.showName = $scope.currName;
-      $http.put('api/projectshows/' + $scope.currProject._id, $scope.currProject);
-      $scope.disableEditor();
-    };
-
-    $scope.close = function () {
-        $modalInstance.close();
     };
 });

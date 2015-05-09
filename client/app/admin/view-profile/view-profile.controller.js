@@ -1,36 +1,27 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ProfileCtrl', function ($scope, User, Auth, $http, socket) {
-    var user = Auth.getCurrentUser();
-    $scope.user = user;
-   
+  .controller('ViewProfileCtrl', function ($scope, $http, $modalInstance, user) {
+    $scope.currUser = user;
+
     $http.get('api/profiles').success(function(profiles) {
       $scope.profiles = profiles;
       var data = 'no data';
       var x;
       for (x in $scope.profiles) {
-        if ($scope.profiles[x]._id === user._id) {
+        if ($scope.profiles[x]._id === $scope.currUser._id) {
           data = $scope.profiles[x];
           {break;}
         }
       }
       $scope.currProfile = data;
       if ($scope.currProfile === 'no data') {
-      	$scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
+      	$scope.currProfile = {_id: $scope.currUser._id, name: $scope.currUser.name, email: $scope.currUser.email, role: $scope.currUser.role, addressTerm:'None Provided',addressHome:'None Provided', phone:'None Provided'};      
         $http.post('api/profiles', $scope.currProfile);      
       }
       socket.syncUpdates('profile', $scope.profiles);
     });
-    
-    $scope.$on('$destroy', function(){
-    	socket.unsyncUpdates('profile');
-    });
 
-    $scope.remove = function(profile) {
-    	$http.delete('api/profiles/' + profile._id);
-    };
-  
     $scope.editorEnabledEmail = false;
     $scope.editorEnabledPhone = false;
     $scope.editorEnabledHome = false;
@@ -117,5 +108,9 @@ angular.module('theatreProjApp')
         $scope.disableEditor();
       };
     };
-  });   
-  
+    
+    $scope.close = function () {
+        $modalInstance.close();
+    };
+
+});
