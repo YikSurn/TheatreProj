@@ -20,6 +20,20 @@
 <div class="modal-body">
     <tabset>
         <tab heading="Members"><legend id="heading">Group Members</legend>
+            <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
+            <div collapse="!usersIsCollapsed">
+                <div class="well well-lg">
+                    <form name="aMember" ng-submit="addMember(showUsers)" novalidate>
+                        <div class="form-group">
+                            <label>Select a Member to add:</label>
+                            <select name="sUsers" class="form-control" ng-model="showUsers">
+                                <option ng-repeat="user in users | orderBy:'name'" value="{{user.name}}">{{user.name}}</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
             <div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} 
                 <button class="btn btn-danger" ng-click="removeMember(member)">Remove Member</button>
             </div>

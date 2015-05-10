@@ -30,8 +30,8 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('projectshow');
     });
 
-    $scope.remove = function(project) {
-    	var confprojectshow = confirm("Are you sure you want to remove " + project.showName + "?");
+    $scope.delete = function(project) {
+    	var confprojectshow = confirm("Are you sure you want to delete " + project.showName + "?");
         if (confprojectshow == true) {
             $http.delete('api/projectshows/' + project._id);
         };

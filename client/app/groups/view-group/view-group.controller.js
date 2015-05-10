@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, group) {
+  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, User, group) {
     $scope.currGroup = group;
     $scope.editorEnabledName = false;
+    $scope.userIsCollapsed=  true;
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
+
+    /*Use the User $resource to fetch all users*/
+    $scope.users = User.query();
     
     /*Displays editor for group names*/
     $scope.enableEditorName = function() {
@@ -82,6 +86,13 @@ angular.module('theatreProjApp')
         $scope.editorEnabledName = false;
     };
 
+    /*Function to add member*/
+    $scope.addMember = function(showUsers) {
+        $scope.memberToAdd = showUsers;
+        $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
+        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+    }
+
     /*Function to remove group members*/
     $scope.removeMember = function(member) {
         $scope.position = $scope.currGroup.members.indexOf(member);
@@ -91,6 +102,7 @@ angular.module('theatreProjApp')
 
     /*Function to assign a new task*/
     $scope.createTask = function(showProject, taskDesc, dt) {
+        $scope.showProject = showProject;
         $scope.taskDesc = taskDesc;
         $scope.deadline = dt.toDateString();
         if($scope.showProject) {

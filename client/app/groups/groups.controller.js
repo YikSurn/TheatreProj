@@ -16,6 +16,7 @@ angular.module('theatreProjApp')
         $scope.groupsLoaded = true;
     });
 
+    /*Function to test if groups exist*/
     $scope.testGroupData = function() {
         $scope.groupData = true;
         if($scope.groups.length === 0) {

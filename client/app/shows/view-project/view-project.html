@@ -4,13 +4,22 @@
     </h3>
     <div ng-show="editorEnabledName">
         <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
-            <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required=""/>
+            <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required/>
+            <div class="form-group has-error">
+                <p class="help-block" ng-show="name.pName.$error.required && submitted">
+                    Please enter a Project Name.
+                </p>
+            </div>
             <button class="btn btn-primary" type="submit">Save</button>
             <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
         </form>
     </div>
 </div>
-<div class="modal-body">Body</div>
+<div class="modal-body">
+    Group: {{currProject.group_id}}<br/>
+    Status: {{currProject.showStatus}}<br/>
+    Production Date: {{currProject.prodDate}}<br/>
+</div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="close()">Close</button>
 </div>
