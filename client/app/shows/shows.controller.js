@@ -44,15 +44,18 @@ angular.module('theatreProjApp')
     $scope.toggleMin();
 
     /*Function to create a new project*/
-    $scope.createProject = function(showName, showGroup, showStatus, dt) {
-        $scope.showName = showName;
+    $scope.createProject = function() {
+        $scope.submitted = true;
+        if($scope.newProject.$valid) {
+        /*$scope.showName = showName;
         $scope.showGroup = showGroup;
-        $scope.showStatus = showStatus;
-        $scope.prodDate = dt.toDateString();
-        $http.post('api/projectshows', {showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup ,prodDate: $scope.prodDate});
-        alert("Project Created");
-        $scope.newProject.$setPristine();
-        $scope.createIsCollapsed = true;
+        $scope.showStatus = showStatus;*/
+            $scope.prodDate = $scope.dt.toDateString();
+            $http.post('api/projectshows', {prodDate: $scope.prodDate, showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup});
+            alert("Project Created");
+            $scope.newProject.$setPristine();
+            $scope.createIsCollapsed = true;
+        }
     };
 
     /*Opens modal dialog with new controller*/
