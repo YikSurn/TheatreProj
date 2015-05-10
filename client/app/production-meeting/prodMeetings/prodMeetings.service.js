@@ -5,7 +5,10 @@ angular.module('theatreProjApp')
   function ($http, socket) {
 
     var o = {
-      meetings : []
+      meetings : [],
+      meeting : {
+        
+      }
     };
 
     o.getAll = function() {
@@ -21,8 +24,17 @@ angular.module('theatreProjApp')
     };
 
     o.get = function(groupName, meetingTitle) {
-      return $http.get('api/prodmeetings/' + groupName + '/' + meetingTitle).then(function (res) {
-        return res.data;
+      return $http.get('api/prodmeetings/' + groupName + '/' + meetingTitle).success(function (data) {
+        angular.copy(data, o.meeting);
+      });
+    };
+
+    o.update = function() {
+      var payload = angular.copy(o.meeting);
+      payload.group = o.meeting.group._id;
+      return $http.put('api/prodmeetings/' + o.meeting._id, payload).success(function (data) {
+        // angular.copy(data, o.meeting);
+        console.log('success');
       });
     };
 

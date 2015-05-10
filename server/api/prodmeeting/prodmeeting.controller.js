@@ -19,7 +19,7 @@ exports.show = function(req, res) {
     Prodmeeting.findOne({ 'group' : group._id, 'title' : req.params.meetingTitle }).populate('group').exec(function (err, prodmeeting) {
       if(err) { return handleError(res, err); }
       if(!prodmeeting) { return res.send(404); }
-      return res.json(prodmeeting);
+      return res.json(200, prodmeeting);
     });
   });
 };
@@ -40,10 +40,13 @@ exports.update = function(req, res) {
   Prodmeeting.findById(req.params.id, function (err, prodmeeting) {
     if (err) { return handleError(res, err); }
     if(!prodmeeting) { return res.send(404); }
-    var updated = _.merge(prodmeeting, req.body);
+    var updated = _.extend(prodmeeting, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, prodmeeting);
+      Prodmeeting.findById(prodmeeting._id).populate('group').exec(function (err, prodmeeting) {
+        if (err) { return handleError(res, err); }
+        return res.json(200, prodmeeting);
+      });
     });
   });
 };
