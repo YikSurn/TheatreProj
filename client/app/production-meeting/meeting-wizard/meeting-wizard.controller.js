@@ -7,6 +7,19 @@ angular.module('theatreProjApp')
 
     $scope.prodMeeting = prodMeetings.meeting;
 
+    // For datepicker
+    $scope.datePicker = {
+      format: 'dd-MMMM-yyyy',
+      minDate: '2015-01-01',
+      opened : {}
+    };
+    $scope.openDatePicker = function ($event, id) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.datePicker.opened[id] = !$scope.datePicker.opened[id];
+    };
+
     // Go to a section, current is the current state, direction is 1 for next, -1 for previous
     var goToSection = function(current, direction) {
       var sections = ['main', 'attending', 'administration', 'director', 'musical-director', 

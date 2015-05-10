@@ -1,3 +1,184 @@
-<div>
-  This is the key dates section!
+<h1 style="text-align:center;">Key Dates Section</h1>
+
+<div class="form-group">
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.weeklyMeeting.check">
+      Weekly Production Meetings
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.weeklyMeeting.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.weeklyMeeting.date" is-open="datePicker.opened['weeklyMeeting']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'weeklyMeeting')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.masterSchedule.check">
+      Master Production Schedule first published
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.masterSchedule.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.masterSchedule.date" is-open="datePicker.opened['masterSchedule']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'masterSchedule')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.6WeeksOutMeeting.check">
+      6 Weeks Out Production Meeting with Union House Theatre
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.6WeeksOutMeeting.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.6WeeksOutMeeting.date" is-open="datePicker.opened['6WeeksOutMeeting']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, '6WeeksOutMeeting')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.2WeeksOutMeeting.check">
+      2 Weeks Out Production Meeting with Union House Theatre
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.2WeeksOutMeeting.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.2WeeksOutMeeting.date" is-open="datePicker.opened['2WeeksOutMeeting']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, '2WeeksOutMeeting')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.setPropsAVDesign.check">
+      Design Presentation – Set, Props  and Costumes and Vision (AV)
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.setPropsAVDesign.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.setPropsAVDesign.date" is-open="datePicker.opened['setPropsAVDesign']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'setPropsAVDesign')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.LightingSoundDesign.check">
+      Design Presentation – Lighting and Sound
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.LightingSoundDesign.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.LightingSoundDesign.date" is-open="datePicker.opened['LightingSoundDesign']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'LightingSoundDesign')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.rehearsals.check">
+      Rehearsals Commence
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.rehearsals.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.rehearsals.date" is-open="datePicker.opened['rehearsals']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'rehearsals')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.costumeParade.check">
+      Costume Parade
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.costumeParade.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.costumeParade.date" is-open="datePicker.opened['costumeParade']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'costumeParade')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.sitzprobe.check">
+      Sitzprobe
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.sitzprobe.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.sitzprobe.date" is-open="datePicker.opened['sitzprobe']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'sitzprobe')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.bumpIn.check">
+      Bump In
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.bumpIn.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.bumpIn.date" is-open="datePicker.opened['bumpIn']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'bumpIn')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.firstDress.check">
+      First Dress Rehearsal
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.firstDress.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.firstDress.date" is-open="datePicker.opened['firstDress']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'firstDress')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.openingPerf.check">
+      Opening Performance
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.openingPerf.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.openingPerf.date" is-open="datePicker.opened['openingPerf']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'openingPerf')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.closingPerf.check">
+      Closing Performance
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.closingPerf.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.closingPerf.date" is-open="datePicker.opened['closingPerf']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'closingPerf')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.matineePerf.check">
+      Matinee Performance/s
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.matineePerf.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.matineePerf.date" is-open="datePicker.opened['matineePerf']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'matineePerf')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>  
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="prodMeeting.info.keyDates.bumpOut.check">
+      Bump Out Date
+    </label>
+    <div ng-show="prodMeeting.info.keyDates.bumpOut.check" class="input-group">
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.bumpOut.date" is-open="datePicker.opened['bumpOut']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'bumpOut')"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
+  </div>
 </div>
