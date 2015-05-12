@@ -9,6 +9,7 @@ angular.module('theatreProjApp')
 		$scope.panelCount = 20;
 		$scope.panelMargin = 10;
 		$scope.panels = [];
+		$scope.currentPanelIndex = 0;
 
 		// derived params
 		$scope.carouselContainerH = $scope.carouselContainerW * $scope.heightRatio;
@@ -30,8 +31,12 @@ angular.module('theatreProjApp')
 			};
 		};
 
-		$scope.setRotation = function (rotation) {
-			$scope.rotation = rotation;
+		$scope.switchToPanel = function (panelIndex) {
+			var indexDelta = Math.abs($scope.currentPanelIndex - panelIndex);
+			var directionFactor = (panelIndex > $scope.currentPanelIndex)? 1 : -1;
+			$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
+			$scope.currentPanelIndex = panelIndex;
+			console.log(panelIndex, $scope.currentPanelIndex);
 		};
 
 		/* ----------------- init code ----------------- */
@@ -51,4 +56,6 @@ angular.module('theatreProjApp')
 			};
 			$scope.panels.push(panel);
 		};
+
+		$scope.switchToPanel($scope.currentPanelIndex);
 	});

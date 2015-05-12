@@ -1,14 +1,14 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <div class="carouselContainer" ng-style="carouselContainerStyle()">
 	<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
-		<figure ng-repeat="panel in panels" ng-style="panel.style">
-			<img src="assets/images/yeoman.png">
+		<figure ng-repeat="panel in panels" ng-style="panel.style" ng-click="switchToPanel($index)">
+			<img src="assets/images/yeoman.png"> {{$index}}
 		</figure>
 	</div>
 </div>
 
 <div class="jumbotron container">
-	<button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button>
-	<button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button>
+	<button class="btn" ng-click="switchToPanel(currentPanelIndex + 1)">Prev</button>
+	<button class="btn" ng-click="switchToPanel(currentPanelIndex - 1)">Next</button>
 	<p>Inspired by <a href="http://desandro.github.io/3dtransforms/docs/carousel.html">http://desandro.github.io/3dtransforms/docs/carousel.html</a></p>
 </div>
