@@ -19,6 +19,12 @@
 </div> 
 <div class="modal-body">
     <tabset>
+        <tab heading="General"><legend id="heading">Group Information</legend>
+            <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
+            <div>Website: <a href="http://{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
+            <div>Facebook: <a href="http://{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
+            <div>Social Media: <a href="http://{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
+        </tab>
         <tab heading="Members"><legend id="heading">Group Members</legend>
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
             <div collapse="!usersIsCollapsed">
@@ -27,17 +33,18 @@
                         <div class="form-group">
                             <label>Select a Member to add:</label>
                             <select name="sUsers" class="form-control" ng-model="showUsers">
-                                <option ng-repeat="user in users | orderBy:'name'" value="{{user.name}}">{{user.name}}</option>
+                                <option ng-repeat="user in users | orderBy:'name'" value="{{user._id}}">{{user.name}}</option>
                             </select>
                         </div>
                         <button class="btn btn-primary" type="submit">Add</button>
                     </form>
                 </div>
             </div>
-            <div class="row-md-4" ng-repeat="member in currGroup.members"> {{member}} 
-                <button class="btn btn-danger" ng-click="removeMember(member)">Remove Member</button>
+            <hr>
+            <div><label>Current Members:</label></div>
+            <div ng-repeat="member in currGroup.members"> {{member}} 
+                <button class="btn btn-danger btn-xs" ng-click="removeMember(member)">Remove Member</button>
             </div>
-            <div>{{position}}{{currGroup}}</div>
         </tab>
         <tab heading="Tasks"><legend id="heading">Group Tasks</legend>
             <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>

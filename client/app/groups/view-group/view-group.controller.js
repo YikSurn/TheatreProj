@@ -8,15 +8,31 @@ angular.module('theatreProjApp')
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
+    $scope.groupMembers = [];
 
     /*Use the User $resource to fetch all users*/
     $scope.users = User.query();
-    
+
+
     /*Displays editor for group names*/
     $scope.enableEditorName = function() {
         $scope.editorEnabledName = true;
         $scope.newName = $scope.currGroup.name;
     };
+
+    /*Display not provided fields*/
+    $scope.providedCheck = function() {
+        if(!$scope.currGroup.facebookURL) {
+            $scope.currGroup.facebookURL = "None Provided";
+        }
+        if(!$scope.currGroup.socialMediaURL) {
+            $scope.currGroup.socialMediaURL = "None Provided";
+        }
+        if(!$scope.currGroup.websiteURL) {
+            $scope.currGroup.websiteURL = "None Provided";
+        }
+    }
+    $scope.providedCheck();
 
     /*Get tasks for selected group and organize tasks into completed and incompleted*/
     $scope.getTasks = function() {
@@ -85,6 +101,28 @@ angular.module('theatreProjApp')
     $scope.disableEditor = function() {
         $scope.editorEnabledName = false;
     };
+
+    /*Function to get member names of users in group
+    $scope.getNames = function() {
+        if($scope.currGroup.members) {
+            $scope.test = "hello";
+            var position;
+            var user;
+            for(position in $scope.currGroup.members) {
+                for(user in $scope.users) {
+                    $scope.test = "hi";
+                    if($scope.currGroup.members[position] === $scope.users[user]._id) {
+                        $scope.test = "made it!";
+                        $scope.groupMembers[$scope.groupMembers.length] = "hi";
+                        {break;}
+                    }
+                }
+            }
+        } else {
+            $scope.groupMembers = "This group does not have any members to show.";
+        }
+    }
+    $scope.getNames();*/
 
     /*Function to add member*/
     $scope.addMember = function(showUsers) {

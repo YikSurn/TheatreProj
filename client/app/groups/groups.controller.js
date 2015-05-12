@@ -32,7 +32,8 @@ angular.module('theatreProjApp')
     $scope.createGroup = function() {
         $scope.submitted = true;
         if($scope.cGroup.$valid) {
-            $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL});
+            $scope.establishedDate = new Date();
+            $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL, establishedDate: $scope.establishedDate});
             alert("Group Created");
             $scope.createIsCollapsed = true;
         };
