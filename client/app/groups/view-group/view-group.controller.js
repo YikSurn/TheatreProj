@@ -91,13 +91,17 @@ angular.module('theatreProjApp')
         $scope.memberToAdd = showUsers;
         $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
         $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        alert($scope.memberToAdd + " has been added to this group.");
     }
 
     /*Function to remove group members*/
     $scope.removeMember = function(member) {
-        $scope.position = $scope.currGroup.members.indexOf(member);
-        $scope.currGroup.members.splice($scope.position, 1);
-        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        var confRemove = confirm("Are you sure you want to remove " + member +" from this group?");
+        if (confRemove == true) {
+            $scope.position = $scope.currGroup.members.indexOf(member);
+            $scope.currGroup.members.splice($scope.position, 1);
+            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        }
     };
 
     /*Function to assign a new task*/
