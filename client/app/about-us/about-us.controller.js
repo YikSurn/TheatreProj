@@ -34,9 +34,14 @@ angular.module('theatreProjApp')
 		$scope.switchToPanel = function (panelIndex) {
 			var indexDelta = Math.abs($scope.currentPanelIndex - panelIndex);
 			var directionFactor = (panelIndex > $scope.currentPanelIndex)? 1 : -1;
+
+			if (indexDelta > $scope.panelCount/2) {
+				indexDelta = $scope.panelCount - indexDelta;
+				directionFactor *= -1;
+			}
+
 			$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
 			$scope.currentPanelIndex = panelIndex;
-			console.log(panelIndex, $scope.currentPanelIndex);
 		};
 
 		/* ----------------- init code ----------------- */
