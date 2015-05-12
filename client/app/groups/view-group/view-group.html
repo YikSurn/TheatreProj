@@ -24,6 +24,10 @@
             <div>Website: <a href="http://{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
             <div>Facebook: <a href="http://{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
             <div>Social Media: <a href="http://{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
+            <hr>
+            <div>Total Members: {{currGroup.members.length}}</div>
+            <div>Total Assigned Tasks: {{iTasks.length + cTasks.length}}</div>
+            <div>Total Current projects: {{gProjects.length}}</div>
         </tab>
         <tab heading="Members"><legend id="heading">Group Members</legend>
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
