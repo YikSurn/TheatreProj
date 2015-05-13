@@ -4,34 +4,55 @@ angular.module('theatreProjApp')
   .controller('ProfileCtrl', function ($scope, User, Auth, $http, socket) {
     var user = Auth.getCurrentUser();
     $scope.user = user;
-    $scope.currProfile = "";
+    /*$scope.currProfile = "";
    
-    /*Gets current profile*/
+    Gets current profile
     $http.get('api/profiles/' + $scope.user._id).success(function(profile) {
       $scope.currProfile = profile;
       socket.syncUpdates('profile', $scope.currProfile);
     });
 
-    /*if user profile does no exist create one*/
+    if user profile does not exist create one
     if($scope.currProfile == "") {
-      $scope.test = "hello"
       $scope.currProfile = {_id: $scope.user._id, name: $scope.user.name, email: $scope.user.email, role: $scope.user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
       $http.post('api/profiles', $scope.currProfile); 
-    }
+    }*/
+
+    //Get the current user profile, if the profile does not exist, create it
+    $http.get('api/profiles').success(function(profiles) {
+      $scope.profiles = profiles;
+      var data = 'no data';
+      var x;
+      for (x in $scope.profiles) {
+        if ($scope.profiles[x]._id === user._id) {
+          data = $scope.profiles[x];
+          {break;}
+        }
+      }
+      $scope.currProfile = data;
+      if ($scope.currProfile === 'no data') {
+        $scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
+        $http.post('api/profiles', $scope.currProfile);      
+      }
+      socket.syncUpdates('profile', $scope.profiles);
+    });
     
     $scope.$on('$destroy', function(){
     	socket.unsyncUpdates('profile');
     });
 
+    //function deletes a profile, this function is not currently in use.
     $scope.remove = function(profile) {
     	$http.delete('api/profiles/' + profile._id);
     };
   
+    //Set up some variables to control the editors.
     $scope.editorEnabledEmail = false;
     $scope.editorEnabledPhone = false;
     $scope.editorEnabledHome = false;
     $scope.editorEnabledTerm = false;
   
+    //The following functions allow editor toggles with "None Provided" being omitted to allow placeholders.  
     $scope.enableEditorEmail = function() {
       $scope.editorEnabledEmail = true;
       $scope.newEmail = $scope.currProfile.email;
@@ -58,6 +79,7 @@ angular.module('theatreProjApp')
       $scope.newTerm = $scope.currProfile.addressTerm;
     }; 
   
+    //Function to disable all editors.
     $scope.disableEditor = function() {
       $scope.editorEnabledPhone = false;
       $scope.editorEnabledEmail = false;
@@ -71,6 +93,7 @@ angular.module('theatreProjApp')
       }
     };
   
+    //The following functions will save any edits made by the user. All functions call disableEditor to ensure all editors are disabled.
     $scope.saveEmail = function() {
       $scope.emailSubmitted = true;
       if($scope.email.$valid) {
@@ -114,4 +137,3 @@ angular.module('theatreProjApp')
       };
     };
   });   
-  
