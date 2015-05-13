@@ -10,9 +10,11 @@ angular.module('theatreProjApp')
     $scope.completeIsCollapsed = true;
     $scope.groupMembers = [];
 
-    /*Use the User $resource to fetch all users*/
-    $scope.users = User.query();
-
+    $http.get('api/users').success(function(users) {
+        $scope.users = users; 
+        socket.syncUpdates('user', $scope.users)
+    });
+    
 
     /*Displays editor for group names*/
     $scope.enableEditorName = function() {
@@ -126,10 +128,13 @@ angular.module('theatreProjApp')
 
     /*Function to add member*/
     $scope.addMember = function(showUsers) {
-        $scope.memberToAdd = showUsers;
-        $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
-        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
-        alert($scope.memberToAdd + " has been added to this group.");
+        $scope.userSubmitted = true;
+        if(showUsers) {
+            $scope.memberToAdd = showUsers;
+            $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
+            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+            alert($scope.memberToAdd + " has been added to this group.");
+        };
     }
 
     /*Function to remove group members*/

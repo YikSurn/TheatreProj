@@ -3,6 +3,7 @@
         <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">
         	Edit Name <span class="glyphicon glyphicon-pencil"></span>
         </button>
+        {{groupToFind}}
     </h3>
     <div ng-show="editorEnabledName">
         <form name="name" class="form-inline" ng-submit="saveName()" novalidate>
@@ -21,9 +22,9 @@
     <tabset>
         <tab heading="General"><legend id="heading">Group Information</legend>
             <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
-            <div>Website: <a href="http://{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
-            <div>Facebook: <a href="http://{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
-            <div>Social Media: <a href="http://{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
+            <div>Website: <a href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
+            <div>Facebook: <a href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
+            <div>Social Media: <a href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
             <hr>
             <div>Total Members: {{currGroup.members.length}}</div>
             <div>Total Assigned Tasks: {{iTasks.length + cTasks.length}}</div>
@@ -36,9 +37,14 @@
                     <form name="aMember" ng-submit="addMember(showUsers)" novalidate>
                         <div class="form-group">
                             <label>Select a Member to add:</label>
-                            <select name="sUsers" class="form-control" ng-model="showUsers">
-                                <option ng-repeat="user in users | orderBy:'name'" value="{{user._id}}">{{user.name}}</option>
+                            <select name="sUsers" class="form-control" ng-model="showUsers" ng-options="user._id as user.name for user in users | orderBy:'name'" required>
+                                <option value="" selected>--Select a member--</option>
                             </select>
+                        </div>
+                        <div class="form-group has-error">
+                            <p class="help-block" ng-show="aMember.sUsers.$error.required && userSubmitted">
+                                You have not select a member.
+                            </p>
                         </div>
                         <button class="btn btn-primary" type="submit">Add</button>
                     </form>
