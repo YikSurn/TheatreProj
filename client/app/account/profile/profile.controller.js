@@ -4,24 +4,20 @@ angular.module('theatreProjApp')
   .controller('ProfileCtrl', function ($scope, User, Auth, $http, socket) {
     var user = Auth.getCurrentUser();
     $scope.user = user;
+    $scope.currProfile = "";
    
-    $http.get('api/profiles').success(function(profiles) {
-      $scope.profiles = profiles;
-      var data = 'no data';
-      var x;
-      for (x in $scope.profiles) {
-        if ($scope.profiles[x]._id === user._id) {
-          data = $scope.profiles[x];
-          {break;}
-        }
-      }
-      $scope.currProfile = data;
-      if ($scope.currProfile === 'no data') {
-      	$scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
-        $http.post('api/profiles', $scope.currProfile);      
-      }
-      socket.syncUpdates('profile', $scope.profiles);
+    /*Gets current profile*/
+    $http.get('api/profiles/' + $scope.user._id).success(function(profile) {
+      $scope.currProfile = profile;
+      socket.syncUpdates('profile', $scope.currProfile);
     });
+
+    /*if user profile does no exist create one*/
+    if($scope.currProfile == "") {
+      $scope.test = "hello"
+      $scope.currProfile = {_id: $scope.user._id, name: $scope.user.name, email: $scope.user.email, role: $scope.user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
+      $http.post('api/profiles', $scope.currProfile); 
+    }
     
     $scope.$on('$destroy', function(){
     	socket.unsyncUpdates('profile');

@@ -5,6 +5,14 @@ angular.module('theatreProjApp')
     $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
 
+    /*define all options for status'*/
+    $scope.statusOptions = [{status: "Proposed"}, 
+                            {status: "Planned"}, 
+                            {status: "Confirmed"}, 
+                            {status: "Underway"}, 
+                            {status: "Concluded"}, 
+                            {status: "Archive"}];
+
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
         $scope.testProjectData();

@@ -3,7 +3,6 @@
         <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">
         	Edit Name <span class="glyphicon glyphicon-pencil"></span>
         </button>
-        {{groupToFind}}
     </h3>
     <div ng-show="editorEnabledName">
         <form name="name" class="form-inline" ng-submit="saveName()" novalidate>
@@ -27,8 +26,9 @@
             <div>Social Media: <a href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
             <hr>
             <div>Total Members: {{currGroup.members.length}}</div>
-            <div>Total Assigned Tasks: {{iTasks.length + cTasks.length}}</div>
-            <div>Total Current projects: {{gProjects.length}}</div>
+            <div>Total Assigned Tasks: {{iTasks.length}}</div>
+            <div>Total Completed Tasks: {{cTasks.length}}</div>
+            <div>Total Current Projects: {{gProjects.length}}</div>
         </tab>
         <tab heading="Members"><legend id="heading">Group Members</legend>
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group has-error">
                             <p class="help-block" ng-show="aMember.sUsers.$error.required && userSubmitted">
-                                You have not select a member.
+                                You have not selected a member.
                             </p>
                         </div>
                         <button class="btn btn-primary" type="submit">Add</button>
@@ -66,7 +66,7 @@
 		            <div>Project: {{task.show_id}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
-		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
 		            <div>Deadline: {{task.deadline}}</div>
 		            <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
 		            <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
@@ -82,7 +82,7 @@
 		            <div>Project: {{task.show_id}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
-		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated}}</div>
+		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
 		            <div>Deadline: {{task.deadline}}</div>
 		        <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
 		    </div> 
@@ -98,9 +98,9 @@
                                 <p>This group has no projects. Task will be assigned to group.</p>
                             </div>
                             <div ng-show="projectData">
-                  	            <p>You can assign tasks to a group project by selecting a project below. Leave project blank to assign task to group.</p>
-                                <select name="sProject" class="form-control" ng-model="showProject" id="show-project">
-                                    <option ng-repeat="project in gProjects | orderBy:'name'" value="{{project._id}}">{{project.showName}}</option>
+                  	            <p>You can assign tasks to a group project by selecting a project below. Do not select a project to assign project to group.</p>
+                                <select name="sProject" class="form-control" ng-model="showProject" ng-options="project._id as project.showName for project in gProjects | orderBy:'name'">
+                                    <option value="" selected>--Assign to Group--</option>
                                 </select>
                             </div>
                         </div>
@@ -108,13 +108,21 @@
 		                    <label>Description:</label>
 		                    <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description" required/>
      		            </div>
-	    	            <div class="form-group">
-		                    <div style="display:inline-block; min-height:290px;">
-		      	                <label>Completion Date: </label>
-		                        <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
- 				                <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
-                            </div>
-		                </div>
+                        <div class="form-group has-error">
+                            <p class="help-block" ng-show="assignTask.tName.$error.required && taskSubmitted">
+                                You must enter a description.
+                            </p>
+                        </div>
+		                <div class="form-group" style="display:inline-block; min-height:290px;">
+		      	            <label>Completion Date: </label>
+		                    <datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
+ 				            <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+                        </div>
+                        <div class="form-group has-error">
+                            <p class="help-block" ng-show="assignTask.date.$error.required && taskSubmitted">
+                                Please select a Completion Date.
+                            </p>
+                        </div>
    	                    <div class="form-group">
 		                    <button class="btn btn-primary" type="submit">Assign</button>
 		                </div>
@@ -132,7 +140,7 @@
       	    <div ng-show="projectData" class="well well-lg" ng-repeat="project in gProjects">
 		        <div>Project Name: {{project.showName}}</div>
 		        <div>Status: {{project.showStatus}}</div>
-		        <div>Production Date: {{project.prodDate}}</div>
+		        <div>Production Date: {{project.prodDate | date:'dd/MM/yyyy'}}</div>
 		    </div>
         </tab>
         <tab heading="Production Meeting"><legend id="heading">Current Scheduled Meeting</legend></tab>

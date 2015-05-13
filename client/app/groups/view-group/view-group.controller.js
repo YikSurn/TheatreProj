@@ -14,7 +14,6 @@ angular.module('theatreProjApp')
         $scope.users = users; 
         socket.syncUpdates('user', $scope.users)
     });
-    
 
     /*Displays editor for group names*/
     $scope.enableEditorName = function() {
@@ -126,14 +125,23 @@ angular.module('theatreProjApp')
     }
     $scope.getNames();*/
 
+    /*Checks to see if selected member is already in group*/
+    $scope.checkArray = function(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
     /*Function to add member*/
     $scope.addMember = function(showUsers) {
         $scope.userSubmitted = true;
         if(showUsers) {
             $scope.memberToAdd = showUsers;
-            $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
-            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
-            alert($scope.memberToAdd + " has been added to this group.");
+            if(!$scope.checkArray($scope.memberToAdd, $scope.currGroup.members)) {
+                $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
+                $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+                alert($scope.memberToAdd + " has been added to this group.");
+            } else {
+                alert($scope.memberToAdd + "is already in this group.");
+            }
         };
     }
 
@@ -149,6 +157,7 @@ angular.module('theatreProjApp')
 
     /*Function to assign a new task*/
     $scope.createTask = function(showProject, taskDesc, dt) {
+        $scope.taskSubmitted = true;
         $scope.showProject = showProject;
         $scope.taskDesc = taskDesc;
         $scope.deadline = dt.toDateString();

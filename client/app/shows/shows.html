@@ -20,13 +20,8 @@
                 </div>
                 <div class="form-group">
                     <label>Status:</label>
-               	    <select name="showStatus" class="form-control" ng-model="showStatus" required>
-                        <option value="Proposed" selected>Proposed</option>
-                        <option value="Planned">Planned</option>
-                	    <option value="Confirmed">Confirmed</option>
-            		    <option value="Underway">Underway</option>
-               		    <option value="Concluded">Concluded</option>
-               		    <option value="Archive">Archive</option>
+               	    <select name="showStatus" class="form-control" ng-model="showStatus" ng-options="status.status as status.status for status in statusOptions" required>
+                        <option value="" selected>--Select a status--</option>
            		    </select>
                 </div>
                 <div class="form-group has-error">
@@ -36,9 +31,14 @@
                 </div>
                 <div class="form-group">
                     <label>Group:</label>
-                    <select name="showGroup" class="form-control" ng-model="showGroup">
-                        <option ng-repeat="group in groups | orderBy:'name'" value="{{group._id}}">{{group.name}}</option>
+                    <select name="showGroup" class="form-control" ng-model="showGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>>
+                        <option value="" selected>--Select a group--</option>
                     </select>
+                </div>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="newProject.showGroup.$error.required && submitted">
+                    Please select a Group.
+                    </p>
                 </div>
                 <div class="form-group" style="display:inline-block; min-height:290px;">
 		      		<label>Project Date: </label>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group has-error">
                     <p class="help-block" ng-show="newProject.date.$error.required && submitted">
-                    Please select Project Date.
+                    Please select a Project Date.
                     </p>
                 </div>
                 <div>

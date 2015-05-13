@@ -18,7 +18,7 @@
 <div class="modal-body">
     Group: {{currProject.group_id}}<br/>
     Status: {{currProject.showStatus}}<br/>
-    Production Date: {{currProject.prodDate}}<br/>
+    Production Date: {{currProject.prodDate | date:'dd/MM/yyyy'}}<br/>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="close()">Close</button>
