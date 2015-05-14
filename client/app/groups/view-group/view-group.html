@@ -148,14 +148,14 @@
 		        <div>Production Date: {{project.prodDate | date:'dd/MM/yyyy'}}</div>
 		    </div>
         </tab>
-        <tab heading="Production Meeting"><h3>Current Scheduled Meeting</h3>
+        <tab heading="Production Meeting"><h3>Current Scheduled Meeting(s)</h3>
             <hr>
             <div ng-hide="meetingData">
                 <p>This group has no current scheduled meetings</p>
             </div>
-            <div ng-show="meetingData" class="well well-lg" ng-repeat="meeting in gMeetings">
+            <div ng-show="meetingData" class="well well-lg col-md-4" ng-repeat="meeting in gMeetings">
                 <div>Meeting Name: {{meeting.title}}</div>
-                <div>Date Created: {{meeting.date}}<div>
+                <div>Date Created: {{meeting.date | date:'dd/MM/yyyy'}}</div>
                 <div>Project: {{meeting.show}}</div>
                 <div>Click <a href="/production-meeting/{{currGroup.name}}/{{meeting.title}}" target="_blank">here</a> to view this meeting. </div>
             </div>

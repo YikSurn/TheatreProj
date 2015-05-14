@@ -75,9 +75,11 @@ angular.module('theatreProjApp')
         $scope.meetingData = true;
         $scope.gMeetings = [];  
         for (meeting in $scope.prodMeetings) {
-            if ($scope.prodMeetings[meeting].group._id == $scope.currGroup._id) {
-                $scope.gMeetings[$scope.gMeetings.length] = $scope.prodMeetings[meeting];
-            }
+            if ($scope.prodMeetings[meeting].group) {
+                if ($scope.prodMeetings[meeting].group._id == $scope.currGroup._id) {
+                    $scope.gMeetings[$scope.gMeetings.length] = $scope.prodMeetings[meeting];
+                }
+            } else {continue;}
         }
         if($scope.gMeetings.length === 0) {
             $scope.meetingData = false;
