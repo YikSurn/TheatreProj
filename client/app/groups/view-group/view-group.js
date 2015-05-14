@@ -4,7 +4,7 @@ angular.module('theatreProjApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('group', {
-        url: '/groups/{name}',
+        url: '/groups/:name',
         templateUrl: 'app/groups/view-group/view-group.html',
         controller: 'ViewGroupCtrl',
         resolve: {

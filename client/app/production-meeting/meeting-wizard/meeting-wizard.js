@@ -4,7 +4,7 @@ angular.module('theatreProjApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('meeting-wizard', {
-        url: '/production-meeting/{groupName}/{meetingTitle}/wizard',
+        url: '/production-meeting/:groupName/:meetingTitle/wizard',
         abstract: true,
         templateUrl: 'app/production-meeting/meeting-wizard/meeting-wizard.html',
         controller: 'MeetingWizardCtrl',

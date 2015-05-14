@@ -1,19 +1,34 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div id="preface" class="preface">
+<br />
 
-  <div class="preface-image">
-    <img class="image-full" src="assets/images/UHT_Venue.jpg">
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block" ui-sref="admin" ng-show="isAdmin()">Admin</button>
+    </div>
   </div>
 
-  <div class="preface-caption">
-    <div class="container">
-      <div class="col-md-12">
-        <h1 style="text-align:center; font-size: 3vw;"><b>Revolutionary theatre management system!</b></h1>
-      </div><br>
+  <br />
+
+  <div class="row">
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block" ui-sref="groups">Groups</button>
+    </div>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block" ui-sref="venue-allocation">Venue allocation</button>
+    </div>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block" ui-sref="shows">Shows</button>
+    </div>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block" ui-sref="production-meeting">Production meeting</button>
     </div>
   </div>
 
 </div>
+
+<br />
 
 <div ng-include="'components/footer/footer.html'"></div>

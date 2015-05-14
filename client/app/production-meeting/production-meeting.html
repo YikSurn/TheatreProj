@@ -2,9 +2,11 @@
 
 <div class="container">
 
-  <div>
-    <div ng-click="createNewProdMeeting()">
-      <button class="btn btn-default">New production meeting</button>
+  <br />
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-3 col-md-3">
+      <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
       <br /><br />
     </div>
   </div>
@@ -22,6 +24,7 @@
       <div class="panel-body">
         Show: {{meeting.show}}<br />
         Theatre Group: {{meeting.group.name}}
+        <button class="btn btn-sm btn-default" ui-sref="group({ name: meeting.group.name })">View Group</button>
       </div>
     </div>
   </div>

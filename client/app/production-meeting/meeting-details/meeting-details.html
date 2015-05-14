@@ -2,18 +2,53 @@
 
 <div class="container">
 
-  <!-- <p> Data: {{prodMeeting}} </p> -->
-
-  <div class="col-md-12">
-    <h3><u><b>{{prodMeeting.title}}</b> of {{prodMeeting.group.name}} theatre group</u></h3>
+  <div class="row">
+    <h2 style="text-align: center;"><u><b>{{prodMeeting.title}}</b> of {{prodMeeting.group.name}} theatre group</u></h2>
     <br />
   </div>
 
-  <div class="col-md-12">
-    <p>{{prodMeeting.info}}</p>
-    <a href="/production-meeting/{{prodMeeting.group.name}}/{{prodMeeting.title}}/wizard">
-      <button class="btn btn-primary">Edit</button>
-    </a>
+  <div class="row">
+    <button class="btn btn-primary" 
+      ui-sref="meeting-wizard.main({ groupName: prodMeeting.group.name, meetingTitle: prodMeeting.title })">Edit
+    </button>
+  </div>
+
+  <br />
+
+  <div>
+    <div class="panel panel-default" ng-show="prodMeeting.info.attending">
+      <div class="panel-heading">
+        <h3>Attending</h3>
+      </div>
+      <div class="panel-body">
+        <div ng-show="prodMeeting.info.attending.creativeTeam.name">
+          <h4>Creative Team</h4>
+          <label>Names: </label>
+          <p>{{prodMeeting.info.attending.creativeTeam.name}}</p>
+        </div>
+
+        <div ng-show="prodMeeting.info.attending.productionTeam.name">
+          <h4>Production Team</h4>
+          <label>Names and Roles: </label>
+          <p>{{prodMeeting.info.attending.productionTeam.name}}</p>
+        </div>
+
+        <div ng-show="prodMeeting.info.attending.cast.name">
+          <h4>Cast</h4>
+          <label>Names and Roles: </label>
+          <p>{{prodMeeting.info.attending.cast.name}}</p>
+        </div>
+
+        <div ng-show="prodMeeting.info.attending.musicians.name">
+          <h4>Musicians</h4>
+          <label>Names and Roles: </label>
+          <p>{{prodMeeting.info.attending.musicians.name}}</p>
+        </div>
+        
+      </div>
+    </div>
+
+
   </div>
 
 </div>
