@@ -15,7 +15,7 @@
           	    </p>
             </div>
             <button class="btn btn-primary" type="submit">Save</button>
-            <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
         </form>
     </div>
 </div> 
@@ -34,7 +34,7 @@
                 <form name="editWeb" class="form-inline" ng-submit="saveWebsite(newWebsite)" novalidate>
                     <input type="text" class="form-control" name="wURL" ng-model="newWebsite" ng-show="editorEnabledWebsite" placeholder="Website URL"/>
                     <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
                 </form>
             </div>
             <div>Facebook: 
@@ -47,7 +47,7 @@
                 <form name="editFB" class="form-inline" ng-submit="saveFacebook(newFacebook)" novalidate>
                     <input type="text" class="form-control" name="fURL" ng-model="newFacebook" ng-show="editorEnabledFaceBook" placeholder="Facebook URL"/>
                     <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
                 </form>
             </div>
             <div>Social Media: 
@@ -60,7 +60,7 @@
                 <form name="editMedia" class="form-inline" ng-submit="saveMedia(newMedia)" novalidate>
                     <input type="text" class="form-control" name="mURL" ng-model="newMedia" ng-show="editorEnabledMedia" placeholder="Media URL"/>
                     <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
                 </form>
             </div>
             <hr>

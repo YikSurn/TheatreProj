@@ -26,6 +26,29 @@ angular.module('theatreProjApp')
         socket.syncUpdates('user', $scope.users)
     });
 
+    //Function to get all groups
+    $http.get('api/groups').success(function(groups) {
+        $scope.groups = groups;
+        $scope.getGroupNames();
+        socket.syncUpdates('group', $scope.groups, function(event, group, groups) {
+            $scope.getGroupNames();
+        });
+    });
+
+    //Gets the name of each group and places into an array.
+    $scope.getGroupNames = function() {
+        var currGroup;
+        $scope.groupNames = [];
+        for(currGroup in $scope.groups) {
+            $scope.groupNames[$scope.groupNames.length] = $scope.groups[currGroup].name;
+        }
+    }
+
+    //Checks to see if group to be created already exists
+    $scope.checkArray = function(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
     //Displays editor for group names*/
     $scope.enableEditorName = function() {
         $scope.editorEnabledName = true;
@@ -166,11 +189,14 @@ angular.module('theatreProjApp')
     $scope.saveName = function() {
         $scope.submitted = true;
         if($scope.name.$valid) {
-            $scope.name.$setPristine();
-            $scope.currName = $scope.newName;
-            $scope.currGroup.name = $scope.currName;
-            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
-            $scope.disableEditor();
+            if(!$scope.checkArray($scope.newName, $scope.groupNames)) {
+                $scope.currName = $scope.newName;
+                $scope.currGroup.name = $scope.currName;
+                $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+                $scope.disableEditor();
+            } else {
+                alert($scope.newName + " already exists as a group name, please try a different name");
+            }
         }
     };
 
