@@ -7,13 +7,20 @@ angular.module('theatreProjApp')
     // ...
 
     var o = {
-      groups: []
+      groups: [],
+      group: {}
     };
 
     // Public API here
     o.getAll = function() {
       $http.get('api/groups').success(function(data) {
         angular.copy(data, o.groups);
+      });
+    };
+
+    o.get = function(name) {
+      return $http.get('api/groups/' + name).success(function (data) {
+        angular.copy(data, o.group);
       });
     };
 

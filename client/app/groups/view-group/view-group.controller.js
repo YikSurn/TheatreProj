@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, User, group) {
-    $scope.currGroup = group;
+  .controller('ViewGroupCtrl', function ($scope, $http, socket, Auth, User, theatreGroups) {
+
+    $scope.currGroup = theatreGroups.group;
     $scope.editorEnabledName = false;
     $scope.userIsCollapsed=  true;
     $scope.viewIsCollapsed = true;
@@ -193,8 +194,4 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Closes the modal dialog*/
-    $scope.close = function () {
-        $modalInstance.close();
-    };
 });
