@@ -24,14 +24,51 @@
         <tab heading="General"><h3>Group Information</h3>
         <hr>
             <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
-            <div>Website: <a href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
-            <div>Facebook: <a href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
-            <div>Social Media: <a href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
+            <div>Website:
+                <a ng-hide="editorEnabledWebsite" href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a>
+                <button ng-hide="editorEnabledWebsite" class="btn btn-primary btn-xs" ng-click="enableEditorWebsite()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledWebsite">
+                <form name="editWeb" class="form-inline" ng-submit="saveWebsite(newWebsite)" novalidate>
+                    <input type="text" class="form-control" name="wURL" ng-model="newWebsite" ng-show="editorEnabledWebsite" placeholder="Website URL"/>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                </form>
+            </div>
+            <div>Facebook: 
+                <a ng-hide="editorEnabledFaceBook" href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a>
+                <button ng-hide="editorEnabledFaceBook" class="btn btn-primary btn-xs" ng-click="enableEditorFacebook()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledFaceBook">
+                <form name="editFB" class="form-inline" ng-submit="saveFacebook(newFacebook)" novalidate>
+                    <input type="text" class="form-control" name="fURL" ng-model="newFacebook" ng-show="editorEnabledFaceBook" placeholder="Facebook URL"/>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                </form>
+            </div>
+            <div>Social Media: 
+                <a ng-hide="editorEnabledMedia" href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a>
+                <button ng-hide="editorEnabledMedia" class="btn btn-primary btn-xs" ng-click="enableEditorMedia()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledMedia">
+                <form name="editMedia" class="form-inline" ng-submit="saveMedia(newMedia)" novalidate>
+                    <input type="text" class="form-control" name="mURL" ng-model="newMedia" ng-show="editorEnabledMedia" placeholder="Media URL"/>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+                </form>
+            </div>
             <hr>
             <div>Total Members: {{currGroup.members.length}}</div>
             <div>Total Assigned Tasks: {{iTasks.length}}</div>
             <div>Total Completed Tasks: {{cTasks.length}}</div>
             <div>Total Current Projects: {{gProjects.length}}</div>
+            <div>Total Upcoming Meetings: {{gMeetings.length}}</div>
         </tab>
         <tab heading="Members"><h3>Group Members</h3>
 

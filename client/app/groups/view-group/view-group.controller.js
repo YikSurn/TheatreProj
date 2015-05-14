@@ -4,25 +4,74 @@ angular.module('theatreProjApp')
   .controller('ViewGroupCtrl', function ($scope, $http, socket, Auth, User, theatreGroups) {
 
     $scope.currGroup = theatreGroups.group;
+   
+    //Handles variable set ups for editors
     $scope.editorEnabledName = false;
+    $scope.editorEnabledFaceBook = false;
+    $scope.editorEnabledMedia = false;
+    $scope.editorEnabledWebsite = false;
+
+    //Handles variable set ups for button collapses
     $scope.userIsCollapsed=  true;
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
+    
+    //An array to store all group member names
     $scope.groupMembers = [];
 
+    //Get all users
     $http.get('api/users').success(function(users) {
         $scope.users = users; 
         socket.syncUpdates('user', $scope.users)
     });
 
-    /*Displays editor for group names*/
+    //Displays editor for group names*/
     $scope.enableEditorName = function() {
         $scope.editorEnabledName = true;
         $scope.newName = $scope.currGroup.name;
     };
 
-    /*Display not provided fields*/
+    //Displays editor for group Facebook details
+    $scope.enableEditorFacebook = function() {
+        $scope.editorEnabledFaceBook = true;
+        $scope.newName = $scope.currGroup.name;
+    };
+
+    //Displays editor for group Social Media details
+    $scope.enableEditorMedia = function() {
+        $scope.editorEnabledMedia = true;
+        $scope.newName = $scope.currGroup.name;
+    };
+
+    //Displays editor for group Website details
+    $scope.enableEditorWebsite = function() {
+        $scope.editorEnabledWebsite = true;
+        $scope.newWebsite = $scope.currGroup.websiteURL;
+    };
+
+    $scope.saveWebsite = function(website) {
+        $scope.currWebsite = website;
+        $scope.currGroup.websiteURL = $scope.currWebsite;
+        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        $scope.disableEditor();
+    };
+
+    $scope.saveFacebook = function(facebook) {
+        $scope.currFacebook = facebook;
+        $scope.currGroup.facebookURL = $scope.currFacebook;
+        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        $scope.disableEditor();
+    };
+
+    $scope.saveMedia = function(media) {
+        $scope.currMedia = media;
+        $scope.currGroup.socialMediaURL = $scope.currMedia;
+        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        $scope.disableEditor();
+    };
+
+    //Display not provided fields
     $scope.providedCheck = function() {
         if(!$scope.currGroup.facebookURL) {
             $scope.currGroup.facebookURL = "None Provided";
@@ -125,9 +174,12 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Disables editor for group names*/
+    /*Disables all editors*/
     $scope.disableEditor = function() {
         $scope.editorEnabledName = false;
+        $scope.editorEnabledFaceBook = false;
+        $scope.editorEnabledMedia = false;
+        $scope.editorEnabledWebsite = false;
     };
 
     /*Function to get member names of users in group
