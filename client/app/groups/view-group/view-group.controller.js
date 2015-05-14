@@ -1,18 +1,39 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, group) {
+  .controller('ViewGroupCtrl', function ($scope, $modalInstance, $http, socket, Auth, User, group) {
     $scope.currGroup = group;
     $scope.editorEnabledName = false;
+    $scope.userIsCollapsed=  true;
     $scope.viewIsCollapsed = true;
     $scope.assignIsCollapsed = true;
     $scope.completeIsCollapsed = true;
-    
+    $scope.groupMembers = [];
+
+    $http.get('api/users').success(function(users) {
+        $scope.users = users; 
+        socket.syncUpdates('user', $scope.users)
+    });
+
     /*Displays editor for group names*/
     $scope.enableEditorName = function() {
-      $scope.editorEnabledName = true;
-      $scope.newName = $scope.currGroup.name;
+        $scope.editorEnabledName = true;
+        $scope.newName = $scope.currGroup.name;
     };
+
+    /*Display not provided fields*/
+    $scope.providedCheck = function() {
+        if(!$scope.currGroup.facebookURL) {
+            $scope.currGroup.facebookURL = "None Provided";
+        }
+        if(!$scope.currGroup.socialMediaURL) {
+            $scope.currGroup.socialMediaURL = "None Provided";
+        }
+        if(!$scope.currGroup.websiteURL) {
+            $scope.currGroup.websiteURL = "None Provided";
+        }
+    }
+    $scope.providedCheck();
 
     /*Get tasks for selected group and organize tasks into completed and incompleted*/
     $scope.getTasks = function() {
@@ -22,13 +43,13 @@ angular.module('theatreProjApp')
         $scope.iTasks = [];
         $scope.cTasks = [];
         for (task in $scope.tasks) {
-          if (($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[task].status === "Incomplete")) {
-            $scope.iTasks[$scope.iTasks.length] = $scope.tasks[task];
-            $scope.iTaskData = true;
-          } else if ($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) {
-            $scope.cTasks[$scope.cTasks.length] = $scope.tasks[task];
-            $scope.cTaskData = true;
-          }
+            if (($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) && ($scope.tasks[task].status === "Incomplete")) {
+                $scope.iTasks[$scope.iTasks.length] = $scope.tasks[task];
+                $scope.iTaskData = true;
+            } else if ($scope.tasks[task].assignedToUser_id === $scope.currGroup._id) {
+                $scope.cTasks[$scope.cTasks.length] = $scope.tasks[task];
+                $scope.cTaskData = true;
+            }
         }
     };
 
@@ -38,9 +59,9 @@ angular.module('theatreProjApp')
         $scope.projectData = true;
         $scope.gProjects = [];  
         for (proj in $scope.projectshows) {
-          if (($scope.projectshows[proj].group_id === $scope.currGroup._id)) {
-            $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[proj];
-          }
+            if (($scope.projectshows[proj].group_id === $scope.currGroup._id)) {
+                $scope.gProjects[$scope.gProjects.length] = $scope.projectshows[proj];
+            }
         }
         if($scope.gProjects.length === 0) {
             $scope.projectData = false;
@@ -67,31 +88,81 @@ angular.module('theatreProjApp')
 
     /*Function to save Group Name edits*/
     $scope.saveName = function() {
-      $scope.name.$setPristine();
-      $scope.currName = $scope.newName;
-      $scope.currGroup.name = $scope.currName;
-      $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
-      $scope.disableEditor();
+        $scope.submitted = true;
+        if($scope.name.$valid) {
+            $scope.name.$setPristine();
+            $scope.currName = $scope.newName;
+            $scope.currGroup.name = $scope.currName;
+            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+            $scope.disableEditor();
+        }
     };
 
     /*Disables editor for group names*/
     $scope.disableEditor = function() {
-      $scope.editorEnabledName = false;
+        $scope.editorEnabledName = false;
     };
+
+    /*Function to get member names of users in group
+    $scope.getNames = function() {
+        if($scope.currGroup.members) {
+            $scope.test = "hello";
+            var position;
+            var user;
+            for(position in $scope.currGroup.members) {
+                for(user in $scope.users) {
+                    $scope.test = "hi";
+                    if($scope.currGroup.members[position] === $scope.users[user]._id) {
+                        $scope.test = "made it!";
+                        $scope.groupMembers[$scope.groupMembers.length] = "hi";
+                        {break;}
+                    }
+                }
+            }
+        } else {
+            $scope.groupMembers = "This group does not have any members to show.";
+        }
+    }
+    $scope.getNames();*/
+
+    /*Checks to see if selected member is already in group*/
+    $scope.checkArray = function(value, array) {
+        return array.indexOf(value) > -1;
+    }
+
+    /*Function to add member*/
+    $scope.addMember = function(showUsers) {
+        $scope.userSubmitted = true;
+        if(showUsers) {
+            $scope.memberToAdd = showUsers;
+            if(!$scope.checkArray($scope.memberToAdd, $scope.currGroup.members)) {
+                $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
+                $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+                alert($scope.memberToAdd + " has been added to this group.");
+            } else {
+                alert($scope.memberToAdd + "is already in this group.");
+            }
+        };
+    }
 
     /*Function to remove group members*/
     $scope.removeMember = function(member) {
-        $scope.position = $scope.currGroup.members.indexOf(member);
-        $scope.currGroup.members.splice($scope.position, 1);
-        $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        var confRemove = confirm("Are you sure you want to remove " + member +" from this group?");
+        if (confRemove == true) {
+            $scope.position = $scope.currGroup.members.indexOf(member);
+            $scope.currGroup.members.splice($scope.position, 1);
+            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+        }
     };
 
     /*Function to assign a new task*/
-    $scope.createTask = function(taskDesc, dt, showProject) {
+    $scope.createTask = function(showProject, taskDesc, dt) {
+        $scope.taskSubmitted = true;
+        $scope.showProject = showProject;
         $scope.taskDesc = taskDesc;
         $scope.deadline = dt.toDateString();
-        if(showProject) {
-            $scope.show_id = showProject; 
+        if($scope.showProject) {
+            $scope.show_id = $scope.showProject; 
         } else {
             $scope.show_id = "No project assigned";
         }
@@ -103,8 +174,9 @@ angular.module('theatreProjApp')
 
     /*Ensures date must be selected from todays date*/
     $scope.toggleMin = function() {
-      $scope.minDate = $scope.minDate ? null : new Date();
+        $scope.minDate = $scope.minDate ? null : new Date();
     };
+    
     $scope.toggleMin();
 
     /*Function to change task to complete*/
@@ -113,9 +185,9 @@ angular.module('theatreProjApp')
         $http.put('api/tasks/' + task._id, task);
     }
 
-    /*Function to remove a current task*/
-    $scope.removeTask = function(task) {
-        var confTask = confirm("Are you sure you want to remove this task?");
+    /*Function to delete a current task*/
+    $scope.deleteTask = function(task) {
+        var confTask = confirm("Are you sure you want to delete this task?");
         if (confTask == true) {
             $http.delete('api/tasks/' + task._id);
         }

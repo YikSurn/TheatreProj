@@ -3,6 +3,7 @@
 <div class="container" ng-hide="isAdmin()">
 	<p>The groups route is restricted to users with the 'admin' role.</p>
 </div>
+
 <div class="container" ng-show="isAdmin()">
 	<button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Group</button>
 	<div collapse="createIsCollapsed">
@@ -19,15 +20,30 @@
           		</div>
 		        <div class="form-group">
 		       		<label>Website:</label>
-		        	<input type="text" class="form-control" name="gURL" ng-model="websiteURL" placeholder="Website URL"/>
+		        	<input type="url" class="form-control" name="gURL" ng-model="websiteURL" placeholder="Website URL"/>
+		        </div>
+		        <div class = "form-group has-error">
+		        	<p class="help-block" ng-show="cGroup.gURL.$error.url && submitted">
+		        	That is not a valid URL, URL's must begin with http://
+		        	</p>
 		        </div>
 		        <div class="form-group">
 		        	<label>Facebook:</label>
-		        	<input type="text" class="form-control" name="gFacebook" ng-model="facebookURL" placeholder="Facebook URL"/>
+		        	<input type="url" class="form-control" name="gFacebook" ng-model="facebookURL" placeholder="Facebook URL"/>
+		        </div>
+		        <div class = "form-group has-error">
+		        	<p class="help-block" ng-show="cGroup.gFacebook.$error.url && submitted">
+		        	That is not a valid URL, URL's must begin with http://
+		        	</p>
 		        </div>
 		        <div class="form-group">
 		        	<label>Social Media:</label>
-		        	<input type="text" class="form-control" name="gMedia" ng-model="mediaURL" placeholder="Social Media URL"/>
+		        	<input type="url" class="form-control" name="gMedia" ng-model="mediaURL" placeholder="Social Media URL"/>
+		        </div>
+		        <div class = "form-group has-error">
+		        	<p class="help-block" ng-show="cGroup.gMedia.$error.url && submitted">
+		        	That is not a valid URL, URL's must begin with http://
+		        	</p>
 		        </div>
 		        <div class="form-group">
 		        	<button class="btn btn-primary" type="submit">Create Group</button>
@@ -44,20 +60,18 @@
 		<p>There are currently no groups to display.</p>
 	</div>
 	<div ng-show="groupData && groupsLoaded">
-		<div class="form-group">
+		<div class="form-group col-md-6">
 			<div class="input-group">
 				<input class="form-control" ng-model="searchText" type="search" placeholder="Search groups">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
 			</div>
 		</div>
-		<div class="form-group">	
-			<div class="input-group">
-				<label>Sort by:</label>
-				<select name="groupCat" class="form-control" ng-model="groupCategory" id="groupCategory">
-                    <option value="name">Group Name</option>
-                    <option value="establishedDate">Established Date</option>
-                </select>
-			</div>
+		<div class="form-group form-inline col-md-6">	
+			<label>Sort by:</label>
+			<select name="groupCat" class="form-control" ng-model="groupCategory" id="groupCategory">
+                <option value="name">Group Name</option>
+                <option value="establishedDate">Established Date</option>
+            </select>
 		</div>
 		<hr>
     	<div class="col-md-4" ng-show="groupData" ng-repeat="group in groups | orderBy:groupCategory | filter:{name:searchText}" id="group">
@@ -66,12 +80,9 @@
 					<h4>{{group.name}}</h4>
 				</div>
 				<div class="panel-body">
-					<div>
-						<progressbar max="100" value="50" type="success"><b>Progress</b></progressbar>
-					</div>
 					<div class="well well-sm" id="inner-elements">
-						<button class="btn btn-primary" ng-click="open(group)">View</button>
-						<button class="btn btn-danger" ng-click="remove(group)">Remove</button>
+						<button class="btn btn-primary" ng-click="open(group)">Manage</button>
+						<button class="btn btn-danger" ng-click="delete(group)">Delete</button>
 					</div>
 				</div>
 			</div>

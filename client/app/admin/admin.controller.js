@@ -25,7 +25,7 @@ angular.module('theatreProjApp')
         var modalInstance = $modal.open({
             templateUrl: 'app/admin/view-profile/view-profile.html',
             controller: 'ViewProfileCtrl',
-            size: "lg",
+            size: "md",
             resolve: {
                 user: function () {
                     return user; 

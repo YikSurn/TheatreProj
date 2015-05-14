@@ -8,38 +8,47 @@
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
 	<div collapse="createIsCollapsed">
         <div class="well well-lg">
-            <form name="newProject" role="form" ng-submit="createProject(showName, showGroup, showStatus, dt)" class="form-horizontal" novalidate>
+            <form name="newProject" ng-submit="createProject()" novalidate>
                 <div class="form-group">
-                    <label for="showName" class="col-xs-3 col-sm-2 control-label">Show Name:</label>
-                    <div class="col-xs-3">
-                        <input type="text" class="form-control" name="name" ng-model="showName" id="showName" placeholder="Working Title" required/>
-                    </div>
-                	<label for="showStatus" class="col-xs-3 col-sm-2 control-label">Status:</label>
-                	<div class="col-xs-3">
-                	    <select name="showStatus" class="form-control" ng-model="showStatus" id="showStatus" required>
-                    		<option value="Proposed" selected>Proposed</option>
-                    		<option value="Planned">Planned</option>
-                    		<option value="Confirmed">Confirmed</option>
-                    		<option value="Underway">Underway</option>
-                    		<option value="Concluded">Concluded</option>
-                    		<option value="Archive">Archive</option>
-                		</select>
-                    </div>
+                    <label>Project Name:</label>
+                    <input type="text" class="form-control" name="name" ng-model="showName" placeholder="Working Title" required/>
+                </div>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="newProject.name.$error.required && submitted">
+                    Please enter a Project Name (Working Title).
+                    </p>
                 </div>
                 <div class="form-group">
-                    <label for="showGroup" class="col-xs-3 col-sm-2 control-label">Group:</label>
-                    <div class="col-xs-3">
-                        <select name="showGroup" class="form-control" ng-model="showGroup" id="showGroup" required>
-                            <option ng-repeat="group in groups | orderBy:'name'" value="{{group._id}}">{{group.name}}</option>
-                        </select>
-                    </div>
+                    <label>Status:</label>
+               	    <select name="showStatus" class="form-control" ng-model="showStatus" ng-options="status.status as status.status for status in statusOptions" required>
+                        <option value="" selected>--Select a status--</option>
+           		    </select>
+                </div>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="newProject.showStatus.$error.required && submitted">
+                    Please select a Project Status.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Group:</label>
+                    <select name="showGroup" class="form-control" ng-model="showGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>>
+                        <option value="" selected>--Select a group--</option>
+                    </select>
+                </div>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="newProject.showGroup.$error.required && submitted">
+                    Please select a Group.
+                    </p>
                 </div>
                 <div class="form-group" style="display:inline-block; min-height:290px;">
-		      		<label for="showDate" class="col-xs-3 col-sm-5 control-label">Show Date: </label>
-		      		<div class="col-xs-9">
-		        	    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" id="showDate"></datepicker>
- 					    <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
- 					</div>
+		      		<label>Project Date: </label>
+		        	<datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
+ 					<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+                </div>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="newProject.date.$error.required && submitted">
+                    Please select a Project Date.
+                    </p>
                 </div>
                 <div>
                 	<button class="btn btn-primary" type="submit">Create Project</button>
@@ -69,8 +78,8 @@
 			<div class="panel-body">
 				<div class="well well-sm" id="inner-elements">
 					<div>{{project.showName}}, {{project.showStatus}}</div>
-					<button class="btn btn-primary" ng-click="open(project)">View</button>
-					<button class="btn btn-danger" ng-click="remove(project)">Remove</button>
+					<button class="btn btn-primary" ng-click="open(project)">Manage</button>
+					<button class="btn btn-danger" ng-click="delete(project)">Delete</button>
 				</div>
 			</div>
 		</div>
