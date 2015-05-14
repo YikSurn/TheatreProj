@@ -69,12 +69,36 @@ angular.module('theatreProjApp')
         }
     };
 
+    /*Get meetings for selected group*/
+    $scope.getMeetings = function() {
+        var meeting;
+        $scope.meetingData = true;
+        $scope.gMeetings = [];  
+        for (meeting in $scope.prodMeetings) {
+            if ($scope.prodMeetings[meeting].group._id == $scope.currGroup._id) {
+                $scope.gMeetings[$scope.gMeetings.length] = $scope.prodMeetings[meeting];
+            }
+        }
+        if($scope.gMeetings.length === 0) {
+            $scope.meetingData = false;
+        }
+    };
+
     /*Get all tasks*/
     $http.get('api/tasks').success(function(tasks) {
         $scope.tasks = tasks;
         $scope.getTasks();
         socket.syncUpdates('task', $scope.tasks, function(event, task, tasks) {
             $scope.getTasks(); 
+        });
+    });
+
+    /*Get all production meetings*/
+    $http.get('api/prodmeetings').success(function(prodmeetings) {
+        $scope.prodMeetings = prodmeetings;
+        $scope.getMeetings();
+        socket.syncUpdates('prodmeeting', $scope.prodMeetings, function(event, prodmeeting, prodmeetings) {
+            $scope.getMeetings();
         });
     });
 
@@ -140,8 +164,9 @@ angular.module('theatreProjApp')
                 $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
                 $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
                 alert($scope.memberToAdd + " has been added to this group.");
+                $window.location.reload()
             } else {
-                alert($scope.memberToAdd + "is already in this group.");
+                alert($scope.memberToAdd + " is already in this group.");
             }
         };
     }
