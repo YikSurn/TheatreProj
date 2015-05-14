@@ -71,7 +71,6 @@
             <div>Total Upcoming Meetings: {{gMeetings.length}}</div>
         </tab>
         <tab heading="Members"><h3>Group Members</h3>
-
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
             <div collapse="!usersIsCollapsed">
                 <div class="well well-lg">
@@ -93,6 +92,9 @@
             </div>
             <hr>
             <div><label>Current Members:</label></div>
+            <div ng-hide="currGroup.members.length > 0">
+                <p>This group has no members.</p>
+            </div>
             <div ng-repeat="member in currGroup.members"> {{member}} 
                 <button class="btn btn-danger btn-xs" ng-click="removeMember(member)">Remove Member</button>
             </div>

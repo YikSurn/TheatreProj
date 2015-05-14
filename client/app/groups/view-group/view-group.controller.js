@@ -85,7 +85,7 @@ angular.module('theatreProjApp')
     }
     $scope.providedCheck();
 
-    /*Get tasks for selected group and organize tasks into completed and incompleted*/
+    //Get tasks for selected group and organize tasks into completed and incompleted
     $scope.getTasks = function() {
         var task;
         $scope.iTaskData = false;
@@ -103,7 +103,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Get projects for selected group*/
+    //Get projects for selected group
     $scope.getProjects = function() {
         var proj;
         $scope.projectData = true;
@@ -118,7 +118,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Get meetings for selected group*/
+    //Get meetings for selected group
     $scope.getMeetings = function() {
         var meeting;
         $scope.meetingData = true;
@@ -135,7 +135,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Get all tasks*/
+    //Get all tasks
     $http.get('api/tasks').success(function(tasks) {
         $scope.tasks = tasks;
         $scope.getTasks();
@@ -144,7 +144,7 @@ angular.module('theatreProjApp')
         });
     });
 
-    /*Get all production meetings*/
+    //Get all production meetings
     $http.get('api/prodmeetings').success(function(prodmeetings) {
         $scope.prodMeetings = prodmeetings;
         $scope.getMeetings();
@@ -153,7 +153,7 @@ angular.module('theatreProjApp')
         });
     });
 
-    /*Get all projects*/
+    //Get all projects
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
         $scope.getProjects();
@@ -162,7 +162,7 @@ angular.module('theatreProjApp')
         });
     });
 
-    /*Function to save Group Name edits*/
+    //Function to save Group Name edits
     $scope.saveName = function() {
         $scope.submitted = true;
         if($scope.name.$valid) {
@@ -174,7 +174,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Disables all editors*/
+    //Disables all editors
     $scope.disableEditor = function() {
         $scope.editorEnabledName = false;
         $scope.editorEnabledFaceBook = false;
@@ -204,12 +204,12 @@ angular.module('theatreProjApp')
     }
     $scope.getNames();*/
 
-    /*Checks to see if selected member is already in group*/
+    //Checks to see if selected member is already in group
     $scope.checkArray = function(value, array) {
         return array.indexOf(value) > -1;
     }
 
-    /*Function to add member*/
+    //Function to add member
     $scope.addMember = function(showUsers) {
         $scope.userSubmitted = true;
         if(showUsers) {
@@ -225,7 +225,7 @@ angular.module('theatreProjApp')
         };
     }
 
-    /*Function to remove group members*/
+    //Function to remove group members
     $scope.removeMember = function(member) {
         var confRemove = confirm("Are you sure you want to remove " + member +" from this group?");
         if (confRemove == true) {
@@ -235,7 +235,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Function to assign a new task*/
+    //Function to assign a new task
     $scope.createTask = function(showProject, taskDesc, dt) {
         $scope.taskSubmitted = true;
         $scope.showProject = showProject;
@@ -252,20 +252,20 @@ angular.module('theatreProjApp')
         alert("Task Created");
     };
 
-    /*Ensures date must be selected from todays date*/
+    //Ensures date must be selected from todays date
     $scope.toggleMin = function() {
         $scope.minDate = $scope.minDate ? null : new Date();
     };
     
     $scope.toggleMin();
 
-    /*Function to change task to complete*/
+    //Function to change task to complete
     $scope.changeStatus = function(task) {
         task.status = "Completed";
         $http.put('api/tasks/' + task._id, task);
     }
 
-    /*Function to delete a current task*/
+    //Function to delete a current task
     $scope.deleteTask = function(task) {
         var confTask = confirm("Are you sure you want to delete this task?");
         if (confTask == true) {
