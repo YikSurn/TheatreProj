@@ -5,9 +5,9 @@ angular.module('theatreProjApp')
 		/* independent variables */
 		$scope.r = $(window).width() / 2;
 		$scope.rotation = 0;
-		$scope.panelCount = 0;
-		$scope.panels = [];
-		$scope.currentPanelIndex = 0;
+		$scope.count = 0;
+		$scope.cubes = [];
+		$scope.currentCubeIndex = 0;
 
 		/* The following functions return a style object for the various
 		parts of the carousel. Because of their dependence on dynamic scope
@@ -31,51 +31,51 @@ angular.module('theatreProjApp')
 			};
 		};
 
-		/* Rotates the carousel to present the panel at panelIndex at the front. */
-		$scope.switchToPanel = function (panelIndex) {
-			if (panelIndex === $scope.currentPanelIndex) {
+		/* Rotates the carousel to present the cube at currentCubeIndex at the front. */
+		$scope.switchTo = function (cubeIndex) {
+			if (cubeIndex === $scope.currentCubeIndex) {
 				return;
 			}
 
-			var indexDelta = Math.abs($scope.currentPanelIndex - panelIndex);
-			var directionFactor = (panelIndex > $scope.currentPanelIndex)? 1 : -1;
+			var indexDelta = Math.abs($scope.currentCubeIndex - cubeIndex);
+			var directionFactor = (cubeIndex > $scope.currentCubeIndex)? 1 : -1;
 
-			if (indexDelta > $scope.panelCount/2) {
-				indexDelta = $scope.panelCount - indexDelta;
+			if (indexDelta > $scope.count/2) {
+				indexDelta = $scope.count - indexDelta;
 				directionFactor *= -1;
 			}
 
 			$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
-			$scope.currentPanelIndex = panelIndex;
+			$scope.currentCubeIndex = cubeIndex;
 		};
 
-		/* Initializes the carousel with a panel for each group in groups. */
+		/* Initializes the carousel with a cube for each group in groups. */
 		var init = function (groups) {
-			$scope.panels = [];
+			$scope.cubes = [];
 			var circumference = 2 * Math.PI * $scope.r;
-			$scope.panelCount = groups.length;
-			$scope.carouselContainerLength = circumference / $scope.panelCount / 4;
-			$scope.panelMargin = $scope.carouselContainerLength * 0.03;
-			$scope.panelLength = $scope.carouselContainerLength - 2*$scope.panelMargin;
-			$scope.degDelta = 360 / $scope.panelCount;
+			$scope.count = groups.length;
+			$scope.carouselContainerLength = circumference / $scope.count / 4;
+			$scope.cubeMargin = $scope.carouselContainerLength * 0.03;
+			$scope.cubeLength = $scope.carouselContainerLength - 2*$scope.cubeMargin;
+			$scope.degDelta = 360 / $scope.count;
 
-			for (var i = 0; i < $scope.panelCount; i++) {
-				var panel = {};
-				panel.cube = {
+			for (var i = 0; i < $scope.count; i++) {
+				var cube = {};
+				cube.cubeStyle = {
 					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
 				};
-				panel.front = {
-					width: $scope.panelLength + 'px',
-					height: $scope.panelLength + 'px',
-					left: $scope.panelMargin + 'px',
-					right: $scope.panelMargin + 'px',
-					top: $scope.panelMargin + 'px',
+				cube.frontStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					left: $scope.cubeMargin + 'px',
+					right: $scope.cubeMargin + 'px',
+					top: $scope.cubeMargin + 'px',
 					'vertical-align': 'middle',
 				};
-				panel.group = groups[i];
-				$scope.panels.push(panel);
+				cube.group = groups[i];
+				$scope.cubes.push(cube);
 			};
-			$scope.switchToPanel($scope.currentPanelIndex);
+			$scope.switchTo($scope.currentCubeIndex);
 		};
 
 		/* ----------------- init ----------------- */

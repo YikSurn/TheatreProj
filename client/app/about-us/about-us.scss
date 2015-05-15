@@ -46,10 +46,10 @@
 .carousel-panel {
 	display: block;
 	position: absolute;
-	cursor: pointer;
 	background-color: #60c2ef;
 }
 
-.carousel-cube:hover {
-	outline: 5px solid black;
+.fx-wrapper:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
