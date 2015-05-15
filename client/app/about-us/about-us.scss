@@ -7,6 +7,7 @@
 	left: 0;
 	right: 0;
 	margin: auto;
+	margin-bottom: 50px;
 	border: 0px;
 	perspective: 1100px;
 }
@@ -35,11 +36,10 @@
 	transition: transform 1.0s;
 }
 
-#carousel .carousel-panel {
+.carousel-panel {
 	display: block;
 	position: absolute;
 	font-weight: bold;
-	color: white;
 	text-align: center;
 	cursor: pointer;
 }
