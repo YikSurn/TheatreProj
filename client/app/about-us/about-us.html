@@ -2,7 +2,7 @@
 <div id="carouselContainer" ng-style="carouselContainerStyle()">
 	<div id="carouselTranslate" ng-style="carouselTranslateStyle()">
 		<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
-			<figure ng-repeat="panel in panels" class="carouselPanel" ng-style="panel.style" ng-click="switchToPanel($index)">
+			<figure ng-repeat="panel in panels" class="carouselPanel" ng-style="panel.style" hm-tap="switchToPanel($index)">
 				<img src="assets/images/yeoman.png"> {{$index}}
 			</figure>
 		</div>
