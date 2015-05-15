@@ -9,6 +9,7 @@
 	position: relative;
 	left: 0;
 	right: 0;
+	bottom: 0;
 	margin: auto;
 	border: 0px;
 	perspective: 1100px;
@@ -43,30 +44,19 @@
 	-moz-transform-style: preserve-3d;
 	-o-transform-style: preserve-3d;
 	transform-style: preserve-3d;
+
+}
+
+.carousel-cube.inactive:hover {
+	cursor: pointer;
 }
 
 .carousel-panel {
-	-webkit-transform-origin: 50% 50% 0;
-	transform-origin: 50% 50% 0;
 	display: block;
 	position: absolute;
 	background-color: #60c2ef;
 }
 
 .front, .back, .left, .right {
-	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(RGBA(0, 0, 0, 0.3)));
-}
-
-.fx-wrapper {
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	-webkit-transform-origin: 50% 50% 0;
-	transform-origin: 50% 50% 0;
-}
-
-.fx-wrapper:hover {
-	cursor: pointer;
-	transform: scale(1.1);
+	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(RGBA(0, 0, 0, 0.3)));
 }
