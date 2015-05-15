@@ -97,7 +97,7 @@ angular.module('theatreProjApp')
 			$scope.cubes = [];
 			var circumference = 2 * Math.PI * $scope.r;
 			$scope.count = groups.length;
-			$scope.cubeLength = circumference / $scope.count / 4;
+			$scope.cubeLength = circumference / $scope.count / 2;
 			$scope.degDelta = 360 / $scope.count;
 
 			for (var i = 0; i < $scope.count; i++) {
@@ -113,7 +113,7 @@ angular.module('theatreProjApp')
 
 		/* ----------------- init ----------------- */
 
-		$http.get('api/groups').success(function (groups) {
+		$http.get('api/aboutusgroups').success(function (groups) {
 			init(groups);
 		});
 	});

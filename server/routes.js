@@ -9,6 +9,7 @@ var errors = require('./components/errors');
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/aboutusgroups', require('./api/aboutusgroup'));
   app.use('/api/venueallocationpendinggroups', require('./api/venueallocationpendinggroup'));
   app.use('/api/prodmeetings', require('./api/prodmeeting'));
   app.use('/api/venueallocationrequests', require('./api/venueallocationrequest'));
