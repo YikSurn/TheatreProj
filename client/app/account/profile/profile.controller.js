@@ -2,9 +2,12 @@
 
 angular.module('theatreProjApp')
   .controller('ProfileCtrl', function ($scope, User, Auth, $http, socket) {
+    //Get current user data to help create/retrieve profile data.
     var user = Auth.getCurrentUser();
     $scope.user = user;
-    /*$scope.currProfile = "";
+    
+    /*The following is another method of retrieving profile data, had issues with it and went for a different method
+    $scope.currProfile = "";
    
     Gets current profile
     $http.get('api/profiles/' + $scope.user._id).success(function(profile) {
@@ -18,7 +21,7 @@ angular.module('theatreProjApp')
       $http.post('api/profiles', $scope.currProfile); 
     }*/
 
-    //Get the current user profile, if the profile does not exist, create it
+    //Get or create the current user profile using user, if the profile does not exist, create it
     $http.get('api/profiles').success(function(profiles) {
       $scope.profiles = profiles;
       var data = 'no data';
@@ -34,6 +37,7 @@ angular.module('theatreProjApp')
         $scope.currProfile = {_id: user._id, name: user.name, email: user.email, role: user.role, addressTerm:'None Provided',addressHome:'None Provided',phone:'None Provided'};      
         $http.post('api/profiles', $scope.currProfile);      
       }
+      //Ensure changes to profiles are synched 
       socket.syncUpdates('profile', $scope.profiles);
     });
     
@@ -41,7 +45,7 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('profile');
     });
 
-    //function deletes a profile, this function is not currently in use.
+    //Function deletes a profile, this function is not currently in use.
     $scope.remove = function(profile) {
     	$http.delete('api/profiles/' + profile._id);
     };
@@ -79,7 +83,7 @@ angular.module('theatreProjApp')
       $scope.newTerm = $scope.currProfile.addressTerm;
     }; 
   
-    //Function to disable all editors.
+    //Function to disable all editors. If a field is empty, ensure "None Provided" is displayed to the user.
     $scope.disableEditor = function() {
       $scope.editorEnabledPhone = false;
       $scope.editorEnabledEmail = false;

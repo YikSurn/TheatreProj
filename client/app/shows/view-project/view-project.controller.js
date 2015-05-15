@@ -7,7 +7,7 @@ angular.module('theatreProjApp')
     $scope.editorEnabledGroup = false;
     $scope.editorEnabledStatus = false;
 
-    /*define all options for status'*/
+    //define all options for status'
     $scope.statusOptions = [{status: "Proposed"}, 
                             {status: "Planned"}, 
                             {status: "Confirmed"}, 
@@ -65,6 +65,7 @@ angular.module('theatreProjApp')
         }
     };
 
+    //The following functions enable various editors for the project
     $scope.enableEditorName = function() {
         $scope.editorEnabledName = true;
         $scope.newName = $scope.currProject.showName;
@@ -80,12 +81,14 @@ angular.module('theatreProjApp')
         $scope.newStatus = $scope.projGroup.status;
     };
 
+    //Function to disable all editors
     $scope.disableEditor = function() {
         $scope.editorEnabledName = false;
         $scope.editorEnabledGroup = false;
         $scope.editorEnabledStatus = false;
     };
 
+    //The following functions allow for changes to be committed to the database after edits, and call disableEditor to close all editors
     $scope.saveName = function() {
         $scope.submitted = true;
         if($scope.name.$valid) {
@@ -111,6 +114,7 @@ angular.module('theatreProjApp')
         $scope.disableEditor();
     }
 
+    //Close the modal
     $scope.close = function () {
         $modalInstance.close();
     };

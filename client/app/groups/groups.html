@@ -1,12 +1,16 @@
+<!--Include the nav bar component-->
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <br/>
 
+<!--Security to ensure user is an admin, users will only see this paragraph when viewing-->
 <div class="container" ng-hide="isAdmin()">
 	<p>The groups route is restricted to users with the 'admin' role.</p>
 </div>
 
+<!--Checked for admin, show the route-->
 <div class="container" ng-show="isAdmin()">
+	<!--Button to create new groups, shows form on toggle-->
 	<button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Group</button>
 	<div collapse="createIsCollapsed">
         <div class="well well-lg">
@@ -55,13 +59,17 @@
         </div> 
 	</div>
 	<hr>
+	<!--Loading div which prevents any groups shown until all groups data has been retrieved-->
 	<div class="jumbotron" ng-hide="groupsLoaded">
 		<h1>Loading...</h1>
 	</div>
+	<!--If no group data is found show this message-->
 	<div ng-hide="groupData">
 		<p>There are currently no groups to display.</p>
 	</div>
+	<!--If group data exists, show the groups-->
 	<div ng-show="groupData && groupsLoaded">
+		<!--Search function and order by filter to help find appropriate groups-->
 		<div class="form-group col-md-6">
 			<div class="input-group">
 				<input class="form-control" ng-model="searchText" type="search" placeholder="Search groups">
@@ -76,6 +84,7 @@
             </select>
 		</div>
 		<hr>
+		<!--Groups organized in rows of 3 thanks to col-md-4 class. Filter specifications defined.-->
     	<div class="col-md-4" ng-show="groupData" ng-repeat="group in groups | orderBy:groupCategory | filter:{name:searchText}" id="group">
 			<div class="panel panel-primary">	
 				<div class="panel-heading" id="group-heading">
@@ -92,4 +101,5 @@
 	</div>
 </div>
 
+<!--Include footer component-->
 <div ng-include="'components/footer/footer.html'"></div>
