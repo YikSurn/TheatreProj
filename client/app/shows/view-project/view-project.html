@@ -20,14 +20,24 @@
     <button ng-hide="editorEnabledGroup" class="btn btn-primary btn-xs" ng-click="enableEditorGroup()">Change Group</button><br/>
     <div ng-show="editorEnabledGroup">
         <form name="group" class="form-inline" ng-submit="changeGroup(newGroup)" novalidate>
-            <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>
+            <select name="showGroup" class="form-control input-sm" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>
             </select>
-            <button class="btn btn-primary" type="submit">Save</button>
-            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+            <button class="btn btn-primary btn-xs" type="submit">Save</button>
+            <button class="btn btn-danger btn-xs" type="button" ng-click="disableEditor()">Cancel</button>
         </form>
     </div>
-    Status: {{currProject.showStatus}}<br/>
-    Production Date: {{currProject.prodDate | date:'dd/MM/yyyy'}}<br/>
+    <div ng-hide="editorEnabledStatus">Status: {{currProject.showStatus}}
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorStatus()">Change Status</button>
+    </div>
+    <div ng-show="editorEnabledStatus">Status:
+        <form name="status" class="form-inline" ng-submit="changeStatus(newStatus)" novalidate>
+            <select name="showStatus" class="form-control input-sm" ng-model="newStatus" ng-options="status.status as status.status for status in statusOptions" required>
+            </select>
+            <button class="btn btn-primary btn-xs" type="submit">Save</button>
+            <button class="btn btn-danger btn-xs" type="button" ng-click="disableEditor()">Cancel</button>
+        </form>
+    </div>
+    Production Date: {{currProject.prodDate | date:'dd/MM/yyyy'}}
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="close()">Close</button>

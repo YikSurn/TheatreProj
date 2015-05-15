@@ -7,6 +7,14 @@ angular.module('theatreProjApp')
     $scope.editorEnabledGroup = false;
     $scope.editorEnabledStatus = false;
 
+    /*define all options for status'*/
+    $scope.statusOptions = [{status: "Proposed"}, 
+                            {status: "Planned"}, 
+                            {status: "Confirmed"}, 
+                            {status: "Underway"}, 
+                            {status: "Concluded"}, 
+                            {status: "Archive"}];
+
     //Function to get all groups
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
@@ -64,7 +72,12 @@ angular.module('theatreProjApp')
 
     $scope.enableEditorGroup = function() {
         $scope.editorEnabledGroup = true;
-        $scope.showGroup = $scope.projGroup.name;
+        $scope.newGroup = $scope.projGroup.name;
+    };
+
+    $scope.enableEditorStatus = function() {
+        $scope.editorEnabledStatus = true;
+        $scope.newStatus = $scope.projGroup.status;
     };
 
     $scope.disableEditor = function() {
@@ -87,6 +100,13 @@ angular.module('theatreProjApp')
     $scope.changeGroup = function(newGroup) {
         $scope.currGroup = newGroup;
         $scope.currProject.group_id = $scope.currGroup;
+        $http.put('api/projectshows/' + $scope.currProject._id, $scope.currProject);
+        $scope.disableEditor();
+    }
+
+    $scope.changeStatus = function(newStatus) {
+        $scope.currStatus = newStatus;
+        $scope.currProject.showStatus = $scope.currStatus;
         $http.put('api/projectshows/' + $scope.currProject._id, $scope.currProject);
         $scope.disableEditor();
     }
