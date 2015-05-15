@@ -6,20 +6,12 @@ angular.module('theatreProjApp')
 
     var o = {
       meetings : [],
-      meeting : {
-        
-      }
+      meeting : {}
     };
 
     o.getAll = function() {
       return $http.get('api/prodmeetings').success(function (data) {
         angular.copy(data, o.meetings);
-      });
-    };
-
-    o.create = function(prodMeeting) {
-      return $http.post('api/prodmeetings', prodMeeting).success(function (data) {
-        o.meetings.push(data);
       });
     };
 
@@ -29,12 +21,27 @@ angular.module('theatreProjApp')
       });
     };
 
+    o.getForGroup = function(groupId) {
+      var prods = [];
+      for (var i=0; i < o.meetings.length; i++) {
+        if (o.meetings[i].group._id == groupId) {
+          prods.push(o.meetings[i]);
+        }
+      }
+      return prods;
+    };
+
+    o.create = function(prodMeeting) {
+      return $http.post('api/prodmeetings', prodMeeting).success(function (data) {
+        o.meetings.push(data);
+      });
+    };
+
     o.update = function() {
       var payload = angular.copy(o.meeting);
       payload.group = o.meeting.group._id;
       return $http.put('api/prodmeetings/' + o.meeting._id, payload).success(function (data) {
         // angular.copy(data, o.meeting);
-        console.log('success');
       });
     };
 

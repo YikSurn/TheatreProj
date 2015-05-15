@@ -7,7 +7,7 @@
       Weekly Production Meetings
     </label>
     <div ng-show="prodMeeting.info.keyDates.weeklyMeeting.check" class="input-group col-xs-12 col-sm-3 col-md-3">
-      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.weeklyMeeting.date" is-open="datePicker.opened['weeklyMeeting']" min-date="datePicker.minDate" close-text="Close" placeholder="Date" />
+      <input type="text" datepicker-popup="{{datePicker.format}}" class="form-control" ng-model="prodMeeting.info.keyDates.weeklyMeeting.date" is-open="datePicker.opened['weeklyMeeting']" min-date="datePicker.minDate" close-text="Close" placeholder="Date">
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatePicker($event, 'weeklyMeeting')"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>

@@ -4,14 +4,14 @@
 
   <br />
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-3 col-md-3">
+  <div class="row newProdButton">
+    <div class="col-xs-12 col-sm-12 col-md-12">
       <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
       <br /><br />
     </div>
   </div>
   
-  <div ng-repeat="meeting in prodMeetings" class="col-xs-12 col-sm-4 col-md-4">
+  <div ng-repeat="meeting in prodMeetings | orderBy: '-date'" class="col-xs-12 col-sm-4 col-md-4">
 
     <div class="panel panel-primary">
       <div class="panel-heading" id="group-heading" >
@@ -26,6 +26,13 @@
         Theatre Group: {{meeting.group.name}}
         <button class="btn btn-sm btn-default" ui-sref="group({ name: meeting.group.name })">View Group</button>
       </div>
+    </div>
+  </div>
+
+  <div class="row newProdButton">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
+      <br /><br />
     </div>
   </div>
 
