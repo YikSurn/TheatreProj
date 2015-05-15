@@ -4,7 +4,6 @@ angular.module('theatreProjApp')
 .controller('AboutUsCtrl', function ($scope, $window, $http) {
 		/* independent variables */
 		$scope.r = $(window).width() / 2;
-		$scope.heightRatio = 2/3;
 		$scope.rotation = 0;
 		$scope.panelCount = 0;
 		$scope.panels = [];
@@ -15,8 +14,8 @@ angular.module('theatreProjApp')
 		variables, they cannot be placed in the scss file. */
 		$scope.carouselContainerStyle = function () {
 			return {
-				width: $scope.carouselContainerW + 'px',
-				height: $scope.carouselContainerH + 'px',
+				width: $scope.carouselContainerLength + 'px',
+				height: $scope.carouselContainerLength + 'px',
 			};
 		};
 
@@ -55,24 +54,23 @@ angular.module('theatreProjApp')
 			$scope.panels = [];
 			var circumference = 2 * Math.PI * $scope.r;
 			$scope.panelCount = groups.length;
-			$scope.carouselContainerW = Math.min(circumference / $scope.panelCount, 300);
-			$scope.carouselContainerH = $scope.carouselContainerW * $scope.heightRatio;
-			$scope.panelMargin = $scope.carouselContainerW * 0.03;
-			$scope.panelWidth = $scope.carouselContainerW - 2*$scope.panelMargin;
-			$scope.panelHeight = $scope.carouselContainerH - 2*$scope.panelMargin;
+			$scope.carouselContainerLength = circumference / $scope.panelCount / 4;
+			$scope.panelMargin = $scope.carouselContainerLength * 0.03;
+			$scope.panelLength = $scope.carouselContainerLength - 2*$scope.panelMargin;
 			$scope.degDelta = 360 / $scope.panelCount;
 
 			for (var i = 0; i < $scope.panelCount; i++) {
 				var panel = {};
-				panel.style = {
-					width: $scope.panelWidth + 'px',
-					height: $scope.panelHeight + 'px',
+				panel.cube = {
+					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
+				};
+				panel.front = {
+					width: $scope.panelLength + 'px',
+					height: $scope.panelLength + 'px',
 					left: $scope.panelMargin + 'px',
 					right: $scope.panelMargin + 'px',
 					top: $scope.panelMargin + 'px',
 					'vertical-align': 'middle',
-					background: 'hsla(' + i*$scope.degDelta + ', 100%, 50%, 1.0)',
-					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
 				};
 				panel.group = groups[i];
 				$scope.panels.push(panel);

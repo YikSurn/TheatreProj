@@ -36,14 +36,20 @@
 	transition: transform 1.0s;
 }
 
+.carousel-cube {
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
 .carousel-panel {
 	display: block;
 	position: absolute;
-	font-weight: bold;
-	text-align: center;
 	cursor: pointer;
+	background-color: #60c2ef;
 }
 
-#carousel .carousel-panel:hover {
+.carousel-cube:hover {
 	outline: 5px solid black;
 }
