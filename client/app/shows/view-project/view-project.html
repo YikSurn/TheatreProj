@@ -3,7 +3,7 @@
         <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">Edit Name</button>
     </h3>
     <div ng-show="editorEnabledName">
-        <form name="name" class= "form-inline" ng-submit="saveName()" novalidate>
+        <form name="name" class="form-inline" ng-submit="saveName()" novalidate>
             <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required/>
             <div class="form-group has-error">
                 <p class="help-block" ng-show="name.pName.$error.required && submitted">
@@ -16,7 +16,16 @@
     </div>
 </div>
 <div class="modal-body">
-    Group: {{currProject.group_id}}<br/>
+    Group: <a ng-hide="editorEnabledGroup" href="groups/{{projGroup.name}}" target="_blank">{{projGroup.name}}</a>
+    <button ng-hide="editorEnabledGroup" class="btn btn-primary btn-xs" ng-click="enableEditorGroup()">Change Group</button><br/>
+    <div ng-show="editorEnabledGroup">
+        <form name="group" class="form-inline" ng-submit="changeGroup(newGroup)" novalidate>
+            <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>
+            </select>
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+        </form>
+    </div>
     Status: {{currProject.showStatus}}<br/>
     Production Date: {{currProject.prodDate | date:'dd/MM/yyyy'}}<br/>
 </div>
