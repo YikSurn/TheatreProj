@@ -21,7 +21,7 @@ angular.module('theatreProjApp')
 
 		$scope.carouselTranslateStyle = function () {
 			return {
-				transform: 'translateZ(-' + $scope.r + 'px)'
+				transform: 'translateZ(-' + $scope.r*1.5 + 'px)'
 			}
 		};
 
@@ -122,8 +122,7 @@ angular.module('theatreProjApp')
 
 		$scope.dataStyle = function (cube, dataType, $index) {
 			var ret = {
-				width: $scope.cubeLength + 'px',
-				height: $scope.cubeLength + 'px'
+				'transform-origin': 'bottom'
 			}
 
 			var len = $scope.cubeLength/2;
@@ -131,16 +130,18 @@ angular.module('theatreProjApp')
 
 			var active = $index == $scope.currentCubeIndex;
 			if (!active) {
-				postTransform = ' scale(0.3)';
+				postTransform = ' scale(0.1)';
 				len *= 0.3;
 			}
 
 			switch (dataType) {
 				case 'info':
+				ret.width = ($scope.cubeLength*4) + 'px';
+				ret.height = ($scope.cubeLength*0.6) + 'px';
 				if (active) {
-					ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+					ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px) translateZ(' + (len*3) + 'px) translateY(' + (len*1.5) + 'px) rotateX(10deg)' + postTransform;
 				} else {
-					ret.transform = 'translateY(' + ($scope.cubeLength/2) + 'px)' + postTransform;
+					ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px) translateY(' + (len*2) + 'px)' + postTransform;
 				}
 				break;
 			}
