@@ -48,24 +48,8 @@ $animate-duration: 1.0s;
 .carousel-cube {
 	@include transform-style(preserve-3d);
 
-	&.inactive {
-		& > .carousel-panel:after {
-			background: radial-gradient(at top left, transparent, rgba(0,0,0,0.1));
-		}
-
-		:hover {
-			cursor: pointer;
-		}
-	}
-
-	&.active {
-		& > .carousel-panel:after {
-			background: red;
-		}
-
-		:hover {
-			transform: rotateY(180deg);
-		}
+	&.inactive:hover {
+		cursor: pointer;
 	}
 }
 
@@ -84,6 +68,19 @@ $animate-duration: 1.0s;
 		width: 100%;
 		height: 100%;
 		z-index: -5;
+	}
+
+	&.inactive:after {
+		background: radial-gradient(at top left, transparent, rgba(0,0,0,0.1));
+	}
+
+	&.active:after {
+		background: rgba(255,0,255,0.9);
+	}
+
+	> p {
+		text-align: center;
+		color: white;
 	}
 }
 

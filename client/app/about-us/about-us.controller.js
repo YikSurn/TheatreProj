@@ -27,7 +27,7 @@ angular.module('theatreProjApp')
 
 		$scope.carouselStyle = function () {
 			return {
-				transform: 'rotateX(-5deg) rotateY(' + $scope.rotation + 'deg)'
+				transform: 'rotateX(-10deg) rotateY(' + $scope.rotation + 'deg)'
 			};
 		};
 
@@ -47,6 +47,10 @@ angular.module('theatreProjApp')
 
 			$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
 			$scope.currentCubeIndex = cubeIndex;
+		};
+
+		$scope.getActivityClass = function ($index) {
+			return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
 		};
 
 		$scope.panelStyle = function (panel, $index) {
@@ -97,7 +101,7 @@ angular.module('theatreProjApp')
 			$scope.cubes = [];
 			var circumference = 2 * Math.PI * $scope.r;
 			$scope.count = groups.length;
-			$scope.cubeLength = circumference / $scope.count / 2;
+			$scope.cubeLength = circumference / $scope.count;
 			$scope.degDelta = 360 / $scope.count;
 
 			for (var i = 0; i < $scope.count; i++) {
