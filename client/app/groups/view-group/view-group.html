@@ -15,31 +15,84 @@
           	    </p>
             </div>
             <button class="btn btn-primary" type="submit">Save</button>
-            <button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
         </form>
     </div>
 </div> 
 <div class="modal-body">
     <tabset>
-        <tab heading="General"><legend id="heading">Group Information</legend>
+        <tab heading="General"><h3>Group Information</h3>
+        <hr>
             <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
-            <div>Website: <a href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a></div>
-            <div>Facebook: <a href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a></div>
-            <div>Social Media: <a href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a></div>
+            <div>Website:
+                <a ng-hide="editorEnabledWebsite" href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a>
+                <button ng-hide="editorEnabledWebsite" class="btn btn-primary btn-xs" ng-click="enableEditorWebsite()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledWebsite">
+                <form name="editWeb" class="form-inline" ng-submit="saveWebsite(newWebsite)" novalidate>
+                    <input type="url" class="form-control" name="wURL" ng-model="newWebsite" ng-show="editorEnabledWebsite" placeholder="Website URL"/>
+                    <button class="btn btn-primary" type="submit" ng-disabled="editWeb.$invalid">Save</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                </form>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="editWeb.wURL.$error.url">
+                        URL's must begin with http://
+                    </p>
+                </div>
+            </div>
+            <div>Facebook: 
+                <a ng-hide="editorEnabledFaceBook" href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a>
+                <button ng-hide="editorEnabledFaceBook" class="btn btn-primary btn-xs" ng-click="enableEditorFacebook()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledFaceBook">
+                <form name="editFB" class="form-inline" ng-submit="saveFacebook(newFacebook)" novalidate>
+                    <input type="url" class="form-control" name="fURL" ng-model="newFacebook" ng-show="editorEnabledFaceBook" placeholder="Facebook URL"/>
+                    <button class="btn btn-primary" type="submit" ng-disabled="editFB.$invalid">Save</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                </form>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="editFB.fURL.$error.url">
+                        URL's must begin with http://
+                    </p>
+                </div>
+            </div>
+            <div>Social Media: 
+                <a ng-hide="editorEnabledMedia" href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a>
+                <button ng-hide="editorEnabledMedia" class="btn btn-primary btn-xs" ng-click="enableEditorMedia()">Edit 
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+            <div ng-show="editorEnabledMedia">
+                <form name="editMedia" class="form-inline" ng-submit="saveMedia(newMedia)" novalidate>
+                    <input type="url" class="form-control" name="mURL" ng-model="newMedia" ng-show="editorEnabledMedia" placeholder="Media URL"/>
+                    <button class="btn btn-primary" type="submit" ng-disabled="editMedia.$invalid">Save</button>
+                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                </form>
+                <div class="form-group has-error">
+                    <p class="help-block" ng-show="editMedia.mURL.$error.url">
+                        URL's must begin with http://
+                    </p>
+                </div>
+            </div>
             <hr>
             <div>Total Members: {{currGroup.members.length}}</div>
             <div>Total Assigned Tasks: {{iTasks.length}}</div>
             <div>Total Completed Tasks: {{cTasks.length}}</div>
             <div>Total Current Projects: {{gProjects.length}}</div>
+            <div>Total Upcoming Meetings: {{gMeetings.length}}</div>
         </tab>
-        <tab heading="Members"><legend id="heading">Group Members</legend>
+        <tab heading="Members"><h3>Group Members</h3>
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
             <div collapse="!usersIsCollapsed">
                 <div class="well well-lg">
                     <form name="aMember" ng-submit="addMember(showUsers)" novalidate>
                         <div class="form-group">
                             <label>Select a Member to add:</label>
-                            <select name="sUsers" class="form-control" ng-model="showUsers" ng-options="user._id as user.name for user in users | orderBy:'name'" required>
+                            <select name="sUsers" class="form-control" ng-model="showUsers" ng-options="user.name as user.name for user in users | orderBy:'name'" required>
                                 <option value="" selected>--Select a member--</option>
                             </select>
                         </div>
@@ -54,11 +107,15 @@
             </div>
             <hr>
             <div><label>Current Members:</label></div>
+            <div ng-hide="currGroup.members.length > 0">
+                <p>This group has no members.</p>
+            </div>
             <div ng-repeat="member in currGroup.members"> {{member}} 
                 <button class="btn btn-danger btn-xs" ng-click="removeMember(member)">Remove Member</button>
             </div>
         </tab>
-        <tab heading="Tasks"><legend id="heading">Group Tasks</legend>
+        <tab heading="Tasks"><h3>Group Tasks</h3>
+        <hr>
             <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	        <div collapse="viewIsCollapsed">
 	            <div ng-hide="iTaskData">
@@ -101,20 +158,15 @@
                             </div>
                             <div ng-show="projectData">
                   	            <p>You can assign tasks to a group project by selecting a project below. Do not select a project to assign project to group.</p>
-                                <select name="sProject" class="form-control" ng-model="showProject" ng-options="project._id as project.showName for project in gProjects | orderBy:'name'">
+                                <select name="sProject" class="form-control" ng-model="showProject" ng-options="project.showName as project.showName for project in gProjects | orderBy:'name'">
                                     <option value="" selected>--Assign to Group--</option>
                                 </select>
                             </div>
                         </div>
      	                <div class="form-group">
 		                    <label>Description:</label>
-		                    <input type="text" class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description" required/>
+		                    <textarea class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description"/>
      		            </div>
-                        <div class="form-group has-error">
-                            <p class="help-block" ng-show="assignTask.tName.$error.required && taskSubmitted">
-                                You must enter a description.
-                            </p>
-                        </div>
 		                <div class="form-group" style="display:inline-block; min-height:290px;">
 		      	            <label>Completion Date: </label>
 		                    <datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
@@ -132,21 +184,32 @@
 		        </div> 
 	        </div>
 	    </tab>
-        <tab heading="Send Message"><legend id="heading">Send A New Message</legend></tab>
-        <tab heading="Send Form"><legend id="heading">Send A New Form</legend></tab>
-        <tab heading="Projects">
-      	    <legend id="heading">Current Projects</legend>
-      	    <div ng-hide="projectData">
+        <tab heading="Send Message"><h3>Send A New Message</h3><hr></tab>
+        <tab heading="Send Form"><h3>Send A New Form</h3><hr></tab>
+        <tab heading="Projects"><h3>Current Projects</h3>
+      	    <hr>
+            <div ng-hide="projectData">
                 <p>This group has no projects.</p>
             </div>
-      	    <div ng-show="projectData" class="well well-lg" ng-repeat="project in gProjects">
+      	    <div ng-show="projectData" class="well well-lg col-md-4" ng-repeat="project in gProjects">
 		        <div>Project Name: {{project.showName}}</div>
 		        <div>Status: {{project.showStatus}}</div>
 		        <div>Production Date: {{project.prodDate | date:'dd/MM/yyyy'}}</div>
 		    </div>
         </tab>
-        <tab heading="Production Meeting"><legend id="heading">Current Scheduled Meeting</legend></tab>
+        <tab heading="Production Meeting"><h3>Current Scheduled Meeting(s)</h3>
+            <hr>
+            <div ng-hide="meetingData">
+                <p>This group has no current scheduled meetings</p>
+            </div>
+            <div ng-show="meetingData" class="well well-lg col-md-4" ng-repeat="meeting in gMeetings">
+                <div>Meeting Name: {{meeting.title}}</div>
+                <div>Date Created: {{meeting.date | date:'dd/MM/yyyy'}}</div>
+                <div>Project: {{meeting.show}}</div>
+                <div>Click <a href="/production-meeting/{{currGroup.name}}/{{meeting.title}}" target="_blank">here</a> to view this meeting. </div>
+            </div>
+        </tab>
     </tabset>
 </div>
 
-<div ng-include="'components/footer/footer.html'"></div>
+<div class="col-md-12" ng-include="'components/footer/footer.html'"></div>

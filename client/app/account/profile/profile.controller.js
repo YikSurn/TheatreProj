@@ -73,7 +73,7 @@ angular.module('theatreProjApp')
   
     $scope.enableEditorTerm = function() {
       $scope.editorEnabledTerm = true;
-            if($scope.currProfile.addressTerm === "None Provided") {
+        if($scope.currProfile.addressTerm === "None Provided") {
         $scope.currProfile.addressTerm = "";
       }
       $scope.newTerm = $scope.currProfile.addressTerm;
