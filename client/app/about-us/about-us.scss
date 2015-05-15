@@ -2,6 +2,8 @@ $animate-duration: 1.0s;
 
 $active-bg: rgba(255,0,255,0.9);
 
+$wobble: cubic-bezier(.5,-0.13,.61,1.39);
+
 @mixin transform-style($value) {
 	-webkit-transform-style: $value;
 	-moz-transform-style: $value;
@@ -9,11 +11,11 @@ $active-bg: rgba(255,0,255,0.9);
 	transform-style: $value;
 }
 
-@mixin transition($value) {
-	-webkit-transition: -webkit-transform $value;
-	-moz-transition: -moz-transform $value;
-	-o-transition: -o-transform $value;
-	transition: transform $value;
+@mixin transition($duration, $delay) {
+	-webkit-transition: -webkit-transform $duration $wobble $delay;
+	-moz-transition: -moz-transform $duration $wobble $delay;
+	-o-transition: -o-transform $duration $wobble $delay;
+	transition: transform $duration $wobble $delay;
 }
 
 .about-us-content {
@@ -44,7 +46,7 @@ $active-bg: rgba(255,0,255,0.9);
 	height: 100%;
 	position: absolute;
 	@include transform-style(preserve-3d);
-	@include transition($animate-duration);
+	@include transition($animate-duration, 0s);
 }
 
 .carousel-cube {
@@ -62,7 +64,7 @@ $active-bg: rgba(255,0,255,0.9);
 	display: block;
 	position: absolute;
 	background: url(../assets/images/white-noise.jpg);
-	@include transition($animate-duration);
+	@include transition($animate-duration, 0s);
 
 	&:after {
 		content: '';
@@ -81,6 +83,22 @@ $active-bg: rgba(255,0,255,0.9);
 
 	&.active:after {
 		background: $active-bg;
+	}
+}
+
+.carousel-data {
+	vertical-align: middle;
+	text-align: center;
+	display: block;
+	position: absolute;
+	@include transform-style(preserve-3d);
+
+	&.active {		
+		@include transition($animate-duration*0.25, $animate-duration*0.8);
+	}
+
+	&.inactive {
+		@include transition($animate-duration, 0s);	
 	}
 }
 

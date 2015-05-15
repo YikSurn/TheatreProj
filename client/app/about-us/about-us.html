@@ -11,6 +11,10 @@
 					<figure ng-style="panelStyle(cube, 'bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></figure>
 					<figure ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)"></figure>
 					<figure ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></figure>
+
+					<figure ng-style="dataStyle(cube, 'info', $index)" class="carousel-data" ng-class="getActivityClass($index)">
+						<h3>{{cube.group.info}}</h3>
+					</figure>
 				</div>
 			</div>
 		</div>

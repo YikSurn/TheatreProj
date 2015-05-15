@@ -120,6 +120,34 @@ angular.module('theatreProjApp')
 			return ret;
 		}
 
+		$scope.dataStyle = function (cube, dataType, $index) {
+			var ret = {
+				width: $scope.cubeLength + 'px',
+				height: $scope.cubeLength + 'px'
+			}
+
+			var len = $scope.cubeLength/2;
+			var postTransform = ' scale(1.0)';
+
+			var active = $index == $scope.currentCubeIndex;
+			if (!active) {
+				postTransform = ' scale(0.3)';
+				len *= 0.3;
+			}
+
+			switch (dataType) {
+				case 'info':
+				if (active) {
+					ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+				} else {
+					ret.transform = 'translateY(' + ($scope.cubeLength/2) + 'px)' + postTransform;
+				}
+				break;
+			}
+
+			return ret;
+		}
+
 		/* Initializes the carousel with a cube for each group in groups. */
 		var init = function (groups) {
 			$scope.cubes = [];
