@@ -3,9 +3,9 @@
 <div id="about-us-content">
 	<div id="carousel-container" ng-style="carouselContainerStyle()">
 		<div id="carousel-translate" ng-style="carouselTranslateStyle()">
-			<div id="carousel" ng-model="carousel" ng-style="carouselStyle()" hm-drag="dragStart($event)" hm-release="dragEnd($event)">
+			<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<figure ng-repeat="panel in panels" class="carousel-panel" ng-style="panel.style" hm-tap="switchToPanel($index)">
-					<img src="assets/images/yeoman.png"> {{$index}}
+					{{$index}}
 				</figure>
 			</div>
 		</div>

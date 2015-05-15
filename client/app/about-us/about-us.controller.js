@@ -1,22 +1,23 @@
 'use strict';
 
 angular.module('theatreProjApp')
-.controller('AboutUsCtrl', function ($scope) {
+.controller('AboutUsCtrl', function ($scope, $window) {
 		// independent params
-		$scope.carouselContainerW = 300;
+		$scope.r = $(window).width() / 2;
 		$scope.heightRatio = 2/3;
 		$scope.rotation = 0;
 		$scope.panelCount = 20;
-		$scope.panelMargin = 10;
 		$scope.panels = [];
 		$scope.currentPanelIndex = 0;
 
 		// derived params
+		var circumference = 2 * Math.PI * $scope.r;
+		$scope.carouselContainerW = circumference / $scope.panelCount;
 		$scope.carouselContainerH = $scope.carouselContainerW * $scope.heightRatio;
+		$scope.panelMargin = $scope.carouselContainerW * 0.03;
 		$scope.panelWidth = $scope.carouselContainerW - 2*$scope.panelMargin;
 		$scope.panelHeight = $scope.carouselContainerH - 2*$scope.panelMargin;
 		$scope.degDelta = 360 / $scope.panelCount;
-		$scope.r = Math.round( $scope.carouselContainerW/2 / Math.tan(Math.PI / $scope.panelCount));
 
 		// variable-dependent styles
 		$scope.carouselContainerStyle = function () {
@@ -36,14 +37,6 @@ angular.module('theatreProjApp')
 			return {
 				transform: 'rotateX(-5deg) rotateY(' + $scope.rotation + 'deg)'
 			};
-		};
-
-		$scope.dragStart = function($event) {
-			console.log($event.gesture.deltaX);
-		};
-
-		$scope.dragEnd = function($event) {
-			console.log('end');
 		};
 
 		$scope.switchToPanel = function (panelIndex) {
