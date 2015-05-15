@@ -14,8 +14,8 @@ angular.module('theatreProjApp')
 		variables, they cannot be placed in the scss file. */
 		$scope.carouselContainerStyle = function () {
 			return {
-				width: $scope.carouselContainerLength + 'px',
-				height: $scope.carouselContainerLength + 'px',
+				width: $scope.cubeLength + 'px',
+				height: $scope.cubeLength + 'px',
 			};
 		};
 
@@ -54,9 +54,7 @@ angular.module('theatreProjApp')
 			$scope.cubes = [];
 			var circumference = 2 * Math.PI * $scope.r;
 			$scope.count = groups.length;
-			$scope.carouselContainerLength = circumference / $scope.count / 4;
-			$scope.cubeMargin = $scope.carouselContainerLength * 0.03;
-			$scope.cubeLength = $scope.carouselContainerLength - 2*$scope.cubeMargin;
+			$scope.cubeLength = circumference / $scope.count / 4;
 			$scope.degDelta = 360 / $scope.count;
 
 			for (var i = 0; i < $scope.count; i++) {
@@ -64,13 +62,38 @@ angular.module('theatreProjApp')
 				cube.cubeStyle = {
 					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
 				};
+
+				/* note: could use a prototype object for the following objects, but it ends up being more
+				lines of code than just repeating the width and height :P */
 				cube.frontStyle = {
 					width: $scope.cubeLength + 'px',
 					height: $scope.cubeLength + 'px',
-					left: $scope.cubeMargin + 'px',
-					right: $scope.cubeMargin + 'px',
-					top: $scope.cubeMargin + 'px',
-					'vertical-align': 'middle',
+					transform: 'translateZ(' + $scope.cubeLength/2 + 'px)'
+				};
+				cube.backStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					transform: 'rotateY(180deg) translateZ(' + $scope.cubeLength/2 + 'px)'
+				};
+				cube.topStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					transform: 'rotateX(90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
+				};
+				cube.bottomStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					transform: 'rotateX(-90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
+				};
+				cube.leftStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					transform: 'rotateY(-90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
+				};
+				cube.rightStyle = {
+					width: $scope.cubeLength + 'px',
+					height: $scope.cubeLength + 'px',
+					transform: 'rotateY(90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
 				};
 				cube.group = groups[i];
 				$scope.cubes.push(cube);
