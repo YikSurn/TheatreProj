@@ -78,8 +78,9 @@ $animate-duration: 1.0s;
 		background: rgba(255,0,255,0.9);
 	}
 
-	> p {
+	> .front-content {
 		text-align: center;
+		vertical-align: middle;
 		color: white;
 	}
 }

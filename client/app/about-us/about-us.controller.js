@@ -15,7 +15,7 @@ angular.module('theatreProjApp')
 		$scope.carouselContainerStyle = function () {
 			return {
 				width: $scope.cubeLength + 'px',
-				height: $scope.cubeLength + 'px',
+				height: $scope.cubeLength + 'px'
 			};
 		};
 
@@ -53,42 +53,58 @@ angular.module('theatreProjApp')
 			return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
 		};
 
-		$scope.panelStyle = function (panel, $index) {
+		$scope.panelStyle = function (cube, panel, $index) {
 			var ret = {
 				width: $scope.cubeLength + 'px',
-				height: $scope.cubeLength + 'px',
+				height: $scope.cubeLength + 'px'
 			}
 
 			var len = $scope.cubeLength/2;
 			var postTransform = ' scale(1.0)';
 
-			if ($index != $scope.currentCubeIndex) { // inactive
+			var active = $index == $scope.currentCubeIndex;
+
+			if (!active) {
 				postTransform = ' scale(0.3)';
 				len *= 0.3;
 			}
 
 			switch (panel) {
 				case 'front':
-				ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+				ret['transform-origin'] = 'bottom';
+				if (cube.open) {
+					ret.transform = 'translateZ(' + len + 'px) rotateX(-90deg)' + postTransform;
+				} else {
+					ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+				}
 				break;
 				
 				case 'back':
+				ret['transform-origin'] = 'bottom';
 				ret.transform = 'rotateY(180deg) translateZ(' + len + 'px)' + postTransform;
 				break;
 				
 				case 'top':
-				ret.transform = 'rotateX(90deg) translateZ(' + len + 'px)' + postTransform;
+				ret['transform-origin'] = 'top';
+				if (active) {
+					ret.transform = 'rotateX(90deg) translateY(-' + len + 'px)' + postTransform;
+				} else {
+					ret.transform = 'rotateX(90deg) translateY(-' + len + 'px) translateZ(-' + ($scope.cubeLength - len * 2) + 'px)' + postTransform;
+				}
 				break;
 
 				case 'bottom':
-				ret.transform = 'rotateX(-90deg) translateZ(' + len + 'px)' + postTransform;
+				ret['transform-origin'] = 'bottom';
+				ret.transform = 'rotateX(-90deg) translateY(' + len + 'px)' + postTransform;
 				break;
 
 				case 'left':
+				ret['transform-origin'] = 'bottom';
 				ret.transform = 'rotateY(-90deg) translateZ(' + len + 'px)' + postTransform;
 				break;
 
 				case 'right':
+				ret['transform-origin'] = 'bottom';
 				ret.transform = 'rotateY(90deg) translateZ(' + len + 'px)' + postTransform;
 				break;
 			}
@@ -101,7 +117,7 @@ angular.module('theatreProjApp')
 			$scope.cubes = [];
 			var circumference = 2 * Math.PI * $scope.r;
 			$scope.count = groups.length;
-			$scope.cubeLength = circumference / $scope.count;
+			$scope.cubeLength = circumference / $scope.count * 0.8;
 			$scope.degDelta = 360 / $scope.count;
 
 			for (var i = 0; i < $scope.count; i++) {
@@ -109,6 +125,7 @@ angular.module('theatreProjApp')
 				cube.cubeStyle = {
 					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
 				};
+				cube.open = false;
 				cube.group = groups[i];
 				$scope.cubes.push(cube);
 			};

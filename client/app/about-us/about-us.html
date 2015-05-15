@@ -5,14 +5,17 @@
 		<div id="carousel-translate" ng-style="carouselTranslateStyle()">
 			<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cube.cubeStyle" ng-class="getActivityClass($index)">
-					<figure ng-style="panelStyle('front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)">
-						<p ng-show="$index == currentCubeIndex">{{cube.group.name}}</p>
+					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)">
+						<div ng-show="$index == currentCubeIndex" class="front-content">
+							<p>{{cube.group.name}}</p>
+							<button class="btn" ng-click="cube.open = !cube.open">OPEN</button>
+						</div>
 					</figure>
-					<figure ng-style="panelStyle('back', $index)" class="carousel-panel back" ng-class="getActivityClass($index)"></figure>
-					<figure ng-style="panelStyle('top', $index)" class="carousel-panel top" ng-class="getActivityClass($index)"></figure>
-					<figure ng-style="panelStyle('bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></figure>
-					<figure ng-style="panelStyle('left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)"></figure>
-					<figure ng-style="panelStyle('right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'back', $index)" class="carousel-panel back" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'top', $index)" class="carousel-panel top" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></figure>
 				</div>
 			</div>
 		</div>
