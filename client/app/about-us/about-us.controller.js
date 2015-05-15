@@ -71,7 +71,7 @@ angular.module('theatreProjApp')
 				top: $scope.panelMargin + 'px',
 				'font-size': $scope.carouselContainerH * 0.5,
 				'vertical-align': 'middle',
-				background: 'hsla(' + i*$scope.degDelta + ', 100%, 50%, 0.8)',
+				background: 'hsla(' + i*$scope.degDelta + ', 100%, 50%, 1.0)',
 				transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
 			};
 			$scope.panels.push(panel);
