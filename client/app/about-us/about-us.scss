@@ -1,3 +1,19 @@
+$animate-duration: 0.5s;
+
+@mixin transform-style($value) {
+	-webkit-transform-style: $value;
+	-moz-transform-style: $value;
+	-o-transform-style: $value;
+	transform-style: $value;
+}
+
+@mixin transition($value) {
+	-webkit-transition: -webkit-transform $value;
+	-moz-transition: -moz-transform $value;
+	-o-transition: -o-transform $value;
+	transition: transform $value;
+}
+
 #about-us-content {
 	position: absolute;
 	width: 100%;
@@ -19,42 +35,30 @@
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
+	@include transform-style(preserve-3d);
 }
 
 #carousel {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	-webkit-transition: -webkit-transform 1.0s;
-	-moz-transition: -moz-transform 1.0s;
-	-o-transition: -o-transform 1.0s;
-	transition: transform 1.0s;
+	@include transform-style(preserve-3d);
+	@include transition($animate-duration);
 }
 
 .carousel-cube {
-	-webkit-transform-style: preserve-3d;
-	-moz-transform-style: preserve-3d;
-	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
+	@include transform-style(preserve-3d);
 
-}
-
-.carousel-cube.inactive:hover {
-	cursor: pointer;
+	&.inactive:hover {
+		cursor: pointer;
+	}
 }
 
 .carousel-panel {
 	display: block;
 	position: absolute;
 	background-color: #60c2ef;
+	@include transition($animate-duration);
 }
 
 .front, .back, .left, .right {
