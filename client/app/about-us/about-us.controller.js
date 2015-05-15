@@ -3,7 +3,7 @@
 angular.module('theatreProjApp')
 .controller('AboutUsCtrl', function ($scope) {
 		// independent params
-		$scope.carouselContainerW = 400;
+		$scope.carouselContainerW = 300;
 		$scope.heightRatio = 2/3;
 		$scope.rotation = 0;
 		$scope.panelCount = 20;
@@ -25,9 +25,15 @@ angular.module('theatreProjApp')
 			};
 		};
 
+		$scope.carouselTranslateStyle = function () {
+			return {
+				transform: 'translateZ(-' + $scope.r + 'px)'				
+			}
+		};
+
 		$scope.carouselStyle = function () {
 			return {
-				transform: 'translateZ(-' + $scope.r + 'px) rotateY(' + $scope.rotation + 'deg)',
+				transform: 'rotateX(-5deg) rotateY(' + $scope.rotation + 'deg)'
 			};
 		};
 

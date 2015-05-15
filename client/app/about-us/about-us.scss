@@ -1,8 +1,20 @@
-.carouselContainer {
+#carouselContainer {
 	position: relative;
-	margin: 0 auto 40px;
-	border: 1px solid #CCC;
+	left: 0;
+	right: 0;
+	margin: auto;
+	border: 0px;
 	perspective: 1100px;
+}
+
+#carouselTranslate {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
 }
 
 #carousel {
@@ -13,22 +25,21 @@
 	-moz-transform-style: preserve-3d;
 	-o-transform-style: preserve-3d;
 	transform-style: preserve-3d;
-	-webkit-transition: -webkit-transform 0.5s;
-	-moz-transition: -moz-transform 0.5s;
-	-o-transition: -o-transform 0.5s;
-	transition: transform 0.5s;
+	-webkit-transition: -webkit-transform 1.0s;
+	-moz-transition: -moz-transform 1.0s;
+	-o-transition: -o-transform 1.0s;
+	transition: transform 1.0s;
 }
 
-#carousel figure {
+#carousel .carouselPanel {
 	display: block;
 	position: absolute;
-	outline: 2px solid black;
 	font-weight: bold;
 	color: white;
 	text-align: center;
 	cursor: pointer;
 }
 
-#carousel figure:hover {
+#carousel .carouselPanel:hover {
 	outline: 5px solid black;
 }
