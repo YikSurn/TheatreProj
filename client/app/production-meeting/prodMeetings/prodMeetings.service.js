@@ -1,5 +1,7 @@
 'use strict';
 
+// Factory for the production meetings
+
 angular.module('theatreProjApp')
   .factory('prodMeetings', ['$http', 'socket',
   function ($http, socket) {
@@ -38,6 +40,7 @@ angular.module('theatreProjApp')
     };
 
     o.update = function() {
+      // Turn the group into just the id to be stored in database under production meeting
       var payload = angular.copy(o.meeting);
       payload.group = o.meeting.group._id;
       return $http.put('api/prodmeetings/' + o.meeting._id, payload).success(function (data) {

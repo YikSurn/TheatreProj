@@ -12,11 +12,16 @@
         <input type="text" class="form-control" name="title" ng-model="newMeeting.title" placeholder="Title" />
       </div>
 
-      <div class="form-group form-inline">
+      <div ng-hide="chosenGroup" class="form-group form-inline">
         <label>Group:</label>
         <select class="btn btn-default" ng-model="newMeeting.group" ng-options="group._id as group.name for group in groups">
           <!-- <option value="">Select a theatre group</option> -->
         </select>
+      </div>
+
+      <div ng-show="chosenGroup" class="form-group form-inline">
+        <label>Group:</label>
+        {{chosenGroup.name}}
       </div>
 
       <div class="form-group form-inline">

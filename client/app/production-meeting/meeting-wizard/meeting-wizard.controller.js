@@ -13,6 +13,8 @@ angular.module('theatreProjApp')
       minDate: '2015-01-01',
       opened : {}
     };
+
+    // To open the datepicker that is clicked
     $scope.openDatePicker = function ($event, id) {
       $event.preventDefault();
       $event.stopPropagation();

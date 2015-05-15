@@ -208,6 +208,12 @@
                 <div>Project: {{meeting.show}}</div>
                 <div>Click <a href="/production-meeting/{{currGroup.name}}/{{meeting.title}}" target="_blank">here</a> to view this meeting. </div>
             </div>
+            <div class="row" id="newProdButton">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
+                    <br /><br />
+                </div>
+            </div>
         </tab>
     </tabset>
 </div>

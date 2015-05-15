@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ViewGroupCtrl', function ($scope, $http, socket, Auth, User, theatreGroups) {
+  .controller('ViewGroupCtrl', function ($scope, $http, socket, Auth, User, theatreGroups, $modal) {
 
     $scope.currGroup = theatreGroups.group;
    
@@ -297,6 +297,20 @@ angular.module('theatreProjApp')
         if (confTask == true) {
             $http.delete('api/tasks/' + task._id);
         }
+    };
+
+    $scope.createNewProdMeeting = function () {
+      var newProdMeeting = $modal.open({
+        templateUrl: "app/production-meeting/new-prod-meeting/new-prod-meeting.html",
+        controller: "NewProdMeetingCtrl",
+        size: 'lg',
+        resolve: {
+          groups: ['theatreGroups', function (theatreGroups) {
+            theatreGroups.get($scope.currGroup.name);
+            return theatreGroups.getAll();
+          }]
+        }
+      });
     };
 
 });

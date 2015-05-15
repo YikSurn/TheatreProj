@@ -4,8 +4,9 @@
 
 <div class="container">
 
+  <!-- Display production meeting title -->
   <div class="row">
-    <h2  ng-hide="editTitle" class="modal-title prodMeetingHeading">{{prodMeeting.title}} ({{prodMeeting.group.name}})
+    <h2 ng-hide="editTitle" class="modal-title prodMeetingHeading">{{prodMeeting.title}} ({{prodMeeting.group.name}})
       <button class="btn btn-primary btn-xs" ng-click="enableEditTitle()">
         Edit Title <span class="glyphicon glyphicon-pencil"></span>
       </button>
