@@ -60,7 +60,7 @@ angular.module('theatreProjApp')
 			}
 
 			var len = $scope.cubeLength/2;
-			var postTransform = ' scale(1.0';
+			var postTransform = ' scale(1.0)';
 
 			if ($index != $scope.currentCubeIndex) { // inactive
 				postTransform = ' scale(0.3)';
