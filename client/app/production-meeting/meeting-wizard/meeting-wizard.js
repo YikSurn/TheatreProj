@@ -8,6 +8,7 @@ angular.module('theatreProjApp')
         abstract: true,
         templateUrl: 'app/production-meeting/meeting-wizard/meeting-wizard.html',
         controller: 'MeetingWizardCtrl',
+        authenticate: true,
         resolve: {
           prodMeetingPromise: ['$stateParams', 'prodMeetings', 
           function ($stateParams, prodMeetings) {

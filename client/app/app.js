@@ -43,18 +43,29 @@ angular.module('theatreProjApp', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
-    // Autoscroll to top of page
-    $rootScope.$on('$stateChangeSuccess', function() {
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-    });
+  .run(function ($rootScope, $location, Auth, $timeout) {
+
+    $rootScope.spinner = false;
 
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$stateChangeStart', function (event, next) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       Auth.isLoggedInAsync(function(loggedIn) {
-        if (next.authenticate && !loggedIn) {
+        if (toState.authenticate && !loggedIn) {
           $location.path('/login');
         }
       });
+
+      $rootScope.timeoutPromise = $timeout(function () {
+        $rootScope.spinner = true;
+      }, 50);
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      // Autoscroll to top of page
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+      $rootScope.spinner = false;
+      $timeout.cancel($rootScope.timeoutPromise);
+
     });
   });

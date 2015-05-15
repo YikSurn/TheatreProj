@@ -7,6 +7,7 @@ angular.module('theatreProjApp')
         url: '/production-meeting/{groupName}/{meetingTitle}',
         templateUrl: 'app/production-meeting/meeting-details/meeting-details.html',
         controller: 'MeetingDetailsCtrl',
+        authenticate: true,
         resolve: {
           prodMeetingPromise: ['$stateParams', 'prodMeetings', 
           function ($stateParams, prodMeetings) {
