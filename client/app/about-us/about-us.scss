@@ -1,5 +1,7 @@
 $animate-duration: 1.0s;
 
+$active-bg: rgba(255,0,255,0.9);
+
 @mixin transform-style($value) {
 	-webkit-transform-style: $value;
 	-moz-transform-style: $value;
@@ -49,6 +51,9 @@ $animate-duration: 1.0s;
 	@include transform-style(preserve-3d);
 
 	&.inactive:hover {
+		> .carousel-panel:after {
+			background: $active-bg;
+		}
 		cursor: pointer;
 	}
 }
@@ -75,13 +80,7 @@ $animate-duration: 1.0s;
 	}
 
 	&.active:after {
-		background: rgba(255,0,255,0.9);
-	}
-
-	> .front-content {
-		text-align: center;
-		vertical-align: middle;
-		color: white;
+		background: $active-bg;
 	}
 }
 

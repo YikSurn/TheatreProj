@@ -72,7 +72,7 @@ angular.module('theatreProjApp')
 			switch (panel) {
 				case 'front':
 				ret['transform-origin'] = 'bottom';
-				if (cube.open) {
+				if (active) {
 					ret.transform = 'translateZ(' + len + 'px) rotateX(-90deg)' + postTransform;
 				} else {
 					ret.transform = 'translateZ(' + len + 'px)' + postTransform;
@@ -81,15 +81,15 @@ angular.module('theatreProjApp')
 				
 				case 'back':
 				ret['transform-origin'] = 'bottom';
-				ret.transform = 'rotateY(180deg) translateZ(' + len + 'px)' + postTransform;
+				ret.transform = 'translateZ(-' + len + 'px)' + postTransform;
 				break;
 				
 				case 'top':
 				ret['transform-origin'] = 'top';
 				if (active) {
-					ret.transform = 'rotateX(90deg) translateY(-' + len + 'px)' + postTransform;
+					ret.transform = 'translateZ(-' + len + 'px) rotateX(110deg)' + postTransform;
 				} else {
-					ret.transform = 'rotateX(90deg) translateY(-' + len + 'px) translateZ(-' + ($scope.cubeLength - len * 2) + 'px)' + postTransform;
+					ret.transform = 'translateZ(-' + len + 'px) rotateX(90deg) translateZ(-' + ($scope.cubeLength - len * 2) + 'px)' + postTransform;
 				}
 				break;
 
@@ -99,13 +99,21 @@ angular.module('theatreProjApp')
 				break;
 
 				case 'left':
-				ret['transform-origin'] = 'bottom';
-				ret.transform = 'rotateY(-90deg) translateZ(' + len + 'px)' + postTransform;
+				ret['transform-origin'] = 'bottom right';
+				if (active) {
+					ret.transform = 'translateX(-' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(80deg)' + postTransform;
+				} else {
+					ret.transform = 'translateX(-' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(90deg)' + postTransform;
+				}
 				break;
 
 				case 'right':
-				ret['transform-origin'] = 'bottom';
-				ret.transform = 'rotateY(90deg) translateZ(' + len + 'px)' + postTransform;
+				ret['transform-origin'] = 'bottom left';
+				if (active) {
+					ret.transform = 'translateX(' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(-80deg)' + postTransform;
+				} else {
+					ret.transform = 'translateX(' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(-90deg)' + postTransform;
+				}
 				break;
 			}
 
