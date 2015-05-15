@@ -2,12 +2,12 @@
 
 angular.module('theatreProjApp')
 .controller('AboutUsCtrl', function ($scope, $window, $http) {
-		/* independent variables */
-		$scope.r = $(window).width() / 2;
-		$scope.rotation = 0;
-		$scope.count = 0;
-		$scope.cubes = [];
-		$scope.currentCubeIndex = 0;
+	/* independent variables */
+	$scope.r = $(window).width() / 2;
+	$scope.rotation = 0;
+	$scope.count = 0;
+	$scope.cubes = [];
+	$scope.currentCubeIndex = 0;
 
 		/* The following functions return a style object for the various
 		parts of the carousel. Because of their dependence on dynamic scope
@@ -49,6 +49,49 @@ angular.module('theatreProjApp')
 			$scope.currentCubeIndex = cubeIndex;
 		};
 
+		$scope.panelStyle = function (panel, $index) {
+			var ret = {
+				width: $scope.cubeLength + 'px',
+				height: $scope.cubeLength + 'px',
+			}
+
+			var len = $scope.cubeLength/2;
+			var postTransform = ' scale(1.0';
+
+			if ($index != $scope.currentCubeIndex) { // inactive
+				postTransform = ' scale(0.3)';
+				len *= 0.3;
+			}
+
+			switch (panel) {
+				case 'front':
+				ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+				break;
+				
+				case 'back':
+				ret.transform = 'rotateY(180deg) translateZ(' + len + 'px)' + postTransform;
+				break;
+				
+				case 'top':
+				ret.transform = 'rotateX(90deg) translateZ(' + len + 'px)' + postTransform;
+				break;
+
+				case 'bottom':
+				ret.transform = 'rotateX(-90deg) translateZ(' + len + 'px)' + postTransform;
+				break;
+
+				case 'left':
+				ret.transform = 'rotateY(-90deg) translateZ(' + len + 'px)' + postTransform;
+				break;
+
+				case 'right':
+				ret.transform = 'rotateY(90deg) translateZ(' + len + 'px)' + postTransform;
+				break;
+			}
+
+			return ret;
+		}
+
 		/* Initializes the carousel with a cube for each group in groups. */
 		var init = function (groups) {
 			$scope.cubes = [];
@@ -61,39 +104,6 @@ angular.module('theatreProjApp')
 				var cube = {};
 				cube.cubeStyle = {
 					transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
-				};
-
-				/* note: could use a prototype object for the following objects, but it ends up being more
-				lines of code than just repeating the width and height :P */
-				cube.frontStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'translateZ(' + $scope.cubeLength/2 + 'px)'
-				};
-				cube.backStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'rotateY(180deg) translateZ(' + $scope.cubeLength/2 + 'px)'
-				};
-				cube.topStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'rotateX(90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
-				};
-				cube.bottomStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'rotateX(-90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
-				};
-				cube.leftStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'rotateY(-90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
-				};
-				cube.rightStyle = {
-					width: $scope.cubeLength + 'px',
-					height: $scope.cubeLength + 'px',
-					transform: 'rotateY(90deg) translateZ(' + $scope.cubeLength/2 + 'px)'
 				};
 				cube.group = groups[i];
 				$scope.cubes.push(cube);

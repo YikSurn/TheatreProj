@@ -9,14 +9,14 @@
 		<div id="carousel-translate" ng-style="carouselTranslateStyle()">
 			<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cube.cubeStyle" ng-class="{'active': $index == currentCubeIndex, 'inactive': $index != currentCubeIndex}">
-					<figure ng-style="cube.frontStyle" class="carousel-panel front">
+					<figure ng-style="panelStyle('front', $index)" class="carousel-panel front">
 						{{cube.group.name}}
 					</figure>
-					<figure ng-style="cube.backStyle" class="carousel-panel back"></figure>
-					<figure ng-style="cube.topStyle" class="carousel-panel top"></figure>
-					<figure ng-style="cube.bottomStyle" class="carousel-panel bottom"></figure>
-					<figure ng-style="cube.leftStyle" class="carousel-panel left"></figure>
-					<figure ng-style="cube.rightStyle" class="carousel-panel right"></figure>
+					<figure ng-style="panelStyle('back', $index)" class="carousel-panel back"></figure>
+					<figure ng-style="panelStyle('top', $index)" class="carousel-panel top"></figure>
+					<figure ng-style="panelStyle('bottom', $index)" class="carousel-panel bottom"></figure>
+					<figure ng-style="panelStyle('left', $index)" class="carousel-panel left"></figure>
+					<figure ng-style="panelStyle('right', $index)" class="carousel-panel right"></figure>
 				</div>
 			</div>
 		</div>
