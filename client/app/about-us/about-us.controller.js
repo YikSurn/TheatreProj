@@ -18,6 +18,7 @@ angular.module('theatreProjApp')
 		$scope.degDelta = 360 / $scope.panelCount;
 		$scope.r = Math.round( $scope.carouselContainerW/2 / Math.tan(Math.PI / $scope.panelCount));
 
+		// variable-dependent styles
 		$scope.carouselContainerStyle = function () {
 			return {
 				width: $scope.carouselContainerW + 'px',
@@ -35,6 +36,14 @@ angular.module('theatreProjApp')
 			return {
 				transform: 'rotateX(-5deg) rotateY(' + $scope.rotation + 'deg)'
 			};
+		};
+
+		$scope.dragStart = function($event) {
+			console.log($event.gesture.deltaX);
+		};
+
+		$scope.dragEnd = function($event) {
+			console.log('end');
 		};
 
 		$scope.switchToPanel = function (panelIndex) {
