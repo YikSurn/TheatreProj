@@ -3,15 +3,18 @@
 angular.module('theatreProjApp')
 .controller('AboutUsCtrl', function ($scope, $window, $http) {
 	/* independent variables */
-	$scope.r = $(window).width() / 2;
-	$scope.rotation = 0;
-	$scope.count = 0;
-	$scope.cubes = [];
-	$scope.currentCubeIndex = 0;
+	$scope.r = $(window).width() / 2; // radius of the carousel
+	$scope.rotation = 0; // the current rotation of the carousel
+	$scope.cubes = []; // the cube data (holding the group, etc)
+	$scope.count = 0; // the number of cubes in the carousel
+	$scope.currentCubeIndex = 0; // the index of the cube at the front
+	var zShift = $scope.r * 1.5; // amt to push the carousel back into the screen
 
-	/* The following functions return a style object for the various
-	parts of the carousel. Because of their dependence on dynamic scope
+	/* The following style functions return a style object for the various
+	parts of the carousel scene. Because of their dependence on dynamic scope
 	variables, they cannot be placed in the scss file. */
+
+	/* The container for everything. */
 	$scope.carouselContainerStyle = function () {
 		return {
 			width: $scope.cubeLength + 'px',
@@ -19,14 +22,14 @@ angular.module('theatreProjApp')
 		};
 	};
 
-	var zShift = $scope.r * 1.5; // amt to push the carousel back into the screen
-
+	/* The carousel-translate div pushes the carousel back into the screen so we can see it. */
 	$scope.carouselTranslateStyle = function () {
 		return {
 			transform: 'translateZ(-' + zShift + 'px) rotateX(-10deg)'
 		}
 	};
 
+	/* The style object for the floor. */
 	$scope.floorStyle = function () {
 		var w = $scope.cubeLength*16;
 		var h = $scope.cubeLength*10;
@@ -42,12 +45,14 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
+	/* Rotates the carousel, in response to user input, to display the selected cube at the front. */
 	$scope.carouselStyle = function () {
 		return {
 			transform: 'rotateY(' + $scope.rotation + 'deg)'
 		};
 	};
 
+	/* Pushes the cube out from the centre of the circle to its place in the ring. */
 	$scope.cubeStyle = function (cubeIndex) {
 		var ret = {
 			transform: 'rotateY(' + cubeIndex*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
@@ -55,103 +60,132 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
-	$scope.panelStyle = function (cube, panel, $index) {
+	var cubeInactiveScaleFactor = 0.3; // the amount to scale inactive cubes by.
+
+	/* Returns the appropriate style for a cube panel.
+	@param cube the cube object.
+	@param panel a string describing which panel is being styled.
+	@param cubeIndex the cubeIndex, used to determine if the cube is active or not. */
+	$scope.panelStyle = function (cube, panel, cubeIndex) {
 		var ret = {
 			width: $scope.cubeLength + 'px',
 			height: $scope.cubeLength + 'px'
 		}
 
-		var len = $scope.cubeLength/2;
-		var postTransform = ' scale(1.0)';
-
-		var active = $index == $scope.currentCubeIndex;
-
+		var len = $scope.cubeLength/2; // the cube half-length. defined here for conciseness, as it's used a lot.
+		var active = cubeIndex == $scope.currentCubeIndex;
 		if (!active) {
-			postTransform = ' scale(0.3)';
-			len *= 0.3;
+			len *= cubeInactiveScaleFactor;
 		}
 
 		switch (panel) {
 			case 'front':
 			ret['transform-origin'] = 'bottom';
+			ret.transform = 'translateZ(' + len + 'px)'; // move it to the front of the cube
 			if (active) {
-				ret.transform = 'translateZ(' + len + 'px) rotateX(-90deg)' + postTransform;
-			} else {
-				ret.transform = 'translateZ(' + len + 'px)' + postTransform;
+				ret.transform += ' rotateX(-90deg)'; // unfold to lay flat
 			}
 			break;
 			
 			case 'back':
 			ret['transform-origin'] = 'bottom';
-			ret.transform = 'translateZ(-' + len + 'px)' + postTransform;
+			ret.transform = 'translateZ(-' + len + 'px)'; // move it to the back of the cube
 			break;
 			
 			case 'top':
 			ret['transform-origin'] = 'top';
+			ret.transform = 'translateZ(-' + len + 'px)'; // move it to align with the back of the cube
 			if (active) {
-				ret.transform = 'translateZ(-' + len + 'px) rotateX(180deg)' + postTransform;
+				ret.transform += ' rotateX(180deg)'; // unfold it to lay open
 			} else {
-				ret.transform = 'translateZ(-' + len + 'px) rotateX(90deg) translateZ(-' + ($scope.cubeLength - len * 2) + 'px)' + postTransform;
+				ret.transform += ' rotateX(90deg)'; // rotate it to lay flat
+				ret.transform += ' translateZ(-' + ($scope.cubeLength - len * 2) + 'px)'; // shift it to align with the post-transformed cube
 			}
 			break;
 
 			case 'bottom':
 			ret['transform-origin'] = 'bottom';
-			ret.transform = 'rotateX(-90deg) translateY(' + len + 'px)' + postTransform;
+			ret.transform = 'rotateX(-90deg)'; // rotate it to lay flat
+			ret.transform += ' translateY(' + len + 'px)'; // move it to the bottom of the cube
 			break;
 
 			case 'left':
 			ret['transform-origin'] = 'bottom right';
 			if (active) {
-				ret.transform = 'translateX(-' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(60deg)' + postTransform;
+				ret.transform = 'translateX(-' + (len * 2) + 'px)'; // move it to align with the left of the cube
+				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back left edge of the cube
+				ret.transform += ' rotateY(60deg)'; // unfold it a little
 			} else {
-				ret.transform = 'translateX(-' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(90deg)' + postTransform;
+				ret.transform = 'translateX(-' + ($scope.cubeLength/2 + len) + 'px)'; // move it to align with the left of the cube
+				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back left edge of the post-transformed cube
+				ret.transform += ' rotateY(90deg)'; // rotate it to lay flush
 			}
 			break;
 
 			case 'right':
 			ret['transform-origin'] = 'bottom left';
 			if (active) {
-				ret.transform = 'translateX(' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(-60deg)' + postTransform;
+				ret.transform = 'translateX(' + (len * 2) + 'px)'; // move it to align with the right of the cube
+				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back right edge of the cube
+				ret.transform += ' rotateY(-60deg)'; // unfold it a little
 			} else {
-				ret.transform = 'translateX(' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(-90deg)' + postTransform;
+				ret.transform = 'translateX(' + ($scope.cubeLength/2 + len) + 'px)'; // move it to align with the right of the cube
+				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back right edge of the post-transformed cube
+				ret.transform += ' rotateY(-90deg)'; // rotate it to lay flush
 			}
 			break;
+		}
+
+		if (!active) {
+			// apply post transform
+			ret.transform += ' scale(' + cubeInactiveScaleFactor + ')';
 		}
 
 		return ret;
 	}
 
-	$scope.dataStyle = function (cube, dataType, $index) {
+	/* Returns the appropriate style for the data presented in the active cube.
+	@param cube the cube object.
+	@param dataType a string describing which data attribute is being styled.
+	@param cubeIndex the cubeIndex, used to determine if the cube is active or not. */
+	$scope.dataStyle = function (cube, dataType, cubeIndex) {
 		var ret = {
 			'transform-origin': 'bottom'
 		}
 
-		var len = $scope.cubeLength/2;
-		var postTransform = ' scale(1.0)';
-
-		var active = $index == $scope.currentCubeIndex;
+		var len = $scope.cubeLength/2; // the cube half-length. defined here for conciseness, as it's used a lot.
+		var active = cubeIndex == $scope.currentCubeIndex;
 		if (!active) {
-			postTransform = ' scale(0.1)';
-			len *= 0.3;
+			len *= cubeInactiveScaleFactor;
 		}
 
 		switch (dataType) {
 			case 'info':
 			ret.width = ($scope.cubeLength*4) + 'px';
 			ret.height = ($scope.cubeLength*0.6) + 'px';
+			ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px)'; // centre it horizontally
 			if (active) {
-				ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px) translateZ(' + (len*3) + 'px) translateY(' + (len*1.5) + 'px) rotateX(10deg)' + postTransform;
+				ret.opacity = '1';
+				ret.transform += ' translateZ(' + (len*3) + 'px)'; // move it forward a lot
+				ret.transform += ' translateY(' + (len*1.5) + 'px)'; // move it down a bit
+				ret.transform += ' rotateX(10deg)'; // rotate it back a bit
 			} else {
-				ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px) translateY(' + (len*2) + 'px)' + postTransform;
+				ret.opacity = '0';
+				ret.transform += ' translateY(' + (len*2) + 'px)'; // move it down a bit
 			}
 			break;
+		}
+
+		if (!active) {
+			// apply post transform
+			ret.transform += ' scale(0.05)';
 		}
 
 		return ret;
 	}
 
-	/* Rotates the carousel to present the cube at currentCubeIndex at the front. */
+	/* Rotates the carousel to present the cube at currentCubeIndex at the front.
+	@param cubeIndex the cubeIndex of the cube which should be presented. */
 	$scope.switchTo = function (cubeIndex) {
 		if (cubeIndex === $scope.currentCubeIndex) {
 			return;
@@ -169,8 +203,11 @@ angular.module('theatreProjApp')
 		$scope.currentCubeIndex = cubeIndex;
 	};
 
-	$scope.getActivityClass = function ($index) {
-		return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
+	/* Returns active if the cube at cubeIndex is the one at the front, inactive
+	otherwise.
+	@param cubeIndex the cubeIndex of the cube whose activity is being requested. */
+	$scope.getActivityClass = function (cubeIndex) {
+		return (cubeIndex == $scope.currentCubeIndex)? 'active' : 'inactive';
 	};
 
 	/* Initializes the carousel with a cube for each group in groups. */

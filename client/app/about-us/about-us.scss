@@ -1,4 +1,4 @@
-$animate-duration: 1.0s;
+$animate-duration: 0.8s;
 
 $active-bg: rgba(255,255,255,0.5);
 
@@ -12,10 +12,10 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 }
 
 @mixin transition($duration, $delay) {
-	-webkit-transition: -webkit-transform $duration $wobble $delay;
-	-moz-transition: -moz-transform $duration $wobble $delay;
-	-o-transition: -o-transform $duration $wobble $delay;
-	transition: transform $duration $wobble $delay;
+	-webkit-transition: all $duration $wobble $delay;
+	-moz-transition: all $duration $wobble $delay;
+	-o-transition: all $duration $wobble $delay;
+	transition: all $duration $wobble $delay;
 }
 
 .about-us-content {
@@ -28,6 +28,8 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 .floor {
 	display: block;
 	position: absolute;
+	background-size: 10% 10%;
+	background-repeat: repeat;
 	background: url(../assets/images/wood_floor.jpg);
 	@include transform-style(preserve-3d);
 }
