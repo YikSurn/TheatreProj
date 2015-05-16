@@ -165,9 +165,23 @@ angular.module('theatreProjApp')
 			'transform-origin': 'bottom',
 			transform: ''
 		};
-		ret.transform += 'translateY(-' + (curtainH*0.3) + 'px)'; // move it up
-		ret.transform += ' translateX(-' + (curtainOpenDist + w*1.5) + 'px)'; // move it onto the left curtain
-		ret.transform += ' translateZ(' + (floorH/2*0.85) + 'px)'; // move it forwards
+		ret.transform += ' translateX(-' + (curtainOpenDist) + 'px)'; // move it to the left
+		ret.transform += ' translateZ(' + (floorH/2 + 1) + 'px)'; // move it out to the front edge of the floor
+		return ret;
+	};
+
+	/* The style object for the 'back' button. */
+	$scope.backButtonStyle = function() {
+		var w = $scope.r*0.2;
+		var h = $scope.r*0.1;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom',
+			transform: ''
+		};
+		ret.transform += ' translateX(-' + (curtainOpenDist + w) + 'px)'; // move it to the left
+		ret.transform += ' translateZ(' + (floorH/2 + 1) + 'px)'; // move it out to the front edge of the floor
 		return ret;
 	};
 
@@ -315,12 +329,18 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
+	/* Loads all the boxes into the carousel. */
 	$scope.loadBoxes = function () {
 		$http.get('api/aboutusgroups').success(function (groups) {
 			$scope.boxesLoaded = true;
 			init(groups);
 		});
 	};
+
+	/* Returns user to the previous page in the history. */
+	$scope.back = function () {
+		$window.history.back();
+	}
 
 	/* Rotates the carousel to present the cube at currentCubeIndex at the front.
 	@param cubeIndex the cubeIndex of the cube which should be presented. */

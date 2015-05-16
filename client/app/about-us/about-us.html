@@ -11,7 +11,8 @@
 			<figure class="hang-curtain" ng-style="hangCurtainStyle()"></figure>
 
 			<!-- Interactive elements -->
-			<button class="load" ng-click="loadBoxes()" ng-hide="boxesLoaded" ng-style="loadButtonStyle()">Load more boxes!</button>
+			<button class="load-button" ng-click="loadBoxes()" ng-hide="boxesLoaded" ng-style="loadButtonStyle()">Load more boxes!</button>
+			<button class="back-button" ng-click="back()" ng-style="backButtonStyle()">Back</button>
 
 			<!-- Carousel -->
 			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()" ng-class="{'hidden': !initialized}">
