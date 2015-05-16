@@ -9,6 +9,24 @@ angular.module('theatreProjApp')
 	$scope.count = 0; // the number of cubes in the carousel
 	$scope.currentCubeIndex = 0; // the index of the cube at the front
 	var zShift = $scope.r * 1.5; // amt to push the carousel back into the screen
+	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
+
+	/* Initializes the carousel with a cube for each group in groups. This method is called for
+	the first time at the bottom of this controller declaration. */
+	var init = function (groups) {
+		$scope.cubes = [];
+		var circumference = 2 * Math.PI * $scope.r;
+		$scope.count = groups.length;
+		$scope.cubeLength = circumference / $scope.count * 0.6;
+		$scope.degDelta = 360 / $scope.count;
+
+		for (var i = 0; i < $scope.count; i++) {
+			var cube = {};
+			cube.group = groups[i];
+			$scope.cubes.push(cube);
+		};
+		$scope.switchTo($scope.currentCubeIndex);
+	};
 
 	/* The following style functions return a style object for the various
 	parts of the carousel scene. Because of their dependence on dynamic scope
@@ -58,7 +76,6 @@ angular.module('theatreProjApp')
 			height: h + 'px',
 			'transform-origin': 'bottom left'
 		};
-		ret.transform = '';
 		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - h) + 'px)'; // move it to floor level
 		ret.transform += ' translateX(' + ($scope.cubeLength/2) + 'px)'; // centre it horizontally
 		ret.transform += ' translateZ(-' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
@@ -84,6 +101,32 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
+	/* The style object for the curtains. */
+	$scope.curtainStyle = function (isLeft) {
+		var w = $scope.r;
+		var h = $scope.r;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom'
+		};
+		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - h) + 'px)'; // move it to floor level
+		var factor = isLeft? -1 : 1;
+		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2 + factor*w/2) + 'px)'; // move it into position horizontally
+		ret.transform += ' translateX(' + (factor*w*0.7) + 'px)';
+		ret.transform += ' translateZ(' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
+		return ret;
+	};
+
+	/* */
+	$scope.curtainOpenStyle = function (isLeft) {
+		var w = $scope.r;
+		var factor = isLeft? -1 : 1;
+		return {
+			transform: 'translateX(' + (factor*w*0.7) + 'px)'
+		}
+	};
+
 	/* Rotates the carousel, in response to user input, to display the selected cube at the front. */
 	$scope.carouselStyle = function () {
 		return {
@@ -98,8 +141,6 @@ angular.module('theatreProjApp')
 		}
 		return ret;
 	};
-
-	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
 
 	/* Returns the appropriate style for a cube panel.
 	@param cube the cube object.
@@ -247,22 +288,6 @@ angular.module('theatreProjApp')
 	@param cubeIndex the cubeIndex of the cube whose activity is being requested. */
 	$scope.getActivityClass = function (cubeIndex) {
 		return (cubeIndex == $scope.currentCubeIndex)? 'active' : 'inactive';
-	};
-
-	/* Initializes the carousel with a cube for each group in groups. */
-	var init = function (groups) {
-		$scope.cubes = [];
-		var circumference = 2 * Math.PI * $scope.r;
-		$scope.count = groups.length;
-		$scope.cubeLength = circumference / $scope.count * 0.6;
-		$scope.degDelta = 360 / $scope.count;
-
-		for (var i = 0; i < $scope.count; i++) {
-			var cube = {};
-			cube.group = groups[i];
-			$scope.cubes.push(cube);
-		};
-		$scope.switchTo($scope.currentCubeIndex);
 	};
 
 	/* ----------------- init ----------------- */
