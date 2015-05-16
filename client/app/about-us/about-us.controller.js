@@ -285,6 +285,21 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
+	$scope.fbStyle = function (cubeIndex) {
+		var margin = $scope.cubeLength*0.07;
+		var l = $scope.cubeLength - 2*margin;
+		var active = cubeIndex == $scope.currentCubeIndex;
+		var ret = {
+			width: l + 'px',
+			height: l + 'px',
+			transform: '',
+			opacity: active? 1 : 0
+		}
+		ret.transform += ' translateX(' + margin + 'px)';
+		ret.transform += ' translateY(' + margin + 'px)';
+		return ret;
+	};
+
 	/* Returns the style for the info presented in the active cube.
 	@param cube the cube object.
 	@param cubeIndex the cubeIndex, used to determine if the cube is active or not. */
