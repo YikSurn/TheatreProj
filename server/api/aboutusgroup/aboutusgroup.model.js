@@ -5,9 +5,9 @@ var mongoose = require('mongoose'),
 
 var AboutusgroupSchema = new Schema({
 	name: String,
-	web: [String],
-	fb: [String],
-	contact: [String],
+	web: String,
+	fb: String,
+	contact: String,
 	info: String
 });
 
