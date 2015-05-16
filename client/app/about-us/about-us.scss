@@ -135,9 +135,10 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 
 .carousel-container {
 	position: relative;
+	width: 0px;
+	height: 0px;
 	left: 0;
 	right: 0;
-	top: 100px;
 	margin: auto;
 	border: 0px;
 	perspective: 1100px;
