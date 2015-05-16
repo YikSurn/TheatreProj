@@ -3,6 +3,7 @@
 <div class="about-us-content">
 	<div class="carousel-container" ng-style="carouselContainerStyle()">
 		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
+			<figure class="floor" ng-style="floorStyle()"></figure>
 			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cube.cubeStyle" ng-class="getActivityClass($index)">
 					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></figure>

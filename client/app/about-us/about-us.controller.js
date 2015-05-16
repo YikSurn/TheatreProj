@@ -19,15 +19,32 @@ angular.module('theatreProjApp')
 			};
 		};
 
+		var zShift = $scope.r * 1.5; // amt to push the carousel back into the screen
+
 		$scope.carouselTranslateStyle = function () {
 			return {
-				transform: 'translateZ(-' + $scope.r*1.5 + 'px)'
+				transform: 'translateZ(-' + zShift + 'px) rotateX(-10deg)'
 			}
+		};
+
+		$scope.floorStyle = function () {
+			var w = $scope.cubeLength*16;
+			var h = $scope.cubeLength*10;
+			var ret = {
+				width: w + 'px',
+				height: h + 'px',
+				'transform-origin': 'top center'
+			};
+			ret.transform = 'translateY(' + $scope.cubeLength*1.1 + 'px)'; // move it to floor level
+			ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2) + 'px)'; // centre it horizontally
+			ret.transform += ' translateZ(-' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
+			ret.transform += ' rotateX(90deg)'; // rotate it so it's flat
+			return ret;
 		};
 
 		$scope.carouselStyle = function () {
 			return {
-				transform: 'rotateX(-10deg) rotateY(' + $scope.rotation + 'deg)'
+				transform: 'rotateY(' + $scope.rotation + 'deg)'
 			};
 		};
 
