@@ -46,10 +46,20 @@
                     Please select a Group.
                     </p>
                 </div>
-                <div class="form-group" style="display:inline-block; min-height:290px;">
+                <div class="form-group">
 		      		<label>Project Date: </label>
-		        	<datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
- 					<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group has-error">
                     <p class="help-block" ng-show="newProject.date.$error.required && submitted">

@@ -50,11 +50,32 @@ angular.module('theatreProjApp')
         };
     };
 
-    //Ensures date must be selected from todays date
-    $scope.toggleMin = function() {
-      $scope.minDate = $scope.minDate ? null : new Date();
+    //Date Picker functions
+    $scope.today = function() {
+      $scope.dt = new Date();
     };
-    $scope.toggleMin();
+    $scope.today();
+
+    $scope.toggleRange = function() {
+      $scope.minDate = $scope.minDate ? null : new Date();
+      $scope.maxDate = $scope.maxDate ? null : new Date();
+      $scope.maxDate.setMonth($scope.maxDate.getMonth()+6);
+    };
+    $scope.toggleRange();
+
+    $scope.datep = {
+      opened: false
+    };
+
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $scope.datep.opened = true;
+    };
+    
+    $scope.clear = function () {
+      $scope.dt = null;
+    };
 
     //Function to create a new project
     $scope.createProject = function() {
