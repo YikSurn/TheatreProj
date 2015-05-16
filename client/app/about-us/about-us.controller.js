@@ -70,6 +70,13 @@ angular.module('theatreProjApp')
 		return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
 	};
 
+	$scope.cubeStyle = function (cubeIndex) {
+		var ret = {
+			transform: 'rotateY(' + cubeIndex*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
+		}
+		return ret;
+	};
+
 	$scope.panelStyle = function (cube, panel, $index) {
 		var ret = {
 			width: $scope.cubeLength + 'px',
@@ -176,10 +183,6 @@ angular.module('theatreProjApp')
 
 		for (var i = 0; i < $scope.count; i++) {
 			var cube = {};
-			cube.cubeStyle = {
-				transform: 'rotateY(' + i*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
-			};
-			cube.open = false;
 			cube.group = groups[i];
 			$scope.cubes.push(cube);
 		};
