@@ -6,8 +6,8 @@
 			<div class="floor" ng-style="floorStyle()"></div>
 			<div class="floor" ng-style="floorWallStyle()"></div>
 			<div class="back-wall" ng-style="backWallStyle()"></div>
-			<div class="left-curtain" ng-style="curtainStyle(true)"></div>
-			<div class="right-curtain" ng-style="curtainStyle(false)"></div>
+			<div class="left-curtain" ng-style="curtainStyles.left" hm-touch="curtainDragStart(true, $event)" hm-drag="curtainDragMove(true, $event)" hm-release="curtainDragEnd(true, $event)"></div>
+			<div class="right-curtain" ng-style="curtainStyles.right" hm-touch="curtainDragStart(false, $event)" hm-drag="curtainDragMove(false, $event)" hm-release="curtainDragEnd(false, $event)"></div>
 			<div class="hang-curtain" ng-style="hangCurtainStyle()"></div>
 
 			<!-- Interactive elements -->
@@ -27,7 +27,6 @@
 					<div ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)">
 						<img class="link" ng-style="contactStyle($index)" src="assets/images/gmail_logo.png" ng-click="mailto(cube.group.contact)" ng-show="cube.group.contact.length > 0">
 					</div>
-
 					<div ng-style="infoStyle(cube, $index)" class="carousel-data info" ng-class="getActivityClass($index)">
 						<span>
 							<h2>{{cube.group.name}}</h2>

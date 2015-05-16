@@ -9,8 +9,9 @@ angular.module('theatreProjApp')
 	$scope.currentCubeIndex = 0; // the index of the cube at the front
 	var zShift = $scope.r * 2; // amt to push the carousel back into the screen
 	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
+	var floorW = $scope.r*8; // the length of the floor from back wall to front edge.
 	var floorH = $scope.r*4; // the length of the floor from back wall to front edge.
-	var curtainW = $scope.r*1.3; // the width of the left and right curtains.
+	var curtainW = $scope.r*2; // the width of the left and right curtains.
 	var curtainH = $scope.r; // the height of the left and right curtains.
 	var curtainOpenDist = $scope.r*0.8; // the amount to move each curtain by for opening.
 
@@ -41,9 +42,11 @@ angular.module('theatreProjApp')
 		$scope.initialized = true;
 	};
 
-	/* The following style functions return a style object for the various
+	/* -----------------------------------------------------------------------------------------------
+	The following style functions return a style object for the various
 	parts of the carousel scene. Because of their dependence on dynamic scope
-	variables, they cannot be placed in the scss file. */
+	variables, they cannot be placed in the scss file.
+	----------------------------------------------------------------------------------------------- */
 
 	/* The container for everything. */
 	$scope.carouselContainerStyle = function () {
@@ -65,7 +68,7 @@ angular.module('theatreProjApp')
 
 	/* The style object for the floor. */
 	$scope.floorStyle = function () {
-		var w = $scope.r*5;
+		var w = floorW;
 		var h = floorH;
 		var ret = {
 			width: w + 'px',
@@ -81,7 +84,7 @@ angular.module('theatreProjApp')
 
 	/* The style object for the front wall at the front end of the floor. */
 	$scope.floorWallStyle = function () {
-		var w = $scope.r*5;
+		var w = floorW;
 		var h = $scope.r;
 		var ret = {
 			width: w + 'px',
@@ -96,7 +99,7 @@ angular.module('theatreProjApp')
 
 	/* The style object for the back wall. */
 	$scope.backWallStyle = function () {
-		var w = $scope.r*5;
+		var w = floorW;
 		var h = $scope.r;
 		var ret = {
 			width: w + 'px',
@@ -110,8 +113,8 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
-	/* The style object for the curtains. */
-	$scope.curtainStyle = function (isLeft) {
+	/* Returns the appropriate style object for the requested curtain (left or right). */
+	var curtainStyle = function (isLeft) {
 		var ret = {
 			width: curtainW + 'px',
 			height: curtainH + 'px',
@@ -126,13 +129,11 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
-	/* */
-	$scope.curtainOpenStyle = function (isLeft) {
-		var w = $scope.r;
-		var factor = isLeft? -1 : 1;
-		return {
-			transform: 'translateX(' + (factor*w*0.7) + 'px)'
-		}
+	/* We maintain these in a persistent object so that we can refer to them during a curtain
+	drag. */
+	$scope.curtainStyles = {
+		left: curtainStyle(true),
+		right: curtainStyle(false)
 	};
 
 	/* The style object for the hanging curtains. */
@@ -211,7 +212,7 @@ angular.module('theatreProjApp')
 		}
 
 		var len = $scope.cubeLength/2; // the cube half-length. defined here for conciseness, as it's used a lot.
-		var active = cubeIndex == $scope.currentCubeIndex;
+		var active = $scope.isActive(cubeIndex);
 		if (!active) {
 			len *= cubeInactiveScaleFactor;
 		}
@@ -289,7 +290,7 @@ angular.module('theatreProjApp')
 	$scope.fbStyle = function (cubeIndex) {
 		var margin = $scope.cubeLength*0.07;
 		var l = $scope.cubeLength - 2*margin;
-		var active = cubeIndex == $scope.currentCubeIndex;
+		var active = $scope.isActive(cubeIndex);
 		var ret = {
 			width: l + 'px',
 			height: l + 'px',
@@ -305,7 +306,7 @@ angular.module('theatreProjApp')
 	$scope.contactStyle = function (cubeIndex) {
 		var margin = $scope.cubeLength*0.07;
 		var l = $scope.cubeLength - 2*margin;
-		var active = cubeIndex == $scope.currentCubeIndex;
+		var active = $scope.isActive(cubeIndex);
 		var ret = {
 			width: l + 'px',
 			height: l + 'px',
@@ -331,7 +332,7 @@ angular.module('theatreProjApp')
 		}
 
 		var len = $scope.cubeLength/2; // the cube half-length. defined here for conciseness, as it's used a lot.
-		var active = cubeIndex == $scope.currentCubeIndex;
+		var active = $scope.isActive(cubeIndex);
 		if (!active) {
 			len *= cubeInactiveScaleFactor;
 		}
@@ -354,6 +355,10 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
+	/* -----------------------------------------------------------------------------------------------
+	The following functions perform some kind of functional task, and are used from the markup.
+	----------------------------------------------------------------------------------------------- */
+
 	/* Opens an external url.
 	@param url a string starting with 'www.' */
 	$scope.link = function (url) {
@@ -364,6 +369,43 @@ angular.module('theatreProjApp')
 	@param addr an email address string, eg. steven@gmail.com */
 	$scope.mailto = function (addr) {
 		$window.open('mailto:'+addr);
+	};
+
+	/* Holds info pertaining to a curtain drag. */
+	$scope.curtainDragObj = {
+		left: {
+			origTransform: '',
+			dragTransform: ''
+		},
+		right: {
+			origTransform: '',
+			dragTransform: ''
+		},
+		dragging: false
+	}
+	/* Called when a curtain is touched. */
+	$scope.curtainDragStart = function (isLeft, $event) {
+		$scope.curtainDragObj.left.origTransform = $scope.curtainStyles.left.transform;
+		$scope.curtainDragObj.right.origTransform = $scope.curtainStyles.right.transform;
+	};
+
+	/* Called when a curtain is dragged. */
+	$scope.curtainDragMove = function (isLeft, $event) {
+		$scope.curtainDragObj.dragging = true;
+		var style = isLeft? $scope.curtainStyles.left : $scope.curtainStyles.right;
+		var leftFactor = isLeft? 1 : -1;
+		var rightFactor = isLeft? -1 : 1;
+		$scope.curtainDragObj.left.dragTransform = ' translateX(' + ($event.gesture.deltaX * leftFactor) + 'px)';
+		$scope.curtainDragObj.right.dragTransform = ' translateX(' + ($event.gesture.deltaX * rightFactor) + 'px)';
+		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform + $scope.curtainDragObj.left.dragTransform;
+		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform + $scope.curtainDragObj.right.dragTransform;
+	};
+
+	/* Called when a curtain is released. */
+	$scope.curtainDragEnd = function (isLeft, $event) {
+		$scope.curtainDragObj.dragging = false;
+		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform;
+		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform;
 	};
 
 	/* Loads all the boxes into the carousel. */
@@ -399,14 +441,20 @@ angular.module('theatreProjApp')
 		$scope.currentCubeIndex = cubeIndex;
 	};
 
+	$scope.isActive = function (cubeIndex) {
+		return (cubeIndex == $scope.currentCubeIndex) && !$scope.curtainDragObj.dragging;
+	}
+
 	/* Returns active if the cube at cubeIndex is the one at the front, inactive
 	otherwise.
 	@param cubeIndex the cubeIndex of the cube whose activity is being requested. */
 	$scope.getActivityClass = function (cubeIndex) {
-		return (cubeIndex == $scope.currentCubeIndex)? 'active' : 'inactive';
+		return $scope.isActive(cubeIndex)? 'active' : 'inactive';
 	};
 
-	/* ----------------- init ----------------- */
+	/* -----------------------------------------------------------------------------------------------
+													Init
+	----------------------------------------------------------------------------------------------- */
 
 	$http.get('api/aboutusgroups/limit/5').success(function (groups) {
 		init(groups);
