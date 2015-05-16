@@ -301,6 +301,22 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
+	/* Returns the style used for the contact button. */
+	$scope.contactStyle = function (cubeIndex) {
+		var margin = $scope.cubeLength*0.07;
+		var l = $scope.cubeLength - 2*margin;
+		var active = cubeIndex == $scope.currentCubeIndex;
+		var ret = {
+			width: l + 'px',
+			height: l + 'px',
+			transform: '',
+			opacity: active? 1 : 0
+		}
+		ret.transform += ' translateX(' + margin + 'px)';
+		ret.transform += ' translateY(' + margin + 'px)';
+		return ret;
+	};
+
 	/* Returns the style for the info presented in the active cube.
 	@param cube the cube object.
 	@param cubeIndex the cubeIndex, used to determine if the cube is active or not. */
@@ -342,6 +358,12 @@ angular.module('theatreProjApp')
 	@param url a string starting with 'www.' */
 	$scope.link = function (url) {
 		$window.open('http://' + url);
+	};
+
+	/* Opens mail client to send an email to addr.
+	@param addr an email address string, eg. steven@gmail.com */
+	$scope.mailto = function (addr) {
+		$window.open('mailto:'+addr);
 	};
 
 	/* Loads all the boxes into the carousel. */
