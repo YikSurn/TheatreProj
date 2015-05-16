@@ -1,12 +1,19 @@
 <div class="about-us-content" ng-class="{'hidden': !initialized}">
 	<div class="carousel-container" ng-style="carouselContainerStyle()">
 		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
+
+			<!-- Stage construct -->
 			<figure class="floor" ng-style="floorStyle()"></figure>
 			<figure class="floor" ng-style="floorWallStyle()"></figure>
 			<figure class="back-wall" ng-style="backWallStyle()"></figure>
 			<figure class="left-curtain" ng-style="curtainStyle(true)"></figure>
 			<figure class="right-curtain" ng-style="curtainStyle(false)"></figure>
 			<figure class="hang-curtain" ng-style="hangCurtainStyle()"></figure>
+
+			<!-- Interactive elements -->
+			<button class="load" ng-style="loadButtonStyle()">Load more boxes!</button>
+
+			<!-- Carousel -->
 			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cubeStyle($index)" ng-class="getActivityClass($index)">
 					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></figure>

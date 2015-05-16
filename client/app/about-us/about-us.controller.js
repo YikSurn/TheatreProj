@@ -11,6 +11,9 @@ angular.module('theatreProjApp')
 	var zShift = $scope.r * 2; // amt to push the carousel back into the screen
 	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
 	var floorH = $scope.r*4; // the length of the floor from back wall to front edge.
+	var curtainW = $scope.r*1.3; // the width of the left and right curtains.
+	var curtainH = $scope.r; // the height of the left and right curtains.
+	var curtainOpenDist = $scope.r*0.8; // the amount to move each curtain by for opening.
 
 	$scope.initialized = false;
 
@@ -43,7 +46,7 @@ angular.module('theatreProjApp')
 		};
 	};
 
-	/* The carousel-translate div pushes the carousel back into the screen so we can see it. */
+	/* The carousel-translate div pushes the scene back into the screen so we can see it. */
 	$scope.carouselTranslateStyle = function () {
 		var ret = {
 			transform: ''
@@ -103,18 +106,16 @@ angular.module('theatreProjApp')
 
 	/* The style object for the curtains. */
 	$scope.curtainStyle = function (isLeft) {
-		var w = $scope.r;
-		var h = $scope.r;
 		var ret = {
-			width: w + 'px',
-			height: h + 'px',
+			width: curtainW + 'px',
+			height: curtainH + 'px',
 			'transform-origin': 'bottom',
 			transform: ''
 		};
-		ret.transform += 'translateY(-' + h + 'px)'; // move it to floor level
+		ret.transform += 'translateY(-' + curtainH + 'px)'; // move it to floor level
 		var factor = isLeft? -1 : 1;
-		ret.transform += ' translateX(-' + (w/2 - factor*w/2) + 'px)'; // move it into position horizontally
-		ret.transform += ' translateX(' + (factor*w*0.8) + 'px)'; // open the curtain
+		ret.transform += ' translateX(-' + (curtainW/2 - factor*curtainW/2) + 'px)'; // move it into position horizontally
+		ret.transform += ' translateX(' + (factor*curtainOpenDist) + 'px)'; // open the curtain
 		ret.transform += ' translateZ(' + (floorH/2*0.84) + 'px)'; // move it forwards
 		return ret;
 	};
@@ -141,6 +142,22 @@ angular.module('theatreProjApp')
 		var curtainH = $scope.r;
 		ret.transform += 'translateY(-' + (curtainH*1.04) + 'px)'; // move it up
 		ret.transform += ' translateX(-' + (w/2) + 'px)'; // move it into position horizontally
+		ret.transform += ' translateZ(' + (floorH/2*0.85) + 'px)'; // move it forwards
+		return ret;
+	};
+
+	/* The style object for the 'load more boxes' button. */
+	$scope.loadButtonStyle = function() {
+		var w = $scope.r*0.2;
+		var h = $scope.r*0.1;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom',
+			transform: ''
+		};
+		ret.transform += 'translateY(-' + (curtainH*0.3) + 'px)'; // move it up
+		ret.transform += ' translateX(-' + (curtainOpenDist + w*1.5) + 'px)'; // move it onto the left curtain
 		ret.transform += ' translateZ(' + (floorH/2*0.85) + 'px)'; // move it forwards
 		return ret;
 	};

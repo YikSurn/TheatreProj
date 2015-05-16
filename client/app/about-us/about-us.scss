@@ -133,6 +133,13 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	}
 }
 
+.load {
+	display: block;
+	position: absolute;
+	background: red;
+	@include transform-style(preserve-3d);
+}
+
 .carousel-container {
 	position: relative;
 	width: 0px;
