@@ -285,13 +285,17 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
-	/* Returns the appropriate style for the data presented in the active cube.
+	/* Returns the style for the info presented in the active cube.
 	@param cube the cube object.
-	@param dataType a string describing which data attribute is being styled.
 	@param cubeIndex the cubeIndex, used to determine if the cube is active or not. */
-	$scope.dataStyle = function (cube, dataType, cubeIndex) {
+	$scope.infoStyle = function (cube, cubeIndex) {
+		var w = $scope.cubeLength*4;
+		var h = $scope.cubeLength*0.7;
 		var ret = {
-			'transform-origin': 'bottom'
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom',
+			transform: ''
 		}
 
 		var len = $scope.cubeLength/2; // the cube half-length. defined here for conciseness, as it's used a lot.
@@ -300,22 +304,14 @@ angular.module('theatreProjApp')
 			len *= cubeInactiveScaleFactor;
 		}
 
-		switch (dataType) {
-			case 'info':
-			var w = $scope.cubeLength*4;
-			var h = $scope.cubeLength*0.7;
-			ret.width = w + 'px';
-			ret.height = h + 'px';
-			ret.transform = 'translateX(-' + (w/2) + 'px)'; // centre it horizontally
-			ret.transform += ' translateY(-' + (h) + 'px)'; // move it to floor level
-			if (active) {
-				ret.opacity = '1';
-				ret.transform += ' translateZ(' + (len*5) + 'px)'; // move it forward a lot
-				ret.transform += ' rotateX(10deg)'; // rotate it back a bit
-			} else {
-				ret.opacity = '0';
-			}
-			break;
+		ret.transform += ' translateX(-' + (w/2) + 'px)'; // centre it horizontally
+		ret.transform += ' translateY(-' + (h) + 'px)'; // move it to floor level
+		if (active) {
+			ret.opacity = '1';
+			ret.transform += ' translateZ(' + (len*5) + 'px)'; // move it forward a lot
+			ret.transform += ' rotateX(10deg)'; // rotate it back a bit
+		} else {
+			ret.opacity = '0';
 		}
 
 		if (!active) {
