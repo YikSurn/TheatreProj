@@ -98,7 +98,7 @@ angular.module('theatreProjApp')
 		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - h) + 'px)'; // move it to floor level
 		var factor = isLeft? -1 : 1;
 		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2 + factor*w/2) + 'px)'; // move it into position horizontally
-		ret.transform += ' translateX(' + (factor*w*0.7) + 'px)';
+		ret.transform += ' translateX(' + (factor*w*0.7) + 'px)'; // open the curtain
 		ret.transform += ' translateZ(' + ($scope.cubeLength/2 + zShift*0.7) + 'px)'; // move it forwards
 		return ret;
 	};
@@ -110,6 +110,22 @@ angular.module('theatreProjApp')
 		return {
 			transform: 'translateX(' + (factor*w*0.7) + 'px)'
 		}
+	};
+
+	/* The style object for the hanging curtains. */
+	$scope.hangCurtainStyle = function() {
+		var w = $scope.r*3;
+		var h = $scope.r*0.23;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom'
+		};
+		var curtainH = $scope.r;
+		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - curtainH*0.9) + 'px)'; // move it up
+		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2) + 'px)'; // move it into position horizontally
+		ret.transform += ' translateZ(' + ($scope.cubeLength/2 + zShift*0.7) + 'px)'; // move it forwards
+		return ret;
 	};
 
 	/* Rotates the carousel, in response to user input, to display the selected cube at the front. */

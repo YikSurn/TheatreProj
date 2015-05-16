@@ -5,6 +5,7 @@
 			<figure class="back-wall" ng-style="backWallStyle()"></figure>
 			<figure class="left-curtain" ng-style="curtainStyle(true)"></figure>
 			<figure class="right-curtain" ng-style="curtainStyle(false)"></figure>
+			<figure class="hang-curtain" ng-style="hangCurtainStyle()"></figure>
 			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cubeStyle($index)" ng-class="getActivityClass($index)">
 					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></figure>
