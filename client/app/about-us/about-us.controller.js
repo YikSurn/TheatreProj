@@ -48,28 +48,6 @@ angular.module('theatreProjApp')
 		};
 	};
 
-	/* Rotates the carousel to present the cube at currentCubeIndex at the front. */
-	$scope.switchTo = function (cubeIndex) {
-		if (cubeIndex === $scope.currentCubeIndex) {
-			return;
-		}
-
-		var indexDelta = Math.abs($scope.currentCubeIndex - cubeIndex);
-		var directionFactor = (cubeIndex > $scope.currentCubeIndex)? 1 : -1;
-
-		if (indexDelta > $scope.count/2) {
-			indexDelta = $scope.count - indexDelta;
-			directionFactor *= -1;
-		}
-
-		$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
-		$scope.currentCubeIndex = cubeIndex;
-	};
-
-	$scope.getActivityClass = function ($index) {
-		return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
-	};
-
 	$scope.cubeStyle = function (cubeIndex) {
 		var ret = {
 			transform: 'rotateY(' + cubeIndex*$scope.degDelta + 'deg) translateZ(' + $scope.r + 'px)'
@@ -172,6 +150,28 @@ angular.module('theatreProjApp')
 
 		return ret;
 	}
+
+	/* Rotates the carousel to present the cube at currentCubeIndex at the front. */
+	$scope.switchTo = function (cubeIndex) {
+		if (cubeIndex === $scope.currentCubeIndex) {
+			return;
+		}
+
+		var indexDelta = Math.abs($scope.currentCubeIndex - cubeIndex);
+		var directionFactor = (cubeIndex > $scope.currentCubeIndex)? 1 : -1;
+
+		if (indexDelta > $scope.count/2) {
+			indexDelta = $scope.count - indexDelta;
+			directionFactor *= -1;
+		}
+
+		$scope.rotation -= indexDelta * $scope.degDelta * directionFactor;
+		$scope.currentCubeIndex = cubeIndex;
+	};
+
+	$scope.getActivityClass = function ($index) {
+		return ($index == $scope.currentCubeIndex)? 'active' : 'inactive';
+	};
 
 	/* Initializes the carousel with a cube for each group in groups. */
 	var init = function (groups) {
