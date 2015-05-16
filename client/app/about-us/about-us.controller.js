@@ -381,7 +381,8 @@ angular.module('theatreProjApp')
 			origTransform: '',
 			dragTransform: ''
 		},
-		dragging: false
+		dragging: false,
+		didClose: false
 	}
 	/* Called when a curtain is touched. */
 	$scope.curtainDragStart = function (isLeft, $event) {
@@ -398,6 +399,7 @@ angular.module('theatreProjApp')
 		var dx = $event.gesture.deltaX;
 		if (Math.abs(dx) > curtainOpenDist) {
 			dx = isLeft? curtainOpenDist : -curtainOpenDist;
+			$scope.curtainDragObj.didClose = true;
 		}
 		$scope.curtainDragObj.left.dragTransform = ' translateX(' + (dx * leftFactor) + 'px)';
 		$scope.curtainDragObj.right.dragTransform = ' translateX(' + (dx * rightFactor) + 'px)';
@@ -410,8 +412,11 @@ angular.module('theatreProjApp')
 		$scope.curtainDragObj.dragging = false;
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform;
-		var sound = new Audio('assets/applause.mp3');
-		sound.play();
+		if ($scope.curtainDragObj.didClose) {
+			var sound = new Audio('assets/applause.mp3');
+			sound.play();
+			$scope.curtainDragObj.didClose = false;
+		}
 	};
 
 	/* Loads all the boxes into the carousel. */
