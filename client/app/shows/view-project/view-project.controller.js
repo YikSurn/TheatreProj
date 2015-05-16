@@ -6,6 +6,7 @@ angular.module('theatreProjApp')
     $scope.editorEnabledName = false;
     $scope.editorEnabledGroup = false;
     $scope.editorEnabledStatus = false;
+    $scope.editorEnabledDate = false;
 
     //define all options for status'
     $scope.statusOptions = [{status: "Proposed"}, 
@@ -35,7 +36,7 @@ angular.module('theatreProjApp')
         });
     });
 
-    //Function to get group assigned to project
+    //Function to get the project information currently being viewed, this allows data to be synched in real time
     $scope.getProject = function() {
         var y;
         for (y in $scope.projectshows) {
@@ -46,7 +47,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    //Function to get group assigned to project
+    //Function to get group details assigned to project
     $scope.getGroup = function() {
         var x;
         for (x in $scope.groups) {
@@ -65,6 +66,11 @@ angular.module('theatreProjApp')
         }
     };
 
+    //Ensures date must be selected from todays date
+    $scope.toggleMin = function() {
+      $scope.minDate = $scope.minDate ? null : new Date();
+    };
+
     //The following functions enable various editors for the project
     $scope.enableEditorName = function() {
         $scope.editorEnabledName = true;
@@ -78,7 +84,13 @@ angular.module('theatreProjApp')
 
     $scope.enableEditorStatus = function() {
         $scope.editorEnabledStatus = true;
-        $scope.newStatus = $scope.projGroup.status;
+        $scope.newStatus = $scope.currProject.showStatus;
+    };
+
+    $scope.enableEditorDate = function() {
+        $scope.toggleMin();
+        $scope.editorEnabledDate = true;
+        $scope.newDate = $scope.currProject.prodDate;
     };
 
     //Function to disable all editors
@@ -86,6 +98,7 @@ angular.module('theatreProjApp')
         $scope.editorEnabledName = false;
         $scope.editorEnabledGroup = false;
         $scope.editorEnabledStatus = false;
+        $scope.editorEnabledDate = false;
     };
 
     //The following functions allow for changes to be committed to the database after edits, and call disableEditor to close all editors
@@ -110,6 +123,13 @@ angular.module('theatreProjApp')
     $scope.changeStatus = function(newStatus) {
         $scope.currStatus = newStatus;
         $scope.currProject.showStatus = $scope.currStatus;
+        $http.put('api/projectshows/' + $scope.currProject._id, $scope.currProject);
+        $scope.disableEditor();
+    }
+
+    $scope.changeDate = function(newDate) {
+        $scope.currDate = newDate;
+        $scope.currProject.prodDate = $scope.currDate;
         $http.put('api/projectshows/' + $scope.currProject._id, $scope.currProject);
         $scope.disableEditor();
     }

@@ -58,13 +58,13 @@ angular.module('theatreProjApp')
     //Displays editor for group Facebook details
     $scope.enableEditorFacebook = function() {
         $scope.editorEnabledFaceBook = true;
-        $scope.newName = $scope.currGroup.name;
+        $scope.newFacebook = $scope.currGroup.facebookURL;
     };
 
     //Displays editor for group Social Media details
     $scope.enableEditorMedia = function() {
         $scope.editorEnabledMedia = true;
-        $scope.newName = $scope.currGroup.name;
+        $scope.newMedia = $scope.currGroup.socialMediaURL;
     };
 
     //Displays editor for group Website details
@@ -189,7 +189,9 @@ angular.module('theatreProjApp')
     $scope.saveName = function() {
         $scope.submitted = true;
         if($scope.name.$valid) {
-            if(!$scope.checkArray($scope.newName, $scope.groupNames)) {
+            if($scope.newName.indexOf('/') > -1 || $scope.newName.indexOf('?') > -1 || $scope.newName.indexOf('%') > -1) {
+                alert("You have included illegal characters (/, ? or %) not permitted in group names. Please try a different name");
+            } else if(!$scope.checkArray($scope.newName, $scope.groupNames)) {
                 $scope.currName = $scope.newName;
                 $scope.currGroup.name = $scope.currName;
                 $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
@@ -261,7 +263,7 @@ angular.module('theatreProjApp')
         }
     };
 
-    //Function to assign a new task
+    //Function to assign a new task and checks if a project was selected.
     $scope.createTask = function(showProject, taskDesc, dt) {
         $scope.taskSubmitted = true;
         $scope.showProject = showProject;
