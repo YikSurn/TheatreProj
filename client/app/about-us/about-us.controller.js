@@ -285,6 +285,7 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
+	/* Returns the style used for the facebook link button. */
 	$scope.fbStyle = function (cubeIndex) {
 		var margin = $scope.cubeLength*0.07;
 		var l = $scope.cubeLength - 2*margin;
@@ -336,6 +337,12 @@ angular.module('theatreProjApp')
 
 		return ret;
 	}
+
+	/* Opens an external url.
+	@param url a string starting with 'www.' */
+	$scope.link = function (url) {
+		$window.open('http://' + url);
+	};
 
 	/* Loads all the boxes into the carousel. */
 	$scope.loadBoxes = function () {
