@@ -1,4 +1,4 @@
-<div class="about-us-content" ng-class="{'hidden': !initialized}">
+<div class="about-us-content">
 	<div class="carousel-container" ng-style="carouselContainerStyle()">
 		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
 
@@ -11,10 +11,10 @@
 			<figure class="hang-curtain" ng-style="hangCurtainStyle()"></figure>
 
 			<!-- Interactive elements -->
-			<button class="load" ng-style="loadButtonStyle()">Load more boxes!</button>
+			<button class="load" ng-click="loadBoxes()" ng-hide="boxesLoaded" ng-style="loadButtonStyle()">Load more boxes!</button>
 
 			<!-- Carousel -->
-			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
+			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()" ng-class="{'hidden': !initialized}">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cubeStyle($index)" ng-class="getActivityClass($index)">
 					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></figure>
 					<figure ng-style="panelStyle(cube, 'back', $index)" class="carousel-panel back" ng-class="getActivityClass($index)"></figure>

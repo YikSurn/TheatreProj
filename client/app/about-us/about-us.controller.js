@@ -6,7 +6,6 @@ angular.module('theatreProjApp')
 	$scope.r = $(window).width() / 2; // radius of the carousel
 	$scope.rotation = 0; // the current rotation of the carousel
 	$scope.cubes = []; // the cube data (holding the group, etc)
-	$scope.count = 0; // the number of cubes in the carousel
 	$scope.currentCubeIndex = 0; // the index of the cube at the front
 	var zShift = $scope.r * 2; // amt to push the carousel back into the screen
 	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
@@ -15,24 +14,34 @@ angular.module('theatreProjApp')
 	var curtainH = $scope.r; // the height of the left and right curtains.
 	var curtainOpenDist = $scope.r*0.8; // the amount to move each curtain by for opening.
 
+	/* Initially, only a limited amount of boxes are loaded. Clicking the 'load boxes' button
+	loads them all, setting this value to true. */
+	$scope.boxesLoaded = false;
+
+	/* Becomes true once the initial limited set of boxes are loaded. */
 	$scope.initialized = false;
 
 	/* Initializes the carousel with a cube for each group in groups. This method is called for
 	the first time at the bottom of this controller declaration. */
 	var init = function (groups) {
+		$scope.rotation = 0;
+		$scope.currentCubeIndex = 0;
 		$scope.cubes = [];
+		var count = groups.length;
 		var circumference = 2 * Math.PI * $scope.r;
-		$scope.count = groups.length;
-		$scope.cubeLength = Math.min(circumference / $scope.count * 0.6, 225);
-		$scope.degDelta = 360 / $scope.count;
+		$scope.cubeLength = Math.min(circumference / count * 0.6, 225);
+		$scope.degDelta = 360 / count;
 
-		for (var i = 0; i < $scope.count; i++) {
+		for (var i = 0; i < groups.length; i++) {
 			var cube = {};
 			cube.group = groups[i];
 			$scope.cubes.push(cube);
 		};
 		$scope.switchTo($scope.currentCubeIndex);
-		$scope.initialized = true;
+		setTimeout(function() {
+			$scope.initialized = true;
+			$scope.$apply();
+		}, 500);
 	};
 
 	/* The following style functions return a style object for the various
@@ -306,6 +315,13 @@ angular.module('theatreProjApp')
 		return ret;
 	}
 
+	$scope.loadBoxes = function () {
+		$http.get('api/aboutusgroups').success(function (groups) {
+			$scope.boxesLoaded = true;
+			init(groups);
+		});
+	};
+
 	/* Rotates the carousel to present the cube at currentCubeIndex at the front.
 	@param cubeIndex the cubeIndex of the cube which should be presented. */
 	$scope.switchTo = function (cubeIndex) {
@@ -316,8 +332,9 @@ angular.module('theatreProjApp')
 		var indexDelta = Math.abs($scope.currentCubeIndex - cubeIndex);
 		var directionFactor = (cubeIndex > $scope.currentCubeIndex)? 1 : -1;
 
-		if (indexDelta > $scope.count/2) {
-			indexDelta = $scope.count - indexDelta;
+		var count = $scope.cubes.length;
+		if (indexDelta > count/2) {
+			indexDelta = count - indexDelta;
 			directionFactor *= -1;
 		}
 
