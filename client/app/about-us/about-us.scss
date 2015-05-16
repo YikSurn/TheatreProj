@@ -54,31 +54,11 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	}
 }
 
-.side-wall {
-	display: block;
-	position: absolute;
-	background: url(../assets/images/wood_floor.jpg);
-	background-size: 30% 40%;
-	background-repeat: repeat;
-	@include transform-style(preserve-3d);
-
-	&:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		opacity: 1;
-		width: 100%;
-		height: 100%;
-		background-image: linear-gradient(40deg, transparent 20%, $wall-dark-shade 100%);
-	}
-}
-
 .back-wall {
 	display: block;
 	position: absolute;
-	background: url(../assets/images/wood_floor.jpg);
-	background-size: 30% 40%;
+	background: url(../assets/images/left_curtain.jpg);
+	background-size: 50% 100%;
 	background-repeat: repeat;
 	@include transform-style(preserve-3d);
 
@@ -90,7 +70,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		opacity: 1;
 		width: 100%;
 		height: 100%;
-		background-image: linear-gradient(to top, transparent 40%, $wall-dark-shade 100%);
+		background: rgba(0,0,0,0.8);
 	}
 }
 
@@ -215,6 +195,6 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	}
 }
 
-.front, .back, .left, .right, .left-curtain, .right-curtain {
+.front, .back, .left, .right, .back-wall, .left-curtain, .right-curtain {
 	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(RGBA(0, 0, 0, 0.6)));
 }
