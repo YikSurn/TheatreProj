@@ -144,12 +144,12 @@
 	      	        <p>This group currently has no assigned tasks</p>
 	            </div>
                 <!--Otherwise display the outstanding tasks-->
-		        <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks | orderBy:deadline">
+		        <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
 		            <div>Project: {{task.show_id}}</div>
+                    <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
 		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
-		            <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
 		            <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
 		        </div> 
@@ -164,10 +164,10 @@
                 <!--Otherwise display the completed tasks-->
 		        <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
 		            <div>Project: {{task.show_id}}</div>
+                    <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
 		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
-		            <div>Deadline: {{task.deadline}}</div>
 		        <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
 		    </div> 
 	    </div>
