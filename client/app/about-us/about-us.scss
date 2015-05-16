@@ -45,7 +45,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		opacity: 1;
 		width: 100%;
 		height: 100%;
-		background-image: linear-gradient(to bottom, $wall-dark-shade, transparent 60%);
+		background-image: linear-gradient(to bottom, transparent 20%, $wall-dark-shade 100%);
 	}
 }
 
@@ -65,7 +65,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		opacity: 1;
 		width: 100%;
 		height: 100%;
-		background-image: linear-gradient(40deg, $wall-dark-shade, transparent 60%);
+		background-image: linear-gradient(40deg, transparent 20%, $wall-dark-shade 100%);
 	}
 }
 
@@ -85,7 +85,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		opacity: 1;
 		width: 100%;
 		height: 100%;
-		background-image: linear-gradient(to top, $wall-dark-shade 15%, transparent 100%);
+		background-image: linear-gradient(to top, transparent 40%, $wall-dark-shade 100%);
 	}
 }
 

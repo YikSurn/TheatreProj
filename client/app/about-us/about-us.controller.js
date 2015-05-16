@@ -24,9 +24,13 @@ angular.module('theatreProjApp')
 
 	/* The carousel-translate div pushes the carousel back into the screen so we can see it. */
 	$scope.carouselTranslateStyle = function () {
-		return {
-			transform: 'translateZ(-' + zShift + 'px) rotateX(-10deg)'
+		var ret = {
+			transform: ''
 		}
+		ret.transform += 'translateY(' + ($scope.r*0.15) + 'px)';
+		ret.transform += ' translateZ(-' + zShift + 'px)';
+		ret.transform += ' rotateX(-10deg)';
+		return ret;
 	};
 
 	/* The style object for the floor. */
@@ -95,7 +99,7 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
-	var cubeInactiveScaleFactor = 0.3; // the amount to scale inactive cubes by.
+	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
 
 	/* Returns the appropriate style for a cube panel.
 	@param cube the cube object.
@@ -149,7 +153,7 @@ angular.module('theatreProjApp')
 			if (active) {
 				ret.transform = 'translateX(-' + (len * 2) + 'px)'; // move it to align with the left of the cube
 				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back left edge of the cube
-				ret.transform += ' rotateY(60deg)'; // unfold it a little
+				ret.transform += ' rotateY(50deg)'; // unfold it a little
 			} else {
 				ret.transform = 'translateX(-' + ($scope.cubeLength/2 + len) + 'px)'; // move it to align with the left of the cube
 				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back left edge of the post-transformed cube
@@ -162,7 +166,7 @@ angular.module('theatreProjApp')
 			if (active) {
 				ret.transform = 'translateX(' + (len * 2) + 'px)'; // move it to align with the right of the cube
 				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back right edge of the cube
-				ret.transform += ' rotateY(-60deg)'; // unfold it a little
+				ret.transform += ' rotateY(-50deg)'; // unfold it a little
 			} else {
 				ret.transform = 'translateX(' + ($scope.cubeLength/2 + len) + 'px)'; // move it to align with the right of the cube
 				ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back right edge of the post-transformed cube
@@ -197,12 +201,12 @@ angular.module('theatreProjApp')
 		switch (dataType) {
 			case 'info':
 			ret.width = ($scope.cubeLength*4) + 'px';
-			ret.height = ($scope.cubeLength*0.6) + 'px';
+			ret.height = ($scope.cubeLength*1) + 'px';
 			ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px)'; // centre it horizontally
 			if (active) {
 				ret.opacity = '1';
 				ret.transform += ' translateZ(' + (len*3) + 'px)'; // move it forward a lot
-				ret.transform += ' translateY(' + (len*1.5) + 'px)'; // move it down a bit
+				ret.transform += ' translateY(' + (len*0.5) + 'px)'; // move it down a bit
 				ret.transform += ' rotateX(10deg)'; // rotate it back a bit
 			} else {
 				ret.opacity = '0';
