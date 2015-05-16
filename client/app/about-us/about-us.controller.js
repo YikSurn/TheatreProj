@@ -38,10 +38,7 @@ angular.module('theatreProjApp')
 			$scope.cubes.push(cube);
 		};
 		$scope.switchTo($scope.currentCubeIndex);
-		setTimeout(function() {
-			$scope.initialized = true;
-			$scope.$apply();
-		}, 500);
+		$scope.initialized = true;
 	};
 
 	/* The following style functions return a style object for the various
@@ -165,7 +162,7 @@ angular.module('theatreProjApp')
 			'transform-origin': 'bottom',
 			transform: ''
 		};
-		ret.transform += ' translateX(-' + (curtainOpenDist) + 'px)'; // move it to the left
+		ret.transform += ' translateX(-' + (w/2) + 'px)'; // centre it horizontally
 		ret.transform += ' translateZ(' + (floorH/2 + 1) + 'px)'; // move it out to the front edge of the floor
 		return ret;
 	};
@@ -306,7 +303,7 @@ angular.module('theatreProjApp')
 		switch (dataType) {
 			case 'info':
 			var w = $scope.cubeLength*4;
-			var h = $scope.cubeLength*0.3;
+			var h = $scope.cubeLength*0.5;
 			ret.width = w + 'px';
 			ret.height = h + 'px';
 			ret.transform = 'translateX(-' + (w/2) + 'px)'; // centre it horizontally

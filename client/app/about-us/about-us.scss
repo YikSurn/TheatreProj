@@ -27,6 +27,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 }
 
 .about-us-content {
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -133,18 +134,37 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	}
 }
 
-.load-button {
+.button {
 	display: block;
 	position: absolute;
-	background: red;
 	@include transform-style(preserve-3d);
+	border-radius: 10px;
+	color: #ccc;
+	background-color: #555;
+	background: linear-gradient(#888, #555);
+	border: 0 none;
+	text-shadow: 0 -1px 0 #000;
+	box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px rgba(0,0,0,0.6);
+	cursor: pointer;
+
+	&:hover, &:focus {
+		-webkit-animation: pulsate 1.2s linear infinite;
+		animation: pulsate 1.2s linear infinite;
+		outline: 0;
+	}
+}
+@keyframes pulsate {
+	0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+	50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+	100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+}
+
+.load-button {
+	@extend .button;
 }
 
 .back-button {
-	display: block;
-	position: absolute;
-	background: red;
-	@include transform-style(preserve-3d);
+	@extend .button;
 }
 
 .carousel-container {
@@ -221,11 +241,13 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 
 	&.info {
 		background: #eee;
-		margin: 10px;
-		border-style: solid;
-		border-width: 2px;
-		border-color: black;
+		padding: 10px;
 		border-radius: 10px;
+
+		& > span {
+			display: inline-block;
+			vertical-align: middle;
+		}
 	}
 }
 
