@@ -8,7 +8,7 @@ var TaskSchema = new Schema({
   roleID: String, 
   assignedToUser_id: String, 
   assignedByUser_id: String,
-  deadline: String,
+  deadline: Date,
   status: String,
   comments: String,
   documents_id: Array,

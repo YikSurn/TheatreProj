@@ -1,0 +1,34 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+    <p>The Contacts information are restricted to users with the 'admin' role.</p>
+
+        <div ng-show="isAdmin">
+            <div class="form-group">
+                <div class="input-group">
+                     <input class="form-control" ng-model="searchText" type="search" placeholder="Search users by user name">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                  <div class="input-group">
+                        <label>Sort by:</label>
+                        <select name="userCat" class="form-control" ng-model="userCategory" id="userCategory">
+                            <option value="name" selected="selected">User Name</option>
+                            <option value="email">User Email</option>
+                            <option value="id">Registered Date</option>
+                      </select>
+                  </div>
+            </div>
+
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="user in users | orderBy:userCategory | filter:{name:searchText}">
+                  <strong>{{user.name}}</strong>
+                  <button ng-click="detail(user)" class="btn btn-info"  id="pencil">Contact <span class="glyphicon glyphicon-envelope"></span></button><br>
+                  <span class="text-muted">{{user.email}}</span>
+                  
+              </li>
+            </ul>
+        </div>
+
+</div>
+<div ng-include="'components/footer/footer.html'"></div>
