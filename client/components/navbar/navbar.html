@@ -9,22 +9,40 @@
       </button>
       <a href="/" class="navbar-brand">theatreProjApp</a>
     </div>
-    <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
+    <div class="collapse navbar-collapse" id="navbar-main">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile')}"><a href="/profile">My Profile</a></li>
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        <li class="dropdown" dropdown>
+          <a href="" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Features 
+          <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-class="{active: isActive('/groups')}"><a href="/groups">Groups</a></li>
+            <li ng-class="{active: isActive('/venue-allocation')}"><a href="/venue-allocation">Venue allocation</a></li>
+            <li ng-class="{active: isActive('/shows')}"><a href="/shows">Shows</a></li>
+            <li ng-class="{active: isActive('/production-meeting')}"><a href="/production-meeting">Production meeting</a></li>
+          </ul>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-show="isLoggedIn()"><p class="navbar-text">Hello {{ getCurrentUser().name }}</p> </li>
-        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+        <li ng-show="isLoggedIn()" class="dropdown" dropdown>
+          <a href="" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Hello {{ getCurrentUser().name }}! 
+          <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-class="{active: isActive('/profile')}"><a href="/profile">My Profile</a></li>
+            <li ng-class="{active: isActive('/settings')}"><a href="/settings">Settings</a></li>
+          </ul>
+        </li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
 </div>
+

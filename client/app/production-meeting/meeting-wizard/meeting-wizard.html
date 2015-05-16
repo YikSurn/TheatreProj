@@ -1,0 +1,52 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+{{ prodMeeting }}
+
+<div class="container">
+
+  <div class="col-xs-12 col-sm-9 col-md-9">
+    <div ui-view=""></div>
+    <br />
+    <div>
+      <div class="btn btn-primary" style="float: left;" ng-click="saveProgress('back')"
+        ng-hide="$state.is('meeting-wizard.attending') || $state.is('meeting-wizard.main')" >
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        &nbsp;Back
+      </div>
+      <div class="btn btn-primary" style="float: right;" ng-click="saveProgress('next')"
+        ng-hide="$state.is('meeting-wizard.next-meeting')">
+        Next&nbsp;
+        <span class="glyphicon glyphicon-arrow-right"></span>
+      </div>
+      <div class="btn btn-primary" style="float: right;" ng-click="saveAndReturn()">
+        Save&nbsp;
+        <span class="glyphicon glyphicon-save"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-3 col-md-3" align="right">
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".attending">Attending</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".administration">Administration</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".director">Director</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".musical-director">Musical Director</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".choreographer">Choreographer</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".production-manager">Production Manager</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".sets">Sets</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".props">Props</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".costumes">Costumes</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".wigs-and-makeup">Wigs and Makeup</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".lighting">Lighting</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".sound">Sound</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".vision-and-communication">Vision and communication</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".stage-manager">Stage Manager</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".schedule">Schedule</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".budget">Budget</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".risk-management">Risk Management</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".key-dates">Key Dates</a>
+    <a class="btn btn-primary btn-block" href="" ui-sref-active="active" ui-sref=".next-meeting">Next Meeting</a>
+  </div>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

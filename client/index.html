@@ -13,6 +13,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -20,6 +21,8 @@
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
+
+    
   </head>
   <body ng-app="theatreProjApp">
     <!--[if lt IE 7]>
@@ -55,6 +58,7 @@
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+      <script src="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js"></script>
       <!-- endbower -->
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
@@ -80,10 +84,17 @@
           <script src="app/contacts/individual/individual.js"></script>
           <script src="app/groups/groups.controller.js"></script>
           <script src="app/groups/groups.js"></script>
+          <script src="app/groups/theatreGroups/theatreGroups.service.js"></script>
           <script src="app/groups/view-group/view-group.controller.js"></script>
           <script src="app/groups/view-group/view-group.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
+          <script src="app/production-meeting/meeting-details/meeting-details.controller.js"></script>
+          <script src="app/production-meeting/meeting-details/meeting-details.js"></script>
+          <script src="app/production-meeting/meeting-wizard/meeting-wizard.controller.js"></script>
+          <script src="app/production-meeting/meeting-wizard/meeting-wizard.js"></script>
+          <script src="app/production-meeting/new-prod-meeting/new-prod-meeting.controller.js"></script>
+          <script src="app/production-meeting/prodMeetings/prodMeetings.service.js"></script>
           <script src="app/production-meeting/production-meeting.controller.js"></script>
           <script src="app/production-meeting/production-meeting.js"></script>
           <script src="app/show-prodmeeting/show-prodmeeting-people/show-prodmeeting-people.controller.js"></script>
@@ -102,6 +113,7 @@
           <script src="app/shows/shows.js"></script>
           <script src="app/shows/view-project/view-project.controller.js"></script>
           <script src="app/shows/view-project/view-project.js"></script>
+          <script src="app/venue-allocation/edit-date-ranges/edit-date-ranges.controller.js"></script>
           <script src="app/venue-allocation/venue-allocation.controller.js"></script>
           <script src="app/venue-allocation/venue-allocation.js"></script>
           <script src="components/auth/auth.service.js"></script>

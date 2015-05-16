@@ -5,15 +5,26 @@ angular.module('theatreProjApp')
     $scope.isAdmin = Auth.isAdmin;
     $scope.createIsCollapsed = true;
 
+    //define all options for status'
+    $scope.statusOptions = [{status: "Proposed"}, 
+                            {status: "Planned"}, 
+                            {status: "Confirmed"}, 
+                            {status: "Underway"}, 
+                            {status: "Concluded"}, 
+                            {status: "Archive"}];
+
+    //Get all projects and test to see if data is retrived
     $http.get('api/projectshows').success(function(projectshows) {
         $scope.projectshows = projectshows;
         $scope.testProjectData();
+        //Ensure data is synched as updates are made
         socket.syncUpdates('projectshow', $scope.projectshows, function(event, projectshow, projectshows) {
             $scope.testProjectData();
         });
         $scope.projectsLoaded = true;
     });
 
+    //Function checks if projects exist.
     $scope.testProjectData = function() {
         $scope.projectData = true;
         if($scope.projectshows.length === 0) {
@@ -21,6 +32,7 @@ angular.module('theatreProjApp')
         }
     };
 
+    //Function to get all groups
     $http.get('api/groups').success(function(groups) {
         $scope.groups = groups;
         socket.syncUpdates('group', $scope.groups)
@@ -30,6 +42,7 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('projectshow');
     });
 
+    //Function to delete a project
     $scope.delete = function(project) {
     	var confprojectshow = confirm("Are you sure you want to delete " + project.showName + "?");
         if (confprojectshow == true) {
@@ -37,19 +50,16 @@ angular.module('theatreProjApp')
         };
     };
 
-    /*Ensures date must be selected from todays date*/
+    //Ensures date must be selected from todays date
     $scope.toggleMin = function() {
       $scope.minDate = $scope.minDate ? null : new Date();
     };
     $scope.toggleMin();
 
-    /*Function to create a new project*/
+    //Function to create a new project
     $scope.createProject = function() {
         $scope.submitted = true;
         if($scope.newProject.$valid) {
-        /*$scope.showName = showName;
-        $scope.showGroup = showGroup;
-        $scope.showStatus = showStatus;*/
             $scope.prodDate = $scope.dt.toDateString();
             $http.post('api/projectshows', {prodDate: $scope.prodDate, showName: $scope.showName, showStatus: $scope.showStatus, group_id: $scope.showGroup});
             alert("Project Created");
@@ -58,12 +68,12 @@ angular.module('theatreProjApp')
         }
     };
 
-    /*Opens modal dialog with new controller*/
+    //Opens modal dialog with new controller
     $scope.open = function(project) {
         var modalInstance = $modal.open({
             templateUrl: 'app/shows/view-project/view-project.html',
             controller: 'ViewProjectCtrl',
-            size: "lg",
+            size: "md",
             resolve: {
                 project: function () {
                     return project; 
