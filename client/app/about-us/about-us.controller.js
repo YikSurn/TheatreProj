@@ -303,7 +303,7 @@ angular.module('theatreProjApp')
 		switch (dataType) {
 			case 'info':
 			var w = $scope.cubeLength*4;
-			var h = $scope.cubeLength*0.5;
+			var h = $scope.cubeLength*0.7;
 			ret.width = w + 'px';
 			ret.height = h + 'px';
 			ret.transform = 'translateX(-' + (w/2) + 'px)'; // centre it horizontally

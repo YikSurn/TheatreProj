@@ -21,11 +21,18 @@
 					<figure ng-style="panelStyle(cube, 'back', $index)" class="carousel-panel back" ng-class="getActivityClass($index)"></figure>
 					<figure ng-style="panelStyle(cube, 'top', $index)" class="carousel-panel top" ng-class="getActivityClass($index)"></figure>
 					<figure ng-style="panelStyle(cube, 'bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></figure>
-					<figure ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)"></figure>
+					<figure ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)">
+						<div ng-show="$index == currentCubeIndex">
+							<!-- facebook will go here -->
+						</div>
+					</figure>
 					<figure ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></figure>
 
 					<figure ng-style="dataStyle(cube, 'info', $index)" class="carousel-data info" ng-class="getActivityClass($index)">
-						<span><h4>{{cube.group.info}}</h4></span>
+						<span>
+							<h2>{{cube.group.name}}</h2>
+							<h4>{{cube.group.info}}</h4>
+						</span>
 					</figure>
 				</div>
 			</div>
