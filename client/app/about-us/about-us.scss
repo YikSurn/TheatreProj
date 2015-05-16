@@ -22,6 +22,10 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	transition: all $duration $wobble $delay;
 }
 
+.hidden {
+	opacity: 0;
+}
+
 .about-us-content {
 	position: absolute;
 	width: 100%;
@@ -32,7 +36,8 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 .floor {
 	display: block;
 	position: absolute;
-	background: url(../assets/images/wood_floor.jpg);
+	// background: url(../assets/images/wood_floor.jpg);
+	background: black;
 	background-size: 30% 20%;
 	background-repeat: repeat;
 	@include transform-style(preserve-3d);
@@ -210,6 +215,6 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	}
 }
 
-.front, .back, .left, .right {
+.front, .back, .left, .right, .left-curtain, .right-curtain {
 	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(RGBA(0, 0, 0, 0.6)));
 }

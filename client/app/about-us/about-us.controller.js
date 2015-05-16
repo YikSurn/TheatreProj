@@ -11,6 +11,8 @@ angular.module('theatreProjApp')
 	var zShift = $scope.r * 1.5; // amt to push the carousel back into the screen
 	var cubeInactiveScaleFactor = 0.4; // the amount to scale inactive cubes by.
 
+	$scope.initialized = false;
+
 	/* Initializes the carousel with a cube for each group in groups. This method is called for
 	the first time at the bottom of this controller declaration. */
 	var init = function (groups) {
@@ -26,6 +28,7 @@ angular.module('theatreProjApp')
 			$scope.cubes.push(cube);
 		};
 		$scope.switchTo($scope.currentCubeIndex);
+		$scope.initialized = true;
 	};
 
 	/* The following style functions return a style object for the various
