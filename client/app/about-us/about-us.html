@@ -22,7 +22,7 @@
 					<div ng-style="panelStyle(cube, 'top', $index)" class="carousel-panel top" ng-class="getActivityClass($index)"></div>
 					<div ng-style="panelStyle(cube, 'bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></div>
 					<div ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)">
-						<img class="link" ng-style="fbStyle($index)" src="assets/images/fb_logo.png" ng-click="link(cube.group.fb)">
+						<img class="link" ng-style="fbStyle($index)" src="assets/images/fb_logo.png" ng-click="link(cube.group.fb)" ng-show="cube.group.fb.length > 0">
 					</div>
 					<div ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></div>
 
