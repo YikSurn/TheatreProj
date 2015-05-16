@@ -1,20 +1,36 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="jumbotron container">
+<br />
+
+<div class="container">
+
   <div class="row">
-    <div class="col-md-3">
-      <a href="groups">Groups</a>
+    <div class="col-sm-4 col-xs-12 col-md-4"></div>
+    <div class="col-sm-4 col-xs-12 col-md-4">
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="admin" ng-show="isAdmin()">Admin</button>
     </div>
-    <div class="col-md-3">
-      <a href="venue-allocation">Venue allocation</a>
+    <div class="col-sm-4 col-xs-12 col-md-4"></div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="groups">Groups</button>
     </div>
-    <div class="col-md-3">
-      <a href="shows">Shows</a>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="venue-allocation">Venue allocation</button>
     </div>
-    <div class="col-md-3">
-      <a href="production-meeting">Production meeting</a>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="shows">Shows</button>
+    </div>
+    <div class="col-sm-3 col-xs-12 col-md-3">
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="production-meeting">Production meeting</button>
     </div>
   </div>
+
 </div>
+
+<br />
 
 <div ng-include="'components/footer/footer.html'"></div>

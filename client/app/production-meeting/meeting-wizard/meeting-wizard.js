@@ -4,12 +4,13 @@ angular.module('theatreProjApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('meeting-wizard', {
-        url: '/production-meeting/{groupName}/{meetingTitle}/wizard',
+        url: '/production-meeting/:groupName/:meetingTitle/wizard',
         abstract: true,
         templateUrl: 'app/production-meeting/meeting-wizard/meeting-wizard.html',
         controller: 'MeetingWizardCtrl',
+        authenticate: true,
         resolve: {
-          prodMeeting: ['$stateParams', 'prodMeetings', 
+          prodMeetingPromise: ['$stateParams', 'prodMeetings', 
           function ($stateParams, prodMeetings) {
             return prodMeetings.get($stateParams.groupName, $stateParams.meetingTitle);
           }]
@@ -80,9 +81,9 @@ angular.module('theatreProjApp')
         templateUrl: 'app/production-meeting/meeting-wizard/sections/sound.html',
         controller: 'MeetingWizardCtrl',
       })
-      .state('meeting-wizard.vision-and-communications', {
+      .state('meeting-wizard.vision-and-communication', {
         url: '#vision-and-communications',
-        templateUrl: 'app/production-meeting/meeting-wizard/sections/vision-and-communications.html',
+        templateUrl: 'app/production-meeting/meeting-wizard/sections/vision-and-communication.html',
         controller: 'MeetingWizardCtrl',
       })
       .state('meeting-wizard.stage-manager', {

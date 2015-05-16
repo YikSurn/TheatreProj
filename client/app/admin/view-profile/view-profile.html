@@ -1,0 +1,86 @@
+<div class="modal-header" id="user-heading">
+	<h3 class="modal-title">{{currProfile.name}}</h3>
+</div>
+<div class="modal-body">
+    <label>Email:</label>
+    <div ng-hide="editorEnabledEmail"> 
+       	{{currProfile.email}}
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorEmail()">Edit</button>
+    </div>
+    <div ng-show="editorEnabledEmail">
+        <form name="email" ng-submit="saveEmail()" novalidate>
+          	<div class="form-group">
+            	<input type="email" class="form-control" name= "uEmail" ng-model="newEmail" ng-show="editorEnabledEmail" required/>
+            	<div class="form-group has-error">
+              		<span class="help-block" ng-show="email.uEmail.$error.required && emailSubmitted">Tell us your email.</span>
+              		<span class="help-block" ng-show="email.uEmail.$error.email && emailSubmitted">This is not a valid email.</span>
+            	</div>
+          	</div>
+          	<div class="form-group">
+            	<button class="btn btn-primary" type="submit">Save</button>
+            	<button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+          	</div>
+        </form>
+    </div> 
+    <br />
+    <label>Phone:</label>
+    <div ng-hide="editorEnabledPhone"> 
+        {{currProfile.phone}}
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorPhone()">Edit</button>
+    </div>
+    <div ng-show="editorEnabledPhone">
+        <form name="phone" ng-submit="savePhone()" novalidate>
+          	<input ng-pattern="/^(\d)+$/" class="form-control" placeholder="Phone Number" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required/>
+          	<div class="form-group has-error">
+            	<span class="help-block" ng-show="phone.uPhone.$error.required && phoneSubmitted">Tell us your phone number.</span>
+            	<span class="help-block" ng-show="(phone.uPhone.$error.minlength || phone.uPhone.$error.maxlength) && phoneSubmitted">phone number must be 10 digits.</span>
+            	<span class="help-block" ng-show="phone.uPhone.$error.pattern && phoneSubmitted">This is not a valid phone number.</span>
+          	</div>
+          	<div class="form-group">
+            	<button class="btn btn-primary" type="submit">Save</button>
+            	<button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+          	</div>
+        </form> 
+    </div>     
+    <br />
+    <label>Home Address:</label>
+    <div ng-hide="editorEnabledHome"> 
+        {{currProfile.addressHome}}
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorHome()">Edit</button>
+    </div>
+    <div ng-show="editorEnabledHome">
+        <form name="home" ng-submit="saveHome()" novalidate>
+          	<input class="form-control" name="uHome" ng-model="newHome" ng-show="editorEnabledHome" placeholder="Home Address"required/>
+          	<div class="form-group has-error">
+            	<span class="help-block" ng-show="home.uHome.$error.required && homeSubmitted">Tell us your home address.</span>
+          	</div>
+          	<div class="form-group">
+            	<button class="btn btn-primary">Save</button>
+            	<button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+          	</div>
+        </form>
+    </div>
+    <br />
+    <label>Term Address:</label>
+    <div ng-hide="editorEnabledTerm"> 
+        {{currProfile.addressTerm}}
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorTerm()">Edit</button>
+    </div>
+    <div ng-show="editorEnabledTerm">
+        <form name="term" ng-submit="saveTerm()" novalidate>
+          	<input name="uTerm" class="form-control" ng-model="newTerm" ng-show="editorEnabledTerm" placeholder="Term Address" required/>
+          	<div class="form-group has-error">
+            	<span class="help-block" ng-show="term.uTerm.$error.required && termSubmitted">Tell us your term address.</span>
+          	</div>
+          	<div>
+            	<button class="btn btn-primary" type="submit">Save</button>
+            	<button class="btn btn-danger" ng-click="disableEditor()">Cancel</button>
+          	</div>
+        </form>
+    </div>
+    <br />
+    <label>Role:</label> {{ currProfile.role }}
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+</div>

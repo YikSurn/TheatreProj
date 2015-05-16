@@ -13,10 +13,10 @@ exports.index = function(req, res) {
 
 // Get a single group
 exports.show = function(req, res) {
-  Group.findById(req.params.id, function (err, group) {
+  Group.findOne({ 'name' : req.params.name }, function (err, group) {
     if(err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
-    return res.json(group);
+    return res.json(200, group);
   });
 };
 
@@ -34,7 +34,7 @@ exports.update = function(req, res) {
   Group.findById(req.params.id, function (err, group) {
     if (err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
-    var updated = _.merge(group, req.body);
+    var updated = _.assign(group, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, group);

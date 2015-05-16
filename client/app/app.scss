@@ -8,6 +8,14 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+.navbar {
+    margin-bottom: 0px;
+}
+
+.footer {
+    margin-top: 0px;
+}
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -21,8 +29,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'account/login/login.scss';
 @import 'account/profile/profile.scss';
 @import 'admin/admin.scss';
+@import 'admin/view-profile/view-profile.scss';
 @import 'custom.scss';
 @import 'groups/groups.scss';
+@import 'groups/view-group/view-group.scss';
 @import 'main/main.scss';
 @import 'production-meeting/meeting-details/meeting-details.scss';
 @import 'production-meeting/meeting-wizard/meeting-wizard.scss';
@@ -35,6 +45,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'show/show-prodmeeting/show-prodmeeting.scss';
 @import 'show/show.scss';
 @import 'shows/shows.scss';
+@import 'shows/view-project/view-project.scss';
 @import 'venue-allocation/venue-allocation.scss';
 @import 'modal/modal.scss';
 // endinjector

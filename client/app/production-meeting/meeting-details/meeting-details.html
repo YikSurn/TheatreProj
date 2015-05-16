@@ -1,21 +1,1274 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<br />
+
 <div class="container">
 
-  <!-- <p> Data: {{prodMeeting}} </p> -->
-
-  <div class="col-md-12">
-    <h3><u><b>{{prodMeeting.title}}</b> of {{prodMeeting.group.name}} theatre group</u></h3>
+  <!-- Display production meeting title -->
+  <div class="row">
+    <h2 ng-hide="editTitle" class="modal-title prodMeetingHeading">{{prodMeeting.title}} ({{prodMeeting.group.name}})
+      <button class="btn btn-primary btn-xs" ng-click="enableEditTitle()">
+        Edit Title <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+    </h2>
+    <div class="prodMeetingHeading" ng-show="editTitle">
+      <form name="prodTitleForm" class="form-inline" ng-submit="saveTitle()">
+        <input type="text" class="form-control" name="prodTitle" ng-model="newTitle" ng-show="editTitle" required/>
+        <div class="form-group has-error">
+          <p class="help-block" ng-show="prodTitleForm.prodTitle.$error.required && submitted">
+            Please enter a production meeting name.
+          </p>
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-danger" type="button" ng-click="disableEditTitle()">Cancel</button>
+      </form>
+    </div>
     <br />
   </div>
+  
+  <div ng-hide="prodMeeting.info">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <h3><i>This is a new production meeting. Start meeting?</i></h3>
+      </div>
+    </div>
+    <div class="row editProdButton">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <button class="btn btn-primary" 
+        ui-sref="meeting-wizard.main({ groupName: prodMeeting.group.name, meetingTitle: prodMeeting.title })">
+          Start Production Meeting
+        </button>
+      </div>
+    </div>
+  </div>
 
-  <div class="col-md-12">
-    <p>This is a newly created production meeting. Start the meeting?</p>
-    <a href="/production-meeting/{{prodMeeting.group.name}}/{{prodMeeting.title}}/wizard">
-      <button class="btn btn-primary">Start</button>
-    </a>
+  <div ng-show="prodMeeting.info">
+    <div class="row editProdButton">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <button class="btn btn-primary" 
+        ui-sref="meeting-wizard.main({ groupName: prodMeeting.group.name, meetingTitle: prodMeeting.title })">
+          Edit Production Meeting
+        </button>
+      </div>
+    </div>
+
+    <br />
+
+    <div>
+      <!-- Attending section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.attending">
+        <div class="panel-heading">
+          <h3>Attending</h3>
+        </div>
+        
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.attending.creativeTeam.name">
+            <h4>Creative Team</h4>
+            <label>Names: </label>
+            <p class="well">{{prodMeeting.info.attending.creativeTeam.name}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.attending.productionTeam.name">
+            <br />
+            <h4>Production Team</h4>
+            <label>Names and Roles: </label>
+            <p class="well">{{prodMeeting.info.attending.productionTeam.name}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.attending.cast.name">
+            <br />
+            <h4>Cast</h4>
+            <label>Names and Roles: </label>
+            <p class="well">{{prodMeeting.info.attending.cast.name}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.attending.musicians.name">
+            <br />
+            <h4>Musicians</h4>
+            <label>Names and Roles: </label>
+            <p class="well">{{prodMeeting.info.attending.musicians.name}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Administration section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.administration">
+        <div class="panel-heading">
+          <h3>Administration</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.administration.underwriting.notes">
+            <h4>Underwriting</h4>
+            <p class="well">{{prodMeeting.info.administration.underwriting.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.contactList.notes">
+            <br />
+            <h4>Contact List</h4>
+            <p class="well">{{prodMeeting.info.administration.contactList.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.ticketing.notes">
+            <br />
+            <h4>Ticketing</h4>
+            <p class="well">{{prodMeeting.info.administration.ticketing.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.wheelchairAccess.notes">
+            <br />
+            <h4>Wheelchair Access</h4>
+            <p class="well">{{prodMeeting.info.administration.wheelchairAccess.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.bar.notes">
+            <br />
+            <h4>Bar</h4>
+            <p class="well">{{prodMeeting.info.administration.bar.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.food.notes">
+            <br />
+            <h4>Food</h4>
+            <p class="well">{{prodMeeting.info.administration.food.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.frontHouseManager.notes">
+            <br />
+            <h4>Front of House Manager</h4>
+            <p class="well">{{prodMeeting.info.administration.frontHouseManager.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.parking.notes">
+            <br />
+            <h4>Parking</h4>
+            <p class="well">{{prodMeeting.info.administration.parking.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.royalty.notes">
+            <br />
+            <h4>Royalty</h4>
+            <p class="well">{{prodMeeting.info.administration.royalty.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.apra.notes">
+            <br />
+            <h4>APRA</h4>
+            <p class="well">{{prodMeeting.info.administration.apra.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.publicity.notes">
+            <br />
+            <h4>Publicity</h4>
+            <p class="well">{{prodMeeting.info.administration.publicity.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.cleaning.notes">
+            <br />
+            <h4>Cleaning</h4>
+            <p class="well">{{prodMeeting.info.administration.cleaning.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.administration.security.notes">
+            <br />
+            <h4>Security</h4>
+            <p class="well">{{prodMeeting.info.administration.security.notes}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Director section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.director">
+        <div class="panel-heading">
+          <h3>Director</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.director.description.notes">
+            <h4>Description of the Production</h4>
+            <p class="well">{{prodMeeting.info.director.description.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.concept.notes">
+            <br />
+            <h4>An arching concept for the performance</h4>
+            <p class="well">{{prodMeeting.info.director.concept.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.meetingCreative.notes">
+            <br />
+            <h4>Meetings with Creatives</h4>
+            <p class="well">{{prodMeeting.info.director.meetingCreative.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.rehearsalReport.notes">
+            <br />
+            <h4>Rehearsal Report</h4>
+            <p class="well">{{prodMeeting.info.director.rehearsalReport.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.riskManagement.notes">
+            <br />
+            <h4>Undertaking for Risk Management</h4>
+            <p class="well">{{prodMeeting.info.director.riskManagement.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.audition.notes">
+            <br />
+            <h4>Auditions</h4>
+            <p class="well">{{prodMeeting.info.director.audition.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.director.castList.notes">
+            <br />
+            <h4>Cast Listing</h4>
+            <p class="well">{{prodMeeting.info.director.castList.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Musical Director section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.musicalDirector">
+        <div class="panel-heading">
+          <h3>Musical Director</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.musicalDirector.layoutAndMap.notes">
+            <h4>Instrument layout and map of orchestra</h4>
+            <p class="well">{{prodMeeting.info.musicalDirector.layoutAndMap.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.musicalDirector.additionalHire.notes">
+            <br />
+            <h4>Additional hire of keyboard/s or percussion and sundry equipment</h4>
+            <p class="well">{{prodMeeting.info.musicalDirector.additionalHire.notes}}</p>
+          </div>
+          
+          <div ng-show="prodMeeting.info.musicalDirector.rehearsalReport.notes">
+            <br />
+            <h4>Rehearsal Report</h4>
+            <p class="well">{{prodMeeting.info.musicalDirector.rehearsalReport.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Choreographer section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.choreographer">
+        <div class="panel-heading">
+          <h3>Choreographer</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.choreographer.meetingCreative.notes">
+            <h4>Meetings with Creatives</h4>
+            <p class="well">{{prodMeeting.info.choreographer.meetingCreative.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.rehearsalReport.notes">
+            <br />
+            <h4>Rehearsal Report</h4>
+            <p class="well">{{prodMeeting.info.choreographer.rehearsalReport.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.riskManagement.notes">
+            <br />
+            <h4>Undertaking for Risk Management</h4>
+            <p class="well">{{prodMeeting.info.choreographer.riskManagement.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.audition.notes">
+            <br />
+            <h4>Auditions</h4>
+            <p class="well">{{prodMeeting.info.choreographer.audition.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.castList.notes">
+            <br />
+            <h4>Cast Listing</h4>
+            <p class="well">{{prodMeeting.info.choreographer.castList.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Production Manager section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.productionManager">
+        <div class="panel-heading">
+          <h3>Production Manager</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.productionManager.schedule.notes">
+            <h4>Production Schedule</h4>
+            <p class="well">{{prodMeeting.info.productionManager.schedule.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.logistics.notes">
+            <br />
+            <h4>Transport Logistics</h4>
+            <p class="well">{{prodMeeting.info.productionManager.logistics.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.budget.notes">
+            <br />
+            <h4>Budgeting of Production</h4>
+            <p class="well">{{prodMeeting.info.productionManager.budget.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.additionalStaff.notes">
+            <br />
+            <h4>Additional Staff Required</h4>
+            <p class="well">{{prodMeeting.info.productionManager.additionalStaff.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.induction.notes">
+            <br />
+            <h4>Induction of Crew</h4>
+            <p class="well">{{prodMeeting.info.productionManager.induction.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.hazards.notes">
+            <br />
+            <h4>Awareness of Hazards in the Workplace</h4>
+            <p class="well">{{prodMeeting.info.productionManager.hazards.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.collectionMSDS.notes">
+            <br />
+            <h4>Collection of Material Safety Data Sheets (MSDS) of chemicals/paints/materials etc</h4>
+            <p class="well">{{prodMeeting.info.productionManager.collectionMSDS.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.handlingTimberMetal.notes">
+            <br />
+            <h4>Handling of Timber or Metal</h4>
+            <p class="well">{{prodMeeting.info.productionManager.handlingTimberMetal.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.handTools.notes">
+            <br />
+            <h4>Use of Hand Tools</h4>
+            <p class="well">{{prodMeeting.info.productionManager.handTools.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.casualTheatreWorkerRole.notes">
+            <br />
+            <h4>The Role of the Casual Theatre Worker</h4>
+            <p class="well">{{prodMeeting.info.productionManager.casualTheatreWorkerRole.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.SOP.notes">
+            <br />
+            <h4>>Developing Standard Operating Processes (SOP)</h4>
+            <p class="well">{{prodMeeting.info.productionManager.SOP.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.riskManagement.notes">
+            <br />
+            <h4>Developing Risk Management Strategies and their Implementation</h4>
+            <p class="well">{{prodMeeting.info.productionManager.riskManagement.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.buildingHours.notes">
+            <br />
+            <h4>Building Hours during semester</h4>
+            <p class="well">{{prodMeeting.info.productionManager.buildingHours.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.productionManager.casualTheatreWorkerChanges.notes">
+            <br />
+            <h4>Change to the Casual Theatre Worker hours/Building Access/Security</h4>
+            <p class="well">{{prodMeeting.info.productionManager.casualTheatreWorkerChanges.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sets section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.sets">
+        <div class="panel-heading">
+          <h3>Sets</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.sets.design.notes">
+            <h4>Design Presentation</h4>
+            <p class="well">{{prodMeeting.info.sets.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.venueConfigure.notes">
+            <br />
+            <h4>Configuration of Venue (style of presentation)</h4>
+            <p class="well">{{prodMeeting.info.sets.venueConfigure.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.drawings.notes">
+            <br />
+            <h4>Drawings</h4>
+            <p class="well">{{prodMeeting.info.sets.drawings.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.riskAssessment.notes">
+            <br />
+            <h4>Risk Assessment of Set Construction</h4>
+            <p class="well">{{prodMeeting.info.sets.riskAssessment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.constructTechniques.notes">
+            <br />
+            <h4>Construction Techniques</h4>
+            <p class="well">{{prodMeeting.info.sets.constructTechniques.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.rostra.notes">
+            <br />
+            <h4>Rostra (Staging)</h4>
+            <p class="well">{{prodMeeting.info.sets.rostra.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.treads.notes">
+            <br />
+            <h4>Treads (Steps)</h4>
+            <p class="well">{{prodMeeting.info.sets.treads.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.flats.notes">
+            <br />
+            <h4>Flats (solid scenery)</h4>
+            <p class="well">{{prodMeeting.info.sets.flats.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.standardRig.notes">
+            <br />
+            <h4>Standard Rig (Onstage Cloths, Borders, Legs, Cyclorama (white cloth backdrop), House Curtain (Tab), Black Tabs (Mid stage Black Curtains), Advance House Curtain (Purple Tabs)</h4>
+            <p class="well">{{prodMeeting.info.sets.standardRig.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.lightingBar.notes">
+            <br />
+            <h4>Lighting Bar Location</h4>
+            <p class="well">{{prodMeeting.info.sets.lightingBar.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.projectionScreen.notes">
+            <br />
+            <h4>Projection Screen Location</h4>
+            <p class="well">{{prodMeeting.info.sets.projectionScreen.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sets.hangingPlot.notes">
+            <br />
+            <h4>Hanging Plot</h4>
+            <p class="well">{{prodMeeting.info.sets.hangingPlot.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Props section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.props">
+        <div class="panel-heading">
+          <h3>Props</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.props.design.notes">
+            <h4>Design Presentation of Props</h4>
+            <p class="well">{{prodMeeting.info.props.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.propsListing.notes">
+            <br />
+            <h4>Props extraction listing breakdown by scene and actor</h4>
+            <p class="well">{{prodMeeting.info.props.propsListing.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.riskAssessment.notes">
+            <br />
+            <h4>Risk Assessment of Props</h4>
+            <p class="well">{{prodMeeting.info.props.riskAssessment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.constructionTechniques.notes">
+            <br />
+            <h4>Construction Techniques</h4>
+            <p class="well">{{prodMeeting.info.props.constructionTechniques.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.foodProps.notes">
+            <br />
+            <h4>Food Props</h4>
+            <p class="well">{{prodMeeting.info.props.foodProps.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.messThings.notes">
+            <br />
+            <h4>Things that might cause a mess</h4>
+            <p class="well">{{prodMeeting.info.props.messThings.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.props.weapons.notes">
+            <br />
+            <h4>Weapons Policy</h4>
+            <p class="well">{{prodMeeting.info.props.weapons.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Costumes section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.costumes">
+        <div class="panel-heading">
+          <h3>Costumes</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.choreographer.design.notes">
+            <h4>Design Presentation</h4>
+            <p class="well">{{prodMeeting.info.choreographer.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.construction.notes">
+            <br />
+            <h4>Construction</h4>
+            <p class="well">{{prodMeeting.info.choreographer.construction.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.maintenance.notes">
+            <br />
+            <h4>Maintenance during Performance</h4>
+            <p class="well">{{prodMeeting.info.choreographer.maintenance.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.costumeListing.notes">
+            <br />
+            <h4>Costume extraction listing breakdown by scene and actor</h4>
+            <p class="well">{{prodMeeting.info.choreographer.costumeListing.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.choreographer.ironing.notes">
+            <br />
+            <h4>Ironing</h4>
+            <p class="well">{{prodMeeting.info.choreographer.ironing.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Wigs and Makeup section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.wigsAndMakeup">
+        <div class="panel-heading">
+          <h3>Wigs and Makeup</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.wigsAndMakeup.design.notes">
+            <h4>Design Presentation</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.materialsAndSafety.notes">
+            <br />
+            <h4>Materials and Safety</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.materialsAndSafety.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.maintenance.notes">
+            <br />
+            <h4>Maintenance during Performance</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.maintenance.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.wig.notes">
+            <br />
+            <h4>Wig Blocks</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.wig.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.makeup.notes">
+            <br />
+            <h4>Not sharing makeup application</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.makeup.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lighting section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.lighting">
+        <div class="panel-heading">
+          <h3>Lighting</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.lighting.design.notes">
+            <h4>Design Presentation of Lighting</h4>
+            <p class="well">{{prodMeeting.info.lighting.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.operator.notes">
+            <br />
+            <h4>Operator Position</h4>
+            <p class="well">{{prodMeeting.info.lighting.operator.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.standardRig.notes">
+            <br />
+            <h4>Standard Rig</h4>
+            <p class="well">{{prodMeeting.info.lighting.standardRig.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.bumpIn.notes">
+            <br />
+            <h4>Bump In</h4>
+            <p class="well">{{prodMeeting.info.lighting.bumpIn.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.ceilingAccess.notes">
+            <br />
+            <h4>Ceiling Access</h4>
+            <p class="well">{{prodMeeting.info.lighting.ceilingAccess.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.design2.notes">
+            <br />
+            <h4>(Your design presentation should include plans or locations of position of lights, strobes, smoke machine, any other effects, lights on the floor, cables used, operator position, distances, cue synopsis, equipment list)</h4>
+            <p class="well">{{prodMeeting.info.lighting.design2.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.riskAssessment.notes">
+            <br />
+            <h4>Risk Assessment</h4>
+            <p class="well">{{prodMeeting.info.lighting.riskAssessment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.followSpot.notes">
+            <br />
+            <h4>Follow spot</h4>
+            <p class="well">{{prodMeeting.info.lighting.followSpot.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.hireUHTEquipment.notes">
+            <br />
+            <h4>Hire of UHT Lighting Equipment</h4>
+            <p class="well">{{prodMeeting.info.lighting.hireUHTEquipment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.hireExEquipment.notes">
+            <br />
+            <h4>Hire of External Equipment</h4>
+            <p class="well">{{prodMeeting.info.lighting.hireExEquipment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.lightingBars.notes">
+            <br />
+            <h4>Weights of Lighting Bars</h4>
+            <p class="well">{{prodMeeting.info.lighting.lightingBars.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.plotting.notes">
+            <br />
+            <h4>Plotting Session</h4>
+            <p class="well">{{prodMeeting.info.lighting.plotting.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.otherLighting.notes">
+            <br />
+            <h4>Moving Lighting, Special Lighting (UV), Mirror Ball, Dry Ice</h4>
+            <p class="well">{{prodMeeting.info.lighting.otherLighting.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.dmx.notes">
+            <br />
+            <h4>DMX (Digital Multiplex)</h4>
+            <p class="well">{{prodMeeting.info.lighting.dmx.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.floorElectrician.notes">
+            <br />
+            <h4>Floor Electrician</h4>
+            <p class="well">{{prodMeeting.info.lighting.floorElectrician.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.talkbackLocation.notes">
+            <br />
+            <h4>Talkback locations</h4>
+            <p class="well">{{prodMeeting.info.lighting.talkbackLocation.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.lighting.bumpOut.notes">
+            <br />
+            <h4>Bump Out</h4>
+            <p class="well">{{prodMeeting.info.lighting.bumpOut.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sound section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.sound">
+        <div class="panel-heading">
+          <h3>Sound</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.sound.design.notes">
+            <h4>Design Presentation of Sound Design</h4>
+            <p class="well">{{prodMeeting.info.sound.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.playback.notes">
+            <br />
+            <h4>Playback Method</h4>
+            <p class="well">{{prodMeeting.info.sound.playback.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.operatorPos.notes">
+            <br />
+            <h4>Operator Position</h4>
+            <p class="well">{{prodMeeting.info.sound.operatorPos.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.grandPiano.notes">
+            <br />
+            <h4>Grand Piano</h4>
+            <p class="well">{{prodMeeting.info.sound.grandPiano.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.foldback.notes">
+            <br />
+            <h4>Foldback</h4>
+            <p class="well">{{prodMeeting.info.sound.foldback.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.muscialReq.notes">
+            <br />
+            <h4>Musical Requirements</h4>
+            <p class="well">{{prodMeeting.info.sound.muscialReq.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.design2.notes">
+            <br />
+            <h4>(Your design presentation should include plans of position of projector/s, cables used, operator position, screen type/location, distances, cue synopsis, hanging hardware, equipment list)</h4>
+            <p class="well">{{prodMeeting.info.sound.design2.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.hireUHTEquipment.notes">
+            <br />
+            <h4>Hire or UHT Sound Equipment</h4>
+            <p class="well">{{prodMeeting.info.sound.hireUHTEquipment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.hireExEquipment.notes">
+            <br />
+            <h4>Hire of External Equipment</h4>
+            <p class="well">{{prodMeeting.info.sound.hireExEquipment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.sound.talkback.notes">
+            <br />
+            <h4>Talkback locations</h4>
+            <p class="well">{{prodMeeting.info.sound.talkback.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Vision and Communications section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.visionAndCommunications">
+        <div class="panel-heading">
+          <h3>Vision and Communications</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.visionAndCommunications.design.notes">
+            <h4>Design Presentation</h4>
+            <p class="well">{{prodMeeting.info.visionAndCommunications.design.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.visionAndCommunications.design2.notes">
+            <br />
+            <h4>(Your design presentation should include plans of position of projector/s, cables used, operator position, screen type/location, distances, cue synopsis, hanging hardware, equipment list)</h4>
+            <p class="well">{{prodMeeting.info.visionAndCommunications.design2.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.drawings.notes">
+            <br />
+            <h4>Drawings</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.drawings.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.skills.notes">
+            <br />
+            <h4>Skills available to arrange and decide on how to do this</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.skills.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.surtitles.notes">
+            <br />
+            <h4>Surtitles</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.surtitles.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.operator.notes">
+            <br />
+            <h4>Operator/s for the Vision System/s</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.operator.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.hireEquipment.notes">
+            <br />
+            <h4>Hires of Equipment, external equipment</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.hireEquipment.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.wigsAndMakeup.talkback.notes">
+            <br />
+            <h4>Talkback locations</h4>
+            <p class="well">{{prodMeeting.info.wigsAndMakeup.talkback.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Stage Manager section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.stageManager">
+        <div class="panel-heading">
+          <h3>Stage Manager</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.stageManager.promptScript.notes">
+            <h4>Prompt Script</h4>
+            <p class="well">{{prodMeeting.info.stageManager.promptScript.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.OHSOfficer.notes">
+            <br />
+            <h4>OH&amp;S Officer in the rehearsal room</h4>
+            <p class="well">{{prodMeeting.info.stageManager.OHSOfficer.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.riskManagement.notes">
+            <br />
+            <h4>Risk Management</h4>
+            <p class="well">{{prodMeeting.info.stageManager.riskManagement.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.incidentReports.notes">
+            <br />
+            <h4>Incident Reports</h4>
+            <p class="well">{{prodMeeting.info.stageManager.incidentReports.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.timing.notes">
+            <br />
+            <h4>Timing of the Performance</h4>
+            <p class="well">{{prodMeeting.info.stageManager.timing.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.showReport.notes">
+            <br />
+            <h4>Show Report</h4>
+            <p class="well">{{prodMeeting.info.stageManager.showReport.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.cleaningStage.notes">
+            <br />
+            <h4>Cleaning of the Stage Area</h4>
+            <p class="well">{{prodMeeting.info.stageManager.cleaningStage.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.valuableItems.notes">
+            <br />
+            <h4>Valuable items</h4>
+            <p class="well">{{prodMeeting.info.stageManager.valuableItems.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.emergency.notes">
+            <br />
+            <h4>Emergencies</h4>
+            <p class="well">{{prodMeeting.info.stageManager.emergency.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.stageManager.talkback.notes">
+            <br />
+            <h4>Talkback locations</h4>
+            <p class="well">{{prodMeeting.info.stageManager.talkback.notes}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.schedule">
+        <div class="panel-heading">
+          <h3>Schedule</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.schedule.occupancyHours.notes">
+            <h4>Hours of Occupancy</h4>
+            <p class="well">{{prodMeeting.info.schedule.occupancyHours.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.times.notes">
+            <br />
+            <h4>Performance Times</h4>
+            <p class="well">{{prodMeeting.info.schedule.times.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.availableHours.notes">
+            <br />
+            <h4>Number of Available Hours before additional costs</h4>
+            <p class="well">{{prodMeeting.info.schedule.availableHours.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.extraOccupancy.notes">
+            <br />
+            <h4>Have 5-7 hours of Occupancy up your sleave for emergencies</h4>
+            <p class="well">{{prodMeeting.info.schedule.extraOccupancy.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.bumpInOut.notes">
+            <br />
+            <h4>Bump In/Out</h4>
+            <p class="well">{{prodMeeting.info.schedule.bumpInOut.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.prodSchedule.notes">
+            <br />
+            <h4>Production Schedule</h4>
+            <p class="well">{{prodMeeting.info.schedule.prodSchedule.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.schedule.rehearsalSchedule.notes">
+            <br />
+            <h4>Rehearsal Schedule</h4>
+            <p class="well">{{prodMeeting.info.schedule.rehearsalSchedule.notes}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.budget">
+        <div class="panel-heading">
+          <h3>Budget</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.budget.set.budget || prodMeeting.info.budget.set.expenditure">
+            <h4>Set</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.set.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.set.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.set.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.set.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.props.budget || prodMeeting.info.budget.props.expenditure">
+            <br />
+            <h4>Props</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.props.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.props.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.props.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.props.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.costumes.budget || prodMeeting.info.budget.costumes.expenditure">
+            <br />
+            <h4>Costumes</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.costumes.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.costumes.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.costumes.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.costumes.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.sound.budget || prodMeeting.info.budget.sound.expenditure">
+            <br />
+            <h4>Sound</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.sound.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.sound.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.sound.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.sound.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.lights.budget || prodMeeting.info.budget.lights.expenditure">
+            <br />
+            <h4>Lights</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.lights.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.lights.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.lights.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.lights.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.vision.budget || prodMeeting.info.budget.vision.expenditure">
+            <br />
+            <h4>Vision</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.vision.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.vision.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.vision.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.vision.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.rehearsalVenue.budget || prodMeeting.info.budget.rehearsalVenue.expenditure">
+            <br />
+            <h4>Rehearsal Venue</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.rehearsalVenue.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.rehearsalVenue.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.rehearsalVenue.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.rehearsalVenue.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.documentation.budget || prodMeeting.info.budget.documentation.expenditure">
+            <br />
+            <h4>Documentation</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.documentation.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.documentation.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.documentation.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.documentation.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.gifts.budget || prodMeeting.info.budget.gifts.expenditure">
+            <br />
+            <h4>Gifts/Amenities</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.gifts.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.gifts.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.gifts.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.gifts.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+
+          <div ng-show="prodMeeting.info.budget.contingency.budget || prodMeeting.info.budget.contingency.expenditure">
+            <br />
+            <h4>Contingency</h4>
+            <div class="well">
+              <p ng-show="prodMeeting.info.budget.contingency.budget" class="col-xs-12 col-sm-3 col-md-3">Budget: {{prodMeeting.info.budget.contingency.budget}}</p>
+              <p ng-show="prodMeeting.info.budget.contingency.expenditure" class="col-xs-12 col-sm-3 col-md-3">Expenditure: {{prodMeeting.info.budget.contingency.expenditure}}</p>
+              <br />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Risk Management section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.riskManagement">
+        <div class="panel-heading">
+          <h3>Risk Management</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.riskManagement.setConstruction.notes">
+            <h4>Set Construction</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.setConstruction.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.access.notes">
+            <br />
+            <h4>Access</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.access.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.lightingEq.notes">
+            <br />
+            <h4>Lighting Equipment</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.lightingEq.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.soundEq.notes">
+            <br />
+            <h4>Sound Equipment</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.soundEq.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.soundLevels.notes">
+            <br />
+            <h4>Sound Levels</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.soundLevels.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.ppe.notes">
+            <br />
+            <h4>Personnel Protective Equipment (PPE)</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.ppe.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.damage.notes">
+            <br />
+            <h4>Damage to Equipment and Walls/Floors</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.damage.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.foodDrink.notes">
+            <br />
+            <h4>Food and Drink</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.foodDrink.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.unusualStaging.notes">
+            <br />
+            <h4>Unusual Staging</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.unusualStaging.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.flownScenery.notes">
+            <br />
+            <h4>Flown Scenery</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.flownScenery.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.fireReduction.notes">
+            <br />
+            <h4>Fire Reduction (Fire Load) Strategies</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.fireReduction.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.rehearsals.notes">
+            <br />
+            <h4>Rehearsals</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.rehearsals.notes}}</p>
+          </div>
+
+          <div ng-show="prodMeeting.info.riskManagement.fatigue.notes">
+            <br />
+            <h4>Fatigue</h4>
+            <p class="well">{{prodMeeting.info.riskManagement.fatigue.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Key Dates section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.keyDates">
+        <div class="panel-heading">
+          <h3>Key Dates</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.keyDates.weeklyMeeting.check == true">
+            <h5>Weekly Production Meetings : {{prodMeeting.info.keyDates.weeklyMeeting.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.masterSchedule.check == true">
+            <br />
+            <h5>Master Production Schedule first published : {{prodMeeting.info.keyDates.masterSchedule.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.6WeeksOutMeeting.check == true">
+            <br />
+            <h5>6 Weeks Out Production Meeting with Union House Theatre : {{prodMeeting.info.keyDates.6WeeksOutMeeting.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.2WeeksOutMeeting.check == true">
+            <br />
+            <h5>2 Weeks Out Production Meeting with Union House Theatre : {{prodMeeting.info.keyDates.2WeeksOutMeeting.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.setPropsAVDesign.check == true">
+            <br />
+            <h5>Design Presentation – Set, Props and Costumes and Vision (AV) : {{prodMeeting.info.keyDates.setPropsAVDesign.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.LightingSoundDesign.check == true">
+            <br />
+            <h5>Design Presentation – Lighting and Sound : {{prodMeeting.info.keyDates.LightingSoundDesign.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.rehearsals.check == true">
+            <br />
+            <h5>Rehearsals Commence : {{prodMeeting.info.keyDates.rehearsals.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.costumeParade.check == true">
+            <br />
+            <h5>Costume Parade : {{prodMeeting.info.keyDates.costumeParade.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.sitzprobe.check == true">
+            <br />
+            <h5>Sitzprobe : {{prodMeeting.info.keyDates.sitzprobe.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.bumpIn.check == true">
+            <br />
+            <h5>Bump In : {{prodMeeting.info.keyDates.bumpIn.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.firstDress.check == true">
+            <br />
+            <h5>First Dress Rehearsal : {{prodMeeting.info.keyDates.firstDress.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.openingPerf.check == true">
+            <br />
+            <h5>Opening Performance : {{prodMeeting.info.keyDates.openingPerf.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.closingPerf.check == true">
+            <br />
+            <h5>Closing Performance : {{prodMeeting.info.keyDates.closingPerf.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.matineePerf.check == true">
+            <br />
+            <h5>Matinee Performance/s : {{prodMeeting.info.keyDates.matineePerf.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+
+          <div ng-show="prodMeeting.info.keyDates.bumpOut.check == true">
+            <br />
+            <h5>Bump Out Date : {{prodMeeting.info.keyDates.bumpOut.date | date: 'd MMMM yyyy'}}</h5>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Next Meeting section -->
+      <div class="panel panel-default" ng-show="prodMeeting.info.nextMeeting">
+        <div class="panel-heading">
+          <h3>Next Meeting</h3>
+        </div>
+
+        <div class="panel-body">
+          <div ng-show="prodMeeting.info.nextMeeting.weeklyMeeting.notes">
+            <h4>Weekly Production Meeting</h4>
+            <p class="well">{{prodMeeting.info.nextMeeting.weeklyMeeting.notes}}</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row editProdButton">
+      <div class="col-xs-12 col-sm-12 col-md-12" >
+        <button class="btn btn-primary" 
+        ui-sref="meeting-wizard.main({ groupName: prodMeeting.group.name, meetingTitle: prodMeeting.title })">
+          Edit Production Meeting
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="allProdButton">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <button class="btn btn-info btn-lg" ui-sref="production-meeting">
+        View All Production Meetings
+      </button>
+    </div>
   </div>
 
 </div>
+
+<br />
 
 <div ng-include="'components/footer/footer.html'"></div>
