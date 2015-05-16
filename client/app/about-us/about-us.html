@@ -4,6 +4,9 @@
 	<div class="carousel-container" ng-style="carouselContainerStyle()">
 		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
 			<figure class="floor" ng-style="floorStyle()"></figure>
+			<figure class="left-wall" ng-style="wallStyle(true)"></figure>
+			<figure class="right-wall" ng-style="wallStyle(false)"></figure>
+			<figure class="back-wall" ng-style="backWallStyle()"></figure>
 			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
 				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cubeStyle($index)" ng-class="getActivityClass($index)">
 					<figure ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></figure>

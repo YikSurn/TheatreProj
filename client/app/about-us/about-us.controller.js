@@ -45,6 +45,41 @@ angular.module('theatreProjApp')
 		return ret;
 	};
 
+	/* The style object for the left and right walls. */
+	$scope.wallStyle = function (isLeft) {
+		var w = $scope.cubeLength*10;
+		var h = $scope.cubeLength*5;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom left'
+		};
+		ret.transform = '';
+		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - h) + 'px)'; // move it to floor level
+		ret.transform += ' translateX(' + ($scope.cubeLength/2) + 'px)'; // centre it horizontally
+		ret.transform += ' translateZ(-' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
+		var factor = isLeft? -1 : 1;
+		ret.transform += ' translateX(' + (($scope.cubeLength + $scope.r)*factor) + 'px)'; // shift it sideways
+		ret.transform += ' rotateY(-90deg)'; // rotate it
+		return ret;
+	};
+
+	/* The style object for the back wall. */
+	$scope.backWallStyle = function () {
+		var w = $scope.cubeLength*10;
+		var h = $scope.cubeLength*5;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'bottom left'
+		};
+		ret.transform = '';
+		ret.transform = 'translateY(' + ($scope.cubeLength*1.1 - h) + 'px)'; // move it to floor level
+		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2) + 'px)'; // centre it horizontally
+		ret.transform += ' translateZ(-' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
+		return ret;
+	};
+
 	/* Rotates the carousel, in response to user input, to display the selected cube at the front. */
 	$scope.carouselStyle = function () {
 		return {
