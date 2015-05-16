@@ -395,8 +395,12 @@ angular.module('theatreProjApp')
 		var style = isLeft? $scope.curtainStyles.left : $scope.curtainStyles.right;
 		var leftFactor = isLeft? 1 : -1;
 		var rightFactor = isLeft? -1 : 1;
-		$scope.curtainDragObj.left.dragTransform = ' translateX(' + ($event.gesture.deltaX * leftFactor) + 'px)';
-		$scope.curtainDragObj.right.dragTransform = ' translateX(' + ($event.gesture.deltaX * rightFactor) + 'px)';
+		var dx = $event.gesture.deltaX;
+		if (Math.abs(dx) > curtainOpenDist) {
+			dx = isLeft? curtainOpenDist : -curtainOpenDist;
+		}
+		$scope.curtainDragObj.left.dragTransform = ' translateX(' + (dx * leftFactor) + 'px)';
+		$scope.curtainDragObj.right.dragTransform = ' translateX(' + (dx * rightFactor) + 'px)';
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform + $scope.curtainDragObj.left.dragTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform + $scope.curtainDragObj.right.dragTransform;
 	};
@@ -406,6 +410,8 @@ angular.module('theatreProjApp')
 		$scope.curtainDragObj.dragging = false;
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform;
+		var sound = new Audio('assets/applause.mp3');
+		sound.play();
 	};
 
 	/* Loads all the boxes into the carousel. */
