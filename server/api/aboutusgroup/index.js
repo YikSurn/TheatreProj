@@ -5,6 +5,7 @@ var controller = require('./aboutusgroup.controller');
 
 var router = express.Router();
 
+router.get('/limit/:count', controller.limit);
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

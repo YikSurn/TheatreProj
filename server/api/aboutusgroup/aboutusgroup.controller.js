@@ -3,6 +3,15 @@
 var _ = require('lodash');
 var Aboutusgroup = require('./aboutusgroup.model');
 
+// Get list of aboutusgroups limited to a given count
+exports.limit = function(req, res) {
+  Aboutusgroup.find({}).limit(req.params.count)
+  .exec(function (err, aboutusgroups) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, aboutusgroups);
+  });
+};
+
 // Get list of aboutusgroups
 exports.index = function(req, res) {
   Aboutusgroup.find(function (err, aboutusgroups) {
