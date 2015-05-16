@@ -34,20 +34,11 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 	@include transform-style(preserve-3d);
 }
 
-.left-wall {
+.side-wall {
 	display: block;
 	position: absolute;
 	background: url(../assets/images/wood_floor.jpg);
-	background-size: 30% 20%;
-	background-repeat: repeat;
-	@include transform-style(preserve-3d);
-}
-
-.right-wall {
-	display: block;
-	position: absolute;
-	background: url(../assets/images/wood_floor.jpg);
-	background-size: 30% 20%;
+	background-size: 30% 40%;
 	background-repeat: repeat;
 	@include transform-style(preserve-3d);
 }
@@ -56,7 +47,7 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 	display: block;
 	position: absolute;
 	background: url(../assets/images/wood_floor.jpg);
-	background-size: 30% 20%;
+	background-size: 30% 40%;
 	background-repeat: repeat;
 	@include transform-style(preserve-3d);
 }

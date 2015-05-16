@@ -31,8 +31,8 @@ angular.module('theatreProjApp')
 
 	/* The style object for the floor. */
 	$scope.floorStyle = function () {
-		var w = $scope.cubeLength*16;
-		var h = $scope.cubeLength*10;
+		var w = $scope.r*3;
+		var h = $scope.r*4;
 		var ret = {
 			width: w + 'px',
 			height: h + 'px',
@@ -47,8 +47,8 @@ angular.module('theatreProjApp')
 
 	/* The style object for the left and right walls. */
 	$scope.wallStyle = function (isLeft) {
-		var w = $scope.cubeLength*10;
-		var h = $scope.cubeLength*5;
+		var w = $scope.r*4;
+		var h = $scope.r;
 		var ret = {
 			width: w + 'px',
 			height: h + 'px',
@@ -66,8 +66,8 @@ angular.module('theatreProjApp')
 
 	/* The style object for the back wall. */
 	$scope.backWallStyle = function () {
-		var w = $scope.cubeLength*10;
-		var h = $scope.cubeLength*5;
+		var w = $scope.r*4;
+		var h = $scope.r;
 		var ret = {
 			width: w + 'px',
 			height: h + 'px',
@@ -250,7 +250,7 @@ angular.module('theatreProjApp')
 		$scope.cubes = [];
 		var circumference = 2 * Math.PI * $scope.r;
 		$scope.count = groups.length;
-		$scope.cubeLength = circumference / $scope.count * 0.8;
+		$scope.cubeLength = circumference / $scope.count * 0.6;
 		$scope.degDelta = 360 / $scope.count;
 
 		for (var i = 0; i < $scope.count; i++) {
