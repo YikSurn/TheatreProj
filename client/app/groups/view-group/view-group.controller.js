@@ -268,7 +268,7 @@ angular.module('theatreProjApp')
         $scope.taskSubmitted = true;
         $scope.showProject = showProject;
         $scope.taskDesc = taskDesc;
-        $scope.deadline = dt.toDateString();
+        $scope.deadline = dt;
         if($scope.showProject) {
             $scope.show_id = $scope.showProject; 
         } else {
