@@ -2,6 +2,7 @@
 	<div class="carousel-container" ng-style="carouselContainerStyle()">
 		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
 			<figure class="floor" ng-style="floorStyle()"></figure>
+			<figure class="floor" ng-style="floorWallStyle()"></figure>
 			<figure class="back-wall" ng-style="backWallStyle()"></figure>
 			<figure class="left-curtain" ng-style="curtainStyle(true)"></figure>
 			<figure class="right-curtain" ng-style="curtainStyle(false)"></figure>
@@ -16,7 +17,7 @@
 					<figure ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)"></figure>
 
 					<figure ng-style="dataStyle(cube, 'info', $index)" class="carousel-data info" ng-class="getActivityClass($index)">
-						<h2>{{cube.group.info}}</h2>
+						<h4>{{cube.group.info}}</h4>
 					</figure>
 				</div>
 			</div>

@@ -57,7 +57,7 @@ angular.module('theatreProjApp')
 	/* The style object for the floor. */
 	$scope.floorStyle = function () {
 		var w = $scope.r*5;
-		var h = $scope.r*4;
+		var h = $scope.cubeLength + zShift*2;
 		var ret = {
 			width: w + 'px',
 			height: h + 'px',
@@ -65,8 +65,23 @@ angular.module('theatreProjApp')
 		};
 		ret.transform = 'translateY(' + $scope.cubeLength*1.1 + 'px)'; // move it to floor level
 		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2) + 'px)'; // centre it horizontally
-		ret.transform += ' translateZ(-' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it back into the screen
+		ret.transform += ' translateZ(-' + (h/2) + 'px)'; // move it back into the screen
 		ret.transform += ' rotateX(90deg)'; // rotate it so it's flat
+		return ret;
+	};
+
+	/* The style object for the front wall at the front end of the floor. */
+	$scope.floorWallStyle = function () {
+		var w = $scope.r*5;
+		var h = $scope.r;
+		var ret = {
+			width: w + 'px',
+			height: h + 'px',
+			'transform-origin': 'top center'
+		};
+		ret.transform = 'translateY(' + $scope.cubeLength*1.1 + 'px)'; // move it to floor level
+		ret.transform += ' translateX(' + ($scope.cubeLength/2 - w/2) + 'px)'; // centre it horizontally
+		ret.transform += ' translateZ(' + ($scope.cubeLength/2 + zShift) + 'px)'; // move it out to the front edge of the floor
 		return ret;
 	};
 
@@ -243,12 +258,11 @@ angular.module('theatreProjApp')
 		switch (dataType) {
 			case 'info':
 			ret.width = ($scope.cubeLength*4) + 'px';
-			ret.height = ($scope.cubeLength*1) + 'px';
+			ret.height = ($scope.cubeLength*0.3) + 'px';
 			ret.transform = 'translateX(-' + ($scope.cubeLength*1.5) + 'px)'; // centre it horizontally
 			if (active) {
 				ret.opacity = '1';
-				ret.transform += ' translateZ(' + (len*3) + 'px)'; // move it forward a lot
-				ret.transform += ' translateY(' + (len*0.5) + 'px)'; // move it down a bit
+				ret.transform += ' translateZ(' + (len*6.3) + 'px)'; // move it forward a lot
 				ret.transform += ' rotateX(10deg)'; // rotate it back a bit
 			} else {
 				ret.opacity = '0';
