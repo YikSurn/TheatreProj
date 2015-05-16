@@ -87,7 +87,7 @@ angular.module('theatreProjApp')
 				case 'top':
 				ret['transform-origin'] = 'top';
 				if (active) {
-					ret.transform = 'translateZ(-' + len + 'px) rotateX(110deg)' + postTransform;
+					ret.transform = 'translateZ(-' + len + 'px) rotateX(180deg)' + postTransform;
 				} else {
 					ret.transform = 'translateZ(-' + len + 'px) rotateX(90deg) translateZ(-' + ($scope.cubeLength - len * 2) + 'px)' + postTransform;
 				}
@@ -101,7 +101,7 @@ angular.module('theatreProjApp')
 				case 'left':
 				ret['transform-origin'] = 'bottom right';
 				if (active) {
-					ret.transform = 'translateX(-' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(80deg)' + postTransform;
+					ret.transform = 'translateX(-' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(60deg)' + postTransform;
 				} else {
 					ret.transform = 'translateX(-' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(90deg)' + postTransform;
 				}
@@ -110,7 +110,7 @@ angular.module('theatreProjApp')
 				case 'right':
 				ret['transform-origin'] = 'bottom left';
 				if (active) {
-					ret.transform = 'translateX(' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(-80deg)' + postTransform;
+					ret.transform = 'translateX(' + (len * 2) + 'px) translateZ(-' + len + 'px) rotateY(-60deg)' + postTransform;
 				} else {
 					ret.transform = 'translateX(' + ($scope.cubeLength/2 + len) + 'px) translateZ(-' + len + 'px) rotateY(-90deg)' + postTransform;
 				}

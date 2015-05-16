@@ -1,6 +1,6 @@
 $animate-duration: 1.0s;
 
-$active-bg: rgba(255,0,255,0.9);
+$active-bg: rgba(255,255,255,0.5);
 
 $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 
@@ -29,6 +29,7 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 	position: relative;
 	left: 0;
 	right: 0;
+	top: 100px;
 	margin: auto;
 	border: 0px;
 	perspective: 1100px;
@@ -63,7 +64,9 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 .carousel-panel {
 	display: block;
 	position: absolute;
-	background: url(../assets/images/white-noise.jpg);
+	background: url(../assets/images/wood_box.jpeg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 	@include transition($animate-duration, 0s);
 
 	&:after {
@@ -82,7 +85,6 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 	}
 
 	&.active:after {
-		background: $active-bg;
 	}
 }
 
@@ -94,11 +96,11 @@ $wobble: cubic-bezier(.5,-0.13,.61,1.39);
 	@include transform-style(preserve-3d);
 
 	&.active {		
-		@include transition($animate-duration*0.25, $animate-duration*0.8);
+		@include transition($animate-duration*0.4, $animate-duration*0.5);
 	}
 
 	&.inactive {
-		@include transition($animate-duration*0.25, 0s);	
+		@include transition($animate-duration*0.4, 0s);	
 	}
 
 	&.info {
