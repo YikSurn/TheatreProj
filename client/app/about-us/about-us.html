@@ -6,8 +6,8 @@
 			<div class="floor" ng-style="floorStyle()"></div>
 			<div class="floor" ng-style="floorWallStyle()"></div>
 			<div class="back-wall" ng-style="backWallStyle()"></div>
-			<div class="left-curtain" ng-style="curtainStyles.left" hm-touch="curtainDragStart(true, $event)" hm-drag="curtainDragMove(true, $event)" hm-release="curtainDragEnd(true, $event)"></div>
-			<div class="right-curtain" ng-style="curtainStyles.right" hm-touch="curtainDragStart(false, $event)" hm-drag="curtainDragMove(false, $event)" hm-release="curtainDragEnd(false, $event)"></div>
+			<div class="curtain curtain-left" ng-style="curtainStyles.left" ng-class="curtainDragObj.class" hm-touch="curtainDragStart(true, $event)" hm-drag="curtainDragMove(true, $event)" hm-release="curtainDragEnd(true, $event)"></div>
+			<div class="curtain curtain-right" ng-style="curtainStyles.right" ng-class="curtainDragObj.class" hm-touch="curtainDragStart(false, $event)" hm-drag="curtainDragMove(false, $event)" hm-release="curtainDragEnd(false, $event)"></div>
 			<div class="hang-curtain" ng-style="hangCurtainStyle()"></div>
 
 			<!-- Interactive elements -->

@@ -342,7 +342,7 @@ angular.module('theatreProjApp')
 		if (active) {
 			ret.opacity = '1';
 			ret.transform += ' translateZ(' + (len*5) + 'px)'; // move it forward a lot
-			ret.transform += ' rotateX(10deg)'; // rotate it back a bit
+			ret.transform += ' rotateX(1deg)'; // rotate it back a bit
 		} else {
 			ret.opacity = '0';
 		}
@@ -382,16 +382,19 @@ angular.module('theatreProjApp')
 			dragTransform: ''
 		},
 		dragging: false,
-		didClose: false
+		didClose: false,
+		class: ''
 	}
 	/* Called when a curtain is touched. */
 	$scope.curtainDragStart = function (isLeft, $event) {
+		$scope.curtainDragObj.class = 'drag-start';
 		$scope.curtainDragObj.left.origTransform = $scope.curtainStyles.left.transform;
 		$scope.curtainDragObj.right.origTransform = $scope.curtainStyles.right.transform;
 	};
 
 	/* Called when a curtain is dragged. */
 	$scope.curtainDragMove = function (isLeft, $event) {
+		$scope.curtainDragObj.class = 'drag-move';
 		$scope.curtainDragObj.dragging = true;
 		var style = isLeft? $scope.curtainStyles.left : $scope.curtainStyles.right;
 		var leftFactor = isLeft? 1 : -1;
@@ -409,6 +412,7 @@ angular.module('theatreProjApp')
 
 	/* Called when a curtain is released. */
 	$scope.curtainDragEnd = function (isLeft, $event) {
+		$scope.curtainDragObj.class = 'drag-end';
 		$scope.curtainDragObj.dragging = false;
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform;
