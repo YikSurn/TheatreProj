@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('NewProdMeetingCtrl', ['$scope', 'prodMeetings', 'theatreGroups', '$modalInstance', '$state',
-   function ($scope, prodMeetings, theatreGroups, $modalInstance, $state) {
+  .controller('NewProdMeetingCtrl', ['$scope', 'prodMeetings', 'theatreGroups', '$modalInstance', '$state', 'chosenGroup',
+   function ($scope, prodMeetings, theatreGroups, $modalInstance, $state, chosenGroup) {
     $scope.groups = theatreGroups.groups;
 
     $scope.newMeeting = {};
 
-    if (theatreGroups.group) {
+    if (chosenGroup) {
       // There is a group already chosen in creating the production meeting
       $scope.chosenGroup = theatreGroups.group;
       $scope.newMeeting.group = $scope.chosenGroup._id;

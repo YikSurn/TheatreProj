@@ -329,9 +329,10 @@ angular.module('theatreProjApp')
         controller: "NewProdMeetingCtrl",
         size: 'lg',
         resolve: {
-          groups: ['theatreGroups', function (theatreGroups) {
+          chosenGroup: ['theatreGroups', function (theatreGroups) {
+            theatreGroups.getAll();
             theatreGroups.get($scope.currGroup.name);
-            return theatreGroups.getAll();
+            return true;
           }]
         }
       });
