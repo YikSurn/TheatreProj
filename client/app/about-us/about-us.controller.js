@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-.controller('AboutUsCtrl', function ($scope, $window, $http) {
+.controller('AboutUsCtrl', function ($scope, $window, $http, $location) {
 	/* independent variables */
 	$scope.r = $(window).width() / 2; // radius of the carousel
 	$scope.rotation = 0; // the current rotation of the carousel
@@ -156,13 +156,14 @@ angular.module('theatreProjApp')
 			'transform-origin': 'bottom',
 			transform: ''
 		};
-		ret.transform += ' translateX(-' + (w/2) + 'px)'; // centre it horizontally
-		ret.transform += ' translateZ(' + (floorH/2 + 1) + 'px)'; // move it out to the front edge of the floor
+		ret.transform += ' translateX(' + (curtainOpenDist*0.95) + 'px)'; // move it to the right
+		ret.transform += ' translateY(-' + (h + curtainH/2) + 'px)';
+		ret.transform += ' translateZ(' + (floorH/2) + 'px)'; // move it to just in front of the curtains
 		return ret;
 	};
 
-	/* The style object for the 'back' button. */
-	$scope.backButtonStyle = function() {
+	/* The style object for the 'home' button. */
+	$scope.homeButtonStyle = function() {
 		var w = $scope.r*0.2;
 		var h = $scope.r*0.1;
 		var ret = {
@@ -171,8 +172,9 @@ angular.module('theatreProjApp')
 			'transform-origin': 'bottom',
 			transform: ''
 		};
-		ret.transform += ' translateX(-' + (curtainOpenDist + w) + 'px)'; // move it to the left
-		ret.transform += ' translateZ(' + (floorH/2 + 1) + 'px)'; // move it out to the front edge of the floor
+		ret.transform += ' translateX(-' + (w + curtainOpenDist*0.95) + 'px)'; // move it to the left
+		ret.transform += ' translateY(-' + (h + curtainH/2) + 'px)';
+		ret.transform += ' translateZ(' + (floorH/2) + 'px)'; // move it out to just in front of the curtains
 		return ret;
 	};
 
@@ -426,9 +428,9 @@ angular.module('theatreProjApp')
 		});
 	};
 
-	/* Returns user to the previous page in the history. */
-	$scope.back = function () {
-		$window.history.back();
+	/* Taks user to the home page. */
+	$scope.home = function () {
+		$location.path('/');
 	}
 
 	/* Rotates the carousel to present the cube at currentCubeIndex at the front.

@@ -79,10 +79,10 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	position: absolute;
 	@include transform-style(preserve-3d);
 
-	&.curtain-left {
+	&.left-curtain {
 		background: url(../assets/images/left_curtain.jpg);
 	}
-	&.curtain-right {
+	&.right-curtain {
 		background: url(../assets/images/right_curtain.jpg);
 	}
 	background-size: 100% 100%;
@@ -153,7 +153,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	@extend .button;
 }
 
-.back-button {
+.home-button {
 	@extend .button;
 }
 
