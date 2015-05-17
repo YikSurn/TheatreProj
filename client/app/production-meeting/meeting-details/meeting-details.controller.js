@@ -3,8 +3,8 @@
 // Controller to handle the meeting details page
 
 angular.module('theatreProjApp')
-  .controller('MeetingDetailsCtrl', ['prodMeetings', '$scope', '$state',
-  function (prodMeetings, $scope, $state) {
+  .controller('MeetingDetailsCtrl', ['prodMeetings', '$scope', '$state', '$modal',
+  function (prodMeetings, $scope, $state, $modal) {
     $scope.prodMeetings = prodMeetings.meetings;
     $scope.prodMeeting = prodMeetings.meeting;
 
@@ -51,5 +51,13 @@ angular.module('theatreProjApp')
     // Disable editing name
     $scope.disableEditTitle = function() {
       $scope.editTitle = false;
+    };
+
+    $scope.deleteProdMeeting = function () {
+      var confDelete = $modal.open({
+        templateUrl: 'app/production-meeting/meeting-details/conf-delete-meeting.html',
+        controller: 'ConfDeleteMeetingCtrl',
+        size: 'sm'
+      });
     };
   }]);

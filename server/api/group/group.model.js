@@ -10,7 +10,8 @@ var GroupSchema = new Schema({
 	websiteURL: String,
 	facebookURL: String,
 	socialMediaURL: String,
-	affiliationDate: Date
+	affiliationDate: Date,
+  prodMeetings: [{ type: Schema.Types.ObjectId, ref: 'Prodmeeting' }]
 });
 
 module.exports = mongoose.model('Group', GroupSchema);

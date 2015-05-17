@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Group = require('./group.model');
+var Prodmeeting = require('../prodmeeting/prodmeeting.model');
 
 // Get list of groups
 exports.index = function(req, res) {
@@ -47,8 +48,17 @@ exports.destroy = function(req, res) {
   Group.findById(req.params.id, function (err, group) {
     if(err) { return handleError(res, err); }
     if(!group) { return res.send(404); }
-    group.remove(function(err) {
+    group.remove(function (err) {
       if(err) { return handleError(res, err); }
+      group.prodMeetings.forEach( function (prodmeetingId) {
+        Prodmeeting.findById(prodmeetingId, function (err, prodmeeting) {
+          if(err) { return handleError(res, err); }
+          if(!prodmeeting) { return res.send(404); }
+          prodmeeting.remove( function (err) {
+            if(err) { return handleError(res, err); }
+          });
+        });
+      });
       return res.send(204);
     });
   });
