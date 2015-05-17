@@ -67,7 +67,7 @@ angular.module('theatreProjApp')
       opened: false
     };
 
-    $scope.open = function($event) {
+    $scope.openDate = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
       $scope.datep.opened = true;
