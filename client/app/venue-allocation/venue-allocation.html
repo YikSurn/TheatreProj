@@ -16,7 +16,7 @@
 
 			<div class="row" id="dates">
 				<div class="col-md-4">
-					<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="startDate"></datetimepicker>
+					<datetimepicker date-format="dd-MMM-yyyy" max-date="today" readonly-time="false" ng-model="startDate"></datetimepicker>
 				</div>
 
 				<div class="col-md-4">
@@ -24,7 +24,7 @@
 				</div>
 
 				<div class="col-md-4">
-					<datetimepicker date-format="dd-MMM-yyyy"readonly-time="false" ng-model="endDate"></datetimepicker>
+					<datetimepicker date-format="dd-MMM-yyyy" min-date="today" readonly-time="false" ng-model="endDate"></datetimepicker>
 				</div>
 			</div>
 
