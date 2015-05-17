@@ -24,16 +24,29 @@
           <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
                  ng-minlength="3"
                  required/>
-          <p class="help-block"
+          <div class="help-block" style="color: red;"
              ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
             Password must be at least 3 characters.
-          </p>
+          </div>
         </div>
 
-        <p class="help-block"> {{ message }} </p>
+        <div class="form-group">
+          <label>Confirm New Password</label>
 
+          <input type="password" name="confPassword" class="form-control" ng-model="user.confPassword"
+                 required/>
+          <div class="help-block" style="color: red;"
+             ng-show="((user.newPassword !== user.confPassword) || form.confPassword.$error.required) && form.confPassword.$dirty">
+            Input is not the same as the new password.
+          </div>
+        </div>
+        
         <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+
+        <p class="help-block"> <h3>{{ message }}</h3> </p>
+
       </form>
+      <br />
     </div>
   </div>
 </div>
