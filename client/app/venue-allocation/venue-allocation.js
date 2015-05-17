@@ -6,6 +6,7 @@ angular.module('theatreProjApp')
       .state('venue-allocation', {
         url: '/venue-allocation',
         templateUrl: 'app/venue-allocation/venue-allocation.html',
-        controller: 'VenueAllocationCtrl'
+        controller: 'VenueAllocationCtrl',
+        authenticate: true
       });
   });

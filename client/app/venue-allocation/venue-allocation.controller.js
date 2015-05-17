@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('VenueAllocationCtrl', function ($scope, $http, $modal) {
+  .controller('VenueAllocationCtrl', function ($scope, $http, $modal, Auth) {
+    $scope.isAdmin = Auth.isAdmin;
+
     var timeDiff = function (startDate, endDate) {
     	var timeDiff = endDate.getTime() - startDate.getTime();
 		return timeDiff;
