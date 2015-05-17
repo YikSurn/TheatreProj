@@ -203,7 +203,7 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 	background-repeat: no-repeat;
 	@include transition($animate-duration, 0s);
 
-	&:before {
+	&:before, &:after {
 		content: '';
 		display: block;
 		position: absolute;
@@ -211,6 +211,9 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		opacity: 1;
 		width: 100%;
 		height: 100%;
+	}
+
+	&:before {
 		background-image: linear-gradient(to bottom right, $panel-dark-shade, transparent 60%);
 		transform: translateZ(-1px);
 	}
