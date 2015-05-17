@@ -99,10 +99,6 @@ $panel-dark-shade: rgba(0,0,0,0.5);
 		background-image: linear-gradient(to top, transparent 40%, $wall-dark-shade 100%);
 	}
 
-	&:hover {
-		cursor: pointer;
-	}
-
 	&.drag-end {
 		@include transition($animate-duration, 0s);
 	}
