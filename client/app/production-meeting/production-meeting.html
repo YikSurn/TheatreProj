@@ -4,32 +4,40 @@
 
   <br />
 
+  <div>
+    <h2 style="text-align: center;">Production Meetings</h2>
+  </div>
+
+  <br />
   
   <div ng-hide="prodMeetings">
     <h3><i>There are no production meetings available to display.</i></h3>
   </div>
 
-  <!-- Display all the production meetings in order of latest created -->
-  <div ng-show="prodMeetings" ng-repeat="meeting in prodMeetings | orderBy: '-date'" class="col-xs-12 col-sm-4 col-md-4">
-    <div class="row newProdButton">
+
+  <div ng-show="prodMeetings">
+    <div ng-show="prodMeetings.length > 6" class="row newProdButton">
       <div class="col-xs-12 col-sm-12 col-md-12">
         <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
         <br /><br />
       </div>
     </div>
+  <!-- Display all the production meetings in order of latest created -->
+    <div ng-repeat="meeting in prodMeetings | orderBy: '-date'" class="col-xs-12 col-sm-4 col-md-4">
 
-    <div class="panel panel-primary">
-      <div class="panel-heading" id="group-heading" >
-        <h4>
-          <a style="color: white;" href="/production-meeting/{{meeting.group.name}}/{{meeting.title}}">
-            <button class="btn btn-primary">{{meeting.title}}</button>
-          </a>
-        </h4>
-      </div>
-      <div class="panel-body">
-        Show: {{meeting.show}}<br />
-        Theatre Group: {{meeting.group.name}}
-        <button class="btn btn-sm btn-default" ui-sref="group({ name: meeting.group.name })">View Group</button>
+      <div class="panel panel-primary">
+        <div class="panel-heading" id="group-heading" >
+          <h4>
+            <a style="color: white;" href="/production-meeting/{{meeting.group.name}}/{{meeting.title}}">
+              <button class="btn btn-primary">{{meeting.title}}</button>
+            </a>
+          </h4>
+        </div>
+        <div class="panel-body">
+          Show: {{meeting.show}}<br />
+          Theatre Group: {{meeting.group.name}}
+          <button class="btn btn-sm btn-default" ui-sref="group({ name: meeting.group.name })">View Group</button>
+        </div>
       </div>
     </div>
   </div>
