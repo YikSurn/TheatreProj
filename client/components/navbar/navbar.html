@@ -15,7 +15,7 @@
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Users</a></li>
-        <li class="dropdown" dropdown>
+        <li ng-show="isAdmin()" class="dropdown" dropdown>
           <a href="" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Features 
           <span class="caret"></span>
           </a>

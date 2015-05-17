@@ -2,14 +2,17 @@
 
 <br />
 
-<div class="container">
+<div class="container center" ng-hide="isAdmin()">
+  <p>This page is restricted to users with the 'admin' role only.</p>
+</div>
+
+<div class="container" ng-show="isAdmin()">
 
   <div class="row">
     <div class="col-sm-4 col-xs-12 col-md-4"></div>
     <div class="col-sm-4 col-xs-12 col-md-4">
-      <button class="btn btn-primary btn-block btn-lg" ui-sref="admin" ng-show="isAdmin()">Users</button>
+      <button class="btn btn-primary btn-block btn-lg" ui-sref="admin">Users</button>
     </div>
-    <div class="col-sm-4 col-xs-12 col-md-4"></div>
   </div>
 
   <br />
