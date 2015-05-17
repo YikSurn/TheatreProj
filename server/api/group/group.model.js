@@ -4,9 +4,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GroupSchema = new Schema({
-	name: String,
+	name: { type: String, required: true },
 	establishedDate: Date,
-	members: Array,
+	members: [String],
 	websiteURL: String,
 	facebookURL: String,
 	socialMediaURL: String,

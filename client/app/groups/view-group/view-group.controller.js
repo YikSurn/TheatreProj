@@ -58,13 +58,13 @@ angular.module('theatreProjApp')
     //Displays editor for group Facebook details
     $scope.enableEditorFacebook = function() {
         $scope.editorEnabledFaceBook = true;
-        $scope.newName = $scope.currGroup.name;
+        $scope.newFacebook = $scope.currGroup.facebookURL;
     };
 
     //Displays editor for group Social Media details
     $scope.enableEditorMedia = function() {
         $scope.editorEnabledMedia = true;
-        $scope.newName = $scope.currGroup.name;
+        $scope.newMedia = $scope.currGroup.socialMediaURL;
     };
 
     //Displays editor for group Website details
@@ -189,7 +189,9 @@ angular.module('theatreProjApp')
     $scope.saveName = function() {
         $scope.submitted = true;
         if($scope.name.$valid) {
-            if(!$scope.checkArray($scope.newName, $scope.groupNames)) {
+            if($scope.newName.indexOf('/') > -1 || $scope.newName.indexOf('?') > -1 || $scope.newName.indexOf('%') > -1) {
+                alert("You have included illegal characters (/, ? or %) not permitted in group names. Please try a different name");
+            } else if(!$scope.checkArray($scope.newName, $scope.groupNames)) {
                 $scope.currName = $scope.newName;
                 $scope.currGroup.name = $scope.currName;
                 $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
@@ -239,14 +241,14 @@ angular.module('theatreProjApp')
     $scope.addMember = function(showUsers) {
         $scope.userSubmitted = true;
         if(showUsers) {
-            $scope.memberToAdd = showUsers;
-            if(!$scope.checkArray($scope.memberToAdd, $scope.currGroup.members)) {
-                $scope.currGroup.members[$scope.currGroup.members.length] = $scope.memberToAdd;
-                $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
-                alert($scope.memberToAdd + " has been added to this group.");
-                $window.location.reload()
+            if(!$scope.checkArray(showUsers, $scope.currGroup.members)) {
+                $scope.currGroup.members.push(showUsers);
+                $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup).success( function (data) {
+                    $scope.currGroup = angular.copy(data);
+                    alert(showUsers + " has been added to this group.");
+                });
             } else {
-                alert($scope.memberToAdd + " is already in this group.");
+                alert(showUsers + " is already in this group.");
             }
         };
     }
@@ -255,18 +257,20 @@ angular.module('theatreProjApp')
     $scope.removeMember = function(member) {
         var confRemove = confirm("Are you sure you want to remove " + member +" from this group?");
         if (confRemove == true) {
-            $scope.position = $scope.currGroup.members.indexOf(member);
-            $scope.currGroup.members.splice($scope.position, 1);
-            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup);
+            var position = $scope.currGroup.members.indexOf(member);
+            $scope.currGroup.members.splice(position, 1);
+            $http.put('api/groups/' + $scope.currGroup._id, $scope.currGroup).success( function (data) {
+                $scope.currGroup = angular.copy(data);
+            });
         }
     };
 
-    //Function to assign a new task
+    //Function to assign a new task and checks if a project was selected.
     $scope.createTask = function(showProject, taskDesc, dt) {
         $scope.taskSubmitted = true;
         $scope.showProject = showProject;
         $scope.taskDesc = taskDesc;
-        $scope.deadline = dt.toDateString();
+        $scope.deadline = dt;
         if($scope.showProject) {
             $scope.show_id = $scope.showProject; 
         } else {
@@ -278,12 +282,32 @@ angular.module('theatreProjApp')
         alert("Task Created");
     };
 
-    //Ensures date must be selected from todays date
-    $scope.toggleMin = function() {
-        $scope.minDate = $scope.minDate ? null : new Date();
+    //Date Picker functions
+    $scope.today = function() {
+      $scope.dt = new Date();
+    };
+    $scope.today();
+
+    $scope.toggleRange = function() {
+      $scope.minDate = $scope.minDate ? null : new Date();
+      $scope.maxDate = $scope.maxDate ? null : new Date();
+      $scope.maxDate.setMonth($scope.maxDate.getMonth()+6);
+    };
+    $scope.toggleRange();
+
+    $scope.datep = {
+      opened: false
+    };
+
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      $scope.datep.opened = true;
     };
     
-    $scope.toggleMin();
+    $scope.clear = function () {
+      $scope.dt = null;
+    };
 
     //Function to change task to complete
     $scope.changeStatus = function(task) {

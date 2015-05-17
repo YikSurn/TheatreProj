@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ViewProfileCtrl', function ($scope, $http, $modalInstance, user) {
+  .controller('ViewProfileCtrl', function ($scope, $http, $modalInstance, user,socket) {
     $scope.currUser = user;
 
     $http.get('api/profiles').success(function(profiles) {

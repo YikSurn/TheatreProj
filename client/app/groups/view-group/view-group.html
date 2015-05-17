@@ -1,11 +1,17 @@
+<!--Include nav bar component-->
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+{{currGroup}}
+
+<!--Remnants of modal classes have been left behind (since been changed to adopt the URL style instead)-->
 <div class="modal-header" id="group-heading"> 
+    <!--Display the group name with the appropriate editor capabilities-->
     <h3 ng-hide="editorEnabledName" class="modal-title">{{currGroup.name}}
         <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">
         	Edit Name <span class="glyphicon glyphicon-pencil"></span>
         </button>
     </h3>
+    <!--Display form when edit is clicked with validation on submit-->
     <div ng-show="editorEnabledName">
         <form name="name" class="form-inline" ng-submit="saveName()" novalidate>
             <input type="text" class="form-control" name="gName" ng-model="newName" ng-show="editorEnabledName" required/>
@@ -20,71 +26,84 @@
     </div>
 </div> 
 <div class="modal-body">
+    <!--Organize sections into tabs using bootstrap tabset-->
     <tabset>
+        <!--Tab handles all basic group information collected on creation, updates as changes are made throughout the app in real time-->
         <tab heading="General"><h3>Group Information</h3>
-        <hr>
-            <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
-            <div>Website:
-                <a ng-hide="editorEnabledWebsite" href="{{currGroup.websiteURL}}" target="_blank">{{currGroup.websiteURL}}</a>
-                <button ng-hide="editorEnabledWebsite" class="btn btn-primary btn-xs" ng-click="enableEditorWebsite()">Edit 
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-            </div>
-            <div ng-show="editorEnabledWebsite">
-                <form name="editWeb" class="form-inline" ng-submit="saveWebsite(newWebsite)" novalidate>
-                    <input type="url" class="form-control" name="wURL" ng-model="newWebsite" ng-show="editorEnabledWebsite" placeholder="Website URL"/>
-                    <button class="btn btn-primary" type="submit" ng-disabled="editWeb.$invalid">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-                <div class="form-group has-error">
-                    <p class="help-block" ng-show="editWeb.wURL.$error.url">
-                        URL's must begin with http://
-                    </p>
-                </div>
-            </div>
-            <div>Facebook: 
-                <a ng-hide="editorEnabledFaceBook" href="{{currGroup.facebookURL}}" target="_blank">{{currGroup.facebookURL}}</a>
-                <button ng-hide="editorEnabledFaceBook" class="btn btn-primary btn-xs" ng-click="enableEditorFacebook()">Edit 
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-            </div>
-            <div ng-show="editorEnabledFaceBook">
-                <form name="editFB" class="form-inline" ng-submit="saveFacebook(newFacebook)" novalidate>
-                    <input type="url" class="form-control" name="fURL" ng-model="newFacebook" ng-show="editorEnabledFaceBook" placeholder="Facebook URL"/>
-                    <button class="btn btn-primary" type="submit" ng-disabled="editFB.$invalid">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-                <div class="form-group has-error">
-                    <p class="help-block" ng-show="editFB.fURL.$error.url">
-                        URL's must begin with http://
-                    </p>
-                </div>
-            </div>
-            <div>Social Media: 
-                <a ng-hide="editorEnabledMedia" href="{{currGroup.socialMediaURL}}" target="_blank">{{currGroup.socialMediaURL}}</a>
-                <button ng-hide="editorEnabledMedia" class="btn btn-primary btn-xs" ng-click="enableEditorMedia()">Edit 
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-            </div>
-            <div ng-show="editorEnabledMedia">
-                <form name="editMedia" class="form-inline" ng-submit="saveMedia(newMedia)" novalidate>
-                    <input type="url" class="form-control" name="mURL" ng-model="newMedia" ng-show="editorEnabledMedia" placeholder="Media URL"/>
-                    <button class="btn btn-primary" type="submit" ng-disabled="editMedia.$invalid">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-                <div class="form-group has-error">
-                    <p class="help-block" ng-show="editMedia.mURL.$error.url">
-                        URL's must begin with http://
-                    </p>
-                </div>
-            </div>
             <hr>
-            <div>Total Members: {{currGroup.members.length}}</div>
-            <div>Total Assigned Tasks: {{iTasks.length}}</div>
-            <div>Total Completed Tasks: {{cTasks.length}}</div>
-            <div>Total Current Projects: {{gProjects.length}}</div>
-            <div>Total Upcoming Meetings: {{gMeetings.length}}</div>
+            <div class="well well-lg">
+                <div>Established: {{currGroup.establishedDate | date:'dd/MM/yyyy'}}</div>
+                <!--Allow edits to be made on all URL information with appropriate validations. Save buttons cannot be clicked unless information provided is valid-->
+                <div>Website:
+                    <a ng-hide="editorEnabledWebsite" href="{{currGroup.websiteURL}}" target="_blank">
+                        {{currGroup.websiteURL}}
+                    </a>
+                    <button ng-hide="editorEnabledWebsite" class="btn btn-primary btn-xs" ng-click="enableEditorWebsite()">Edit 
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <div ng-show="editorEnabledWebsite">
+                    <form name="editWeb" class="form-inline" ng-submit="saveWebsite(newWebsite)" novalidate>
+                        <input type="url" class="form-control" name="wURL" ng-model="newWebsite" ng-show="editorEnabledWebsite" placeholder="Website URL"/>
+                        <button class="btn btn-primary" type="submit" ng-disabled="editWeb.$invalid">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </form>
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="editWeb.wURL.$error.url">
+                            URL's must begin with http://
+                        </p>
+                    </div>
+                </div>
+                <div>Facebook: 
+                    <a ng-hide="editorEnabledFaceBook" href="{{currGroup.facebookURL}}" target="_blank">
+                        {{currGroup.facebookURL}}
+                    </a>
+                    <button ng-hide="editorEnabledFaceBook" class="btn btn-primary btn-xs" ng-click="enableEditorFacebook()">
+                        Edit 
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <div ng-show="editorEnabledFaceBook">
+                    <form name="editFB" class="form-inline" ng-submit="saveFacebook(newFacebook)" novalidate>
+                        <input type="url" class="form-control" name="fURL" ng-model="newFacebook" ng-show="editorEnabledFaceBook" placeholder="Facebook URL"/>
+                        <button class="btn btn-primary" type="submit" ng-disabled="editFB.$invalid">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </form>
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="editFB.fURL.$error.url">
+                            URL's must begin with http://
+                        </p>
+                    </div>
+                </div>
+                <div>Social Media: 
+                    <a ng-hide="editorEnabledMedia" href="{{currGroup.socialMediaURL}}" target="_blank">
+                        {{currGroup.socialMediaURL}}
+                    </a>
+                    <button ng-hide="editorEnabledMedia" class="btn btn-primary btn-xs" ng-click="enableEditorMedia()">Edit 
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                </div>
+                <div ng-show="editorEnabledMedia">
+                    <form name="editMedia" class="form-inline" ng-submit="saveMedia(newMedia)" novalidate>
+                        <input type="url" class="form-control" name="mURL" ng-model="newMedia" ng-show="editorEnabledMedia" placeholder="Media URL"/>
+                        <button class="btn btn-primary" type="submit" ng-disabled="editMedia.$invalid">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </form>
+                    <div class="form-group has-error">
+                        <p class="help-block" ng-show="editMedia.mURL.$error.url">
+                            URL's must begin with http://
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div>Total Members: {{currGroup.members.length}}</div>
+                <div>Total Assigned Tasks: {{iTasks.length}}</div>
+                <div>Total Completed Tasks: {{cTasks.length}}</div>
+                <div>Total Current Projects: {{gProjects.length}}</div>
+                <div>Total Upcoming Meetings: {{gMeetings.length}}</div>
+            </div>
         </tab>
+        <!--Tab handles addition of new members and removal of existing members-->
         <tab heading="Members"><h3>Group Members</h3>
             <button class="btn btn-default" ng-click="usersIsCollapsed = !usersIsCollapsed">Add New Member</button>
             <div collapse="!usersIsCollapsed">
@@ -106,27 +125,33 @@
                 </div>
             </div>
             <hr>
-            <div><label>Current Members:</label></div>
-            <div ng-hide="currGroup.members.length > 0">
-                <p>This group has no members.</p>
-            </div>
-            <div ng-repeat="member in currGroup.members"> {{member}} 
-                <button class="btn btn-danger btn-xs" ng-click="removeMember(member)">Remove Member</button>
+            <div class="well well-lg">
+                <div><label>Current Members:</label></div>
+                <!--Message to be displayed if no members currently exist in the group-->
+                <div ng-hide="currGroup.members.length > 0">
+                    <p>This group has no members.</p>
+                </div>
+                <div ng-repeat="member in currGroup.members"> {{member}} 
+                    <button class="btn btn-danger btn-xs" ng-click="removeMember(member)">Remove Member</button>
+                </div>
             </div>
         </tab>
+        <!--Tab handles the viewing of tasks both complete and incomplete and allows creation of new tasks-->
         <tab heading="Tasks"><h3>Group Tasks</h3>
         <hr>
             <button class="btn btn-default" ng-click="viewIsCollapsed = !viewIsCollapsed">View Assigned Tasks</button>
 	        <div collapse="viewIsCollapsed">
-	            <div ng-hide="iTaskData">
+	            <!--Message to be displayed if no tasks are outstanding-->
+                <div ng-hide="iTaskData">
 	      	        <p>This group currently has no assigned tasks</p>
 	            </div>
+                <!--Otherwise display the outstanding tasks-->
 		        <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
 		            <div>Project: {{task.show_id}}</div>
+                    <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
 		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
-		            <div>Deadline: {{task.deadline}}</div>
 		            <button class="btn btn-primary" id="task-button" ng-click="changeStatus(task)">Mark Completed</button>
 		            <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
 		        </div> 
@@ -134,30 +159,35 @@
 	        <hr>
 	        <button class="btn btn-default" ng-click="completeIsCollapsed = !completeIsCollapsed">View Completed Tasks</button>
 	        <div collapse="completeIsCollapsed">
+                <!--Message to be displayed if no tasks are completed-->
 	            <div ng-hide="cTaskData">
 	          	    <p>This group currently has no completed tasks</p>
 	            </div>
+                <!--Otherwise display the completed tasks-->
 		        <div ng-show="cTaskData" class="well well-lg" ng-repeat="task in cTasks">
 		            <div>Project: {{task.show_id}}</div>
+                    <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <div>Description: {{task.description}}</div>
 		            <div>Status: {{task.status}}</div>
 		            <div>Assigned By: {{task.assignedByUser_id}} on {{task.dateCreated | date:'dd/MM/yyyy'}}</div>
-		            <div>Deadline: {{task.deadline}}</div>
 		        <button class="btn btn-danger" id="task-button" ng-click="deleteTask(task)">Delete Task</button>
 		    </div> 
 	    </div>
 	    <hr>
+        <!--Button to display the create task form, toggles on click-->
 	    <button class="btn btn-default" ng-click="assignIsCollapsed = !assignIsCollapsed">Create New Task</button>
 	        <div collapse="assignIsCollapsed">
 		        <div class="well well-lg">
 		            <form name="assignTask" ng-submit="createTask(showProject, taskDesc, dt)" novalidate>
 		                <div class="form-group">
                             <label>Project:</label>
+                            <!--Check to see if group projects exist, otherwise task will be assigned to group by default-->
                             <div ng-hide="projectData">
                                 <p>This group has no projects. Task will be assigned to group.</p>
                             </div>
+                            <!--If projects exists, display a drop down and allow selection, if applicable-->
                             <div ng-show="projectData">
-                  	            <p>You can assign tasks to a group project by selecting a project below. Do not select a project to assign project to group.</p>
+                  	            <p>You can assign tasks to a group project by selecting a project below. Do not select a project to assign this task to group.</p>
                                 <select name="sProject" class="form-control" ng-model="showProject" ng-options="project.showName as project.showName for project in gProjects | orderBy:'name'">
                                     <option value="" selected>--Assign to Group--</option>
                                 </select>
@@ -167,10 +197,20 @@
 		                    <label>Description:</label>
 		                    <textarea class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description"/>
      		            </div>
-		                <div class="form-group" style="display:inline-block; min-height:290px;">
-		      	            <label>Completion Date: </label>
-		                    <datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
- 				            <pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+		                <div class="form-group">
+		      	            <label>Completion Date:</label>
+                            <div class="row">
+                               <div class="col-md-3">
+                                    <p class="input-group">
+		                                <input type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group has-error">
                             <p class="help-block" ng-show="assignTask.date.$error.required && taskSubmitted">
@@ -184,24 +224,28 @@
 		        </div> 
 	        </div>
 	    </tab>
-        <tab heading="Send Message"><h3>Send A New Message</h3><hr></tab>
-        <tab heading="Send Form"><h3>Send A New Form</h3><hr></tab>
+        <!--Tab deals with projects belonging to group-->
         <tab heading="Projects"><h3>Current Projects</h3>
       	    <hr>
+            <!--Message to be displayed if no projects exist-->
             <div ng-hide="projectData">
                 <p>This group has no projects.</p>
             </div>
+            <!--Otherwise display the projects-->
       	    <div ng-show="projectData" class="well well-lg col-md-4" ng-repeat="project in gProjects">
 		        <div>Project Name: {{project.showName}}</div>
 		        <div>Status: {{project.showStatus}}</div>
 		        <div>Production Date: {{project.prodDate | date:'dd/MM/yyyy'}}</div>
 		    </div>
         </tab>
-        <tab heading="Production Meeting"><h3>Current Scheduled Meeting(s)</h3>
+        <!--Tab deals with production meetings belonging to the group-->
+        <tab heading="Production Meeting(s)"><h3>Current Scheduled Meeting(s)</h3>
             <hr>
+            <!--Message to be displayed if no meetings exist-->
             <div ng-hide="meetingData">
                 <p>This group has no current scheduled meetings</p>
             </div>
+            <!--Otherwise display the meetings-->
             <div ng-show="meetingData" class="well well-lg col-md-4" ng-repeat="meeting in gMeetings">
                 <div>Meeting Name: {{meeting.title}}</div>
                 <div>Date Created: {{meeting.date | date:'dd/MM/yyyy'}}</div>
@@ -218,4 +262,5 @@
     </tabset>
 </div>
 
+<!--Include the footer component-->
 <div class="col-md-12" ng-include="'components/footer/footer.html'"></div>

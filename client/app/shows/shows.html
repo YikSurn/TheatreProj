@@ -1,12 +1,16 @@
+<!--Include the nav bar component-->
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <br/>
 
+<!--Security to ensure user is an admin, users will only see this paragraph when viewing-->
 <div class="container" ng-show="!isAdmin()">
     <p>The projects route is restricted to users with the 'admin' role.</p>
 </div>  
 
+<!--Checked for admin, show the route-->
 <div class="container" ng-show="isAdmin()">
+    <!--Button to create new projects, shows form on toggle-->
     <button class="btn btn-default" ng-click="createIsCollapsed = !createIsCollapsed">Create New Project</button>
 	<div collapse="createIsCollapsed">
         <div class="well well-lg">
@@ -42,10 +46,20 @@
                     Please select a Group.
                     </p>
                 </div>
-                <div class="form-group" style="display:inline-block; min-height:290px;">
+                <div class="form-group">
 		      		<label>Project Date: </label>
-		        	<datepicker name="date" ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" required></datepicker>
- 					<pre>Date Selected: <em>{{dt | date:'fullDate' }}</em></pre>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="input-group">
+                                <input type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open($event)">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group has-error">
                     <p class="help-block" ng-show="newProject.date.$error.required && submitted">
@@ -60,26 +74,42 @@
         </div>
     </div>
     <hr>
+    <!--Loading div which prevents any projects shown until all projects data has been retrieved-->
     <div class="jumbotron" ng-hide="projectsLoaded">
         <h1>Loading...</h1>
     </div>
+    <!--If no group data is found show this message-->
     <div ng-hide="projectData">
         <p>There are currently no projects to display.</p>
     </div>
+    <!--If projectdata exists, show the projects-->
     <div ng-show="projectData && projectsLoaded">
-        <div class="input-group">
-            <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+        <!--Search function and order by filter to help find appropriate projects-->
+        <div class="form-group col-md-6">
+            <div class="input-group">
+                <input class="form-control" ng-model="searchText" type="search" placeholder="Search projects by name">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            </div>
+        </div>
+        <div class="form-group form-inline col-md-6">   
+            <label>Sort by:</label>
+            <select name="projectCat" class="form-control" ng-model="projectCategory" id="projectCategory">
+                <option value="showName">Project Name</option>
+                <option value="showStatus">Project Status</option>
+                <option value="_id"> Creation Date</option>
+                <option value="prodDate">Production Date</option>
+            </select>
         </div>
     </div>
-	<div class="col-md-4" ng-repeat="project in projectshows | filter:{showName:searchText}" id="project">
+    <!--Projects organized in rows of 3 thanks to col-md-4 class. Filter specifications defined.-->
+	<div class="col-md-4" ng-repeat="project in projectshows | orderBy:projectCategory | filter:{showName:searchText}" id="project">
 		<div class="panel panel-primary">
 			<div class="panel-heading" id="project-heading">
 				<h4>{{project.showName}}</h4>
 			</div>
 			<div class="panel-body">
 				<div class="well well-sm" id="inner-elements">
-					<div>{{project.showName}}, {{project.showStatus}}</div>
+					<div>{{project.showName}}, {{project.showStatus}}, {{project.prodDate | date: 'dd/MM/yyyy'}}</div>
 					<button class="btn btn-primary" ng-click="open(project)">Manage</button>
 					<button class="btn btn-danger" ng-click="delete(project)">Delete</button>
 				</div>
