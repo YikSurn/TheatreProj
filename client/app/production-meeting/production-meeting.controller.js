@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('ProductionMeetingCtrl', ['$scope', 'prodMeetings', '$modal', 'theatreGroups',
-  function ($scope, prodMeetings, $modal, theatreGroups) {
+  .controller('ProductionMeetingCtrl', ['$scope', 'prodMeetings', '$modal', 'theatreGroups', 'Auth'
+  function ($scope, prodMeetings, $modal, theatreGroups, Auth) {
+    $scope.isAdmin = Auth.isAdmin;
 
     $scope.prodMeetings = prodMeetings.meetings;
 

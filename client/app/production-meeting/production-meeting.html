@@ -1,6 +1,10 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
+<div class="container" ng-hide="isAdmin()">
+  <p>This page is restricted to users with the 'admin' role only.</p>
+</div>
+
+<div class="container" ng-show="isAdmin()">
 
   <br />
 
