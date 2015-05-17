@@ -143,7 +143,7 @@
 	      	        <p>This group currently has no assigned tasks</p>
 	            </div>
                 <!--Otherwise display the outstanding tasks-->
-		        <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks">
+		        <div ng-show="iTaskData" class="well well-lg" ng-repeat="task in iTasks | orderBy: 'deadline'">
 		            <div>Project: {{task.show_id}}</div>
                     <div>Deadline: {{task.deadline | date: 'dd/MM/yyyy'}}</div>
 		            <div>Description: {{task.description}}</div>
@@ -192,7 +192,7 @@
                         </div>
      	                <div class="form-group">
 		                    <label>Description:</label>
-		                    <textarea class="form-control" name="tName" ng-model="taskDesc" placeholder="Task Description"></textarea>
+		                    <textarea class="form-control" name="tName" ng-model="taskDesc" placeholder="Enter A Task Description" required></textarea>
      		            </div>
 		                <div class="form-group">
 		      	            <label>Completion Date:</label>
@@ -209,13 +209,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group has-error">
-                            <p class="help-block" ng-show="assignTask.date.$error.required && taskSubmitted">
-                                Please select a Completion Date.
-                            </p>
-                        </div>
    	                    <div class="form-group">
-		                    <button class="btn btn-primary" type="submit">Assign</button>
+		                    <button class="btn btn-primary" type="submit" ng-disabled="assignTask.$invalid">Assign</button>
 		                </div>
 		            </form>
 		        </div> 
