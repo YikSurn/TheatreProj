@@ -4,103 +4,115 @@
 <div class="modal-body">
     <tabset>
         <tab heading="Contact Details">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Email</h3>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Email</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div ng-hide="editorEnabledEmail"> 
+                                <font size=4><strong>{{currProfile.email}}</strong></font>
+                            </div>
+                        </li>
+                    </ul>
+                </div> 
             </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div ng-hide="editorEnabledEmail"> 
-                            <font size=4><strong>{{currProfile.email}}</strong></font>
-                        </div>
-                    </li>
-                </ul>
-            </div> 
-        </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Phone</h3>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Phone</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div ng-hide="editorEnabledPhone"> 
+                                <font size=4><strong>{{currProfile.phone}}</strong></font>
+                                <button class="btn btn-warning btn-sm" ng-click="enableEditorPhone()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                            </div>
+                            <div ng-show="editorEnabledPhone">
+                                <form name="phone" ng-submit="savePhone(phone,newPhone)" novalidate>
+                                    <input ng-pattern="/^(\d)+$/" class="form-control" placeholder="Phone Number" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required/>
+                                    <div class="form-group has-error">
+                                        <span class="help-block" ng-show="phone.uPhone.$error.required && phoneSubmitted">
+                                            Tell us your phone number.
+                                        </span>
+                                        <span class="help-block" ng-show="(phone.uPhone.$error.minlength || phone.uPhone.$error.maxlength) && phoneSubmitted">Phone number must be 10 digits.</span>
+                                        <span class="help-block" ng-show="phone.uPhone.$error.pattern && phoneSubmitted">
+                                            This is not a valid phone number.
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div> 
+                        </li>
+                    </ul>
+                </div>     
             </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div ng-hide="editorEnabledPhone"> 
-                            <font size=4><strong>{{currProfile.phone}}</strong></font>
-                            <button class="btn btn-warning btn-sm" ng-click="enableEditorPhone()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
-                        </div>
-                    </li>
-                </ul>
-                <div ng-show="editorEnabledPhone">
-                <form name="phone" ng-submit="savePhone(phone,newPhone)" novalidate>
-                    <input ng-pattern="/^(\d)+$/" class="form-control" placeholder="Phone Number" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required/>
-                    <div class="form-group has-error">
-                        <span class="help-block" ng-show="phone.uPhone.$error.required && phoneSubmitted">Tell us your phone number.</span>
-                        <span class="help-block" ng-show="(phone.uPhone.$error.minlength || phone.uPhone.$error.maxlength) && phoneSubmitted">phone number must be 10 digits.</span>
-                        <span class="help-block" ng-show="phone.uPhone.$error.pattern && phoneSubmitted">This is not a valid phone number.</span>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                    </div>
-                </form> 
-            </div>     
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Home Address</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div ng-hide="editorEnabledHome"> 
+                                <font size=4><strong>{{currProfile.addressHome}}</strong></font>
+                                <button class="btn btn-warning btn-sm" ng-click="enableEditorHome()" id="pencil">
+                                    Edit <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                            <div ng-show="editorEnabledHome">
+                                <form name="home" ng-submit="saveHome(home,newHome)" novalidate>
+                                    <input class="form-control" name="uHome" ng-model="newHome" ng-show="editorEnabledHome"    placeholder="Home Address" required />
+                                    <div class="form-group has-error"> 
+                                        <span class="help-block" ng-show="home.uHome.$error.required && homeSubmitted">
+                                            Tell us your home address.
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary">Save</button>
+                                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>  
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Term Address</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div ng-hide="editorEnabledTerm"> 
+                                <font size=4><strong>{{currProfile.addressTerm}}</strong></font>
+                                <button class="btn btn-warning btn-sm" ng-click="enableEditorTerm()" id="pencil">
+                                    Edit <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </div>
+                            <div ng-show="editorEnabledTerm">
+                                <form name="term" ng-submit="saveTerm(term,newTerm)" novalidate>
+                                    <input name="uTerm" class="form-control" ng-model="newTerm" ng-show="editorEnabledTerm" placeholder="Term Address" required />
+                                    <div class="form-group has-error">
+                                        <span class="help-block" ng-show="term.uTerm.$error.required && termSubmitted">
+                                            Tell us your term address.
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Home Address</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div ng-hide="editorEnabledHome"> 
-                            <font size=4><strong>{{currProfile.addressHome}}</strong></font>
-                            <button class="btn btn-warning btn-sm" ng-click="enableEditorHome()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
-                        </div>
-                    </li>
-                </ul>
-                <div ng-show="editorEnabledHome">
-                <form name="home" ng-submit="saveHome(home,newHome)" novalidate>
-                    <input class="form-control" name="uHome" ng-model="newHome" ng-show="editorEnabledHome" placeholder="Home Address"required/>
-                    <div class="form-group has-error">
-                        <span class="help-block" ng-show="home.uHome.$error.required && homeSubmitted">Tell us your home address.</span>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary">Save</button>
-                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>  
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title">Term Address</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div ng-hide="editorEnabledTerm"> 
-                            <font size=4><strong>{{currProfile.addressTerm}}</strong></font>
-                            <button class="btn btn-warning btn-sm" ng-click="enableEditorTerm()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
-                        </div>
-                    </li>
-                </ul>
-                <div ng-show="editorEnabledTerm">
-                <form name="term" ng-submit="saveTerm(term,newTerm)" novalidate>
-                    <input name="uTerm" class="form-control" ng-model="newTerm" ng-show="editorEnabledTerm" placeholder="Term Address" required/>
-                    <div class="form-group has-error">
-                        <span class="help-block" ng-show="term.uTerm.$error.required && termSubmitted">Tell us your term address.</span>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
         </tab>
         <tab heading="Tasks">
             <ul class="list-group">
