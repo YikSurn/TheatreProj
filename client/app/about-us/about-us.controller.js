@@ -48,19 +48,12 @@ angular.module('theatreProjApp')
 	variables, they cannot be placed in the scss file.
 	----------------------------------------------------------------------------------------------- */
 
-	/* The container for everything. */
-	$scope.carouselContainerStyle = function () {
-		return {
-			// width: $scope.cubeLength + 'px'
-		};
-	};
-
 	/* The carousel-translate div pushes the scene back into the screen so we can see it. */
 	$scope.carouselTranslateStyle = function () {
 		var ret = {
 			transform: ''
 		}
-		ret.transform += 'translateY(' + ($scope.r*1) + 'px)'; // move it down a bit
+		ret.transform += 'translateY(' + $scope.r + 'px)'; // move it down a bit
 		ret.transform += ' translateZ(-' + zShift + 'px)'; // push it back
 		ret.transform += ' rotateX(0deg)'; // rotate it forwards a little
 		return ret;
