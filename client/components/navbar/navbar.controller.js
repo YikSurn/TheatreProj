@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theatreProjApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $state, $location, Auth, $window) {
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
@@ -14,7 +14,7 @@ angular.module('theatreProjApp')
 
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/');
+      $state.go('login');
     };
 
     $scope.isActive = function(route) {

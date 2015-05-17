@@ -230,13 +230,11 @@ angular.module('theatreProjApp')
 			break;
 			
 			case 'top':
-			ret['transform-origin'] = 'top';
-			ret.transform += ' translateZ(-' + len + 'px)'; // move it to align with the back of the cube
-			if (active) {
-				ret.transform += ' rotateX(180deg)'; // unfold it to lay open
-			} else {
-				ret.transform += ' rotateX(90deg)'; // rotate it to lay flat
-				ret.transform += ' translateZ(-' + ($scope.cubeLength - len * 2) + 'px)'; // shift it to align with the post-transformed cube
+			ret['transform-origin'] = 'bottom';
+			ret.transform += ' translateZ(-' + len + 'px)'; // move it back to align with the back of the cube
+			ret.transform += ' translateY(-' + len*2 + 'px)'; // move it up to align with the top edge
+			if (!active) {
+				ret.transform += ' rotateX(-90deg)'; // rotate it to lay flat
 			}
 			break;
 
