@@ -3,8 +3,8 @@
 // Factory for the production meetings
 
 angular.module('theatreProjApp')
-  .factory('prodMeetings', ['$http', 'socket',
-  function ($http, socket) {
+  .factory('prodMeetings', ['$http', 'socket', 'theatreGroups', '$state', '$window',
+  function ($http, socket, theatreGroups, $state, $window) {
 
     var o = {
       meetings : [],
@@ -44,9 +44,16 @@ angular.module('theatreProjApp')
       var payload = angular.copy(o.meeting);
       payload.group = o.meeting.group._id;
       return $http.put('api/prodmeetings/' + o.meeting._id, payload).success(function (data) {
-        // angular.copy(data, o.meeting);
+        angular.copy(data, o.meeting);
       });
     };
+
+    o.remove = function () {
+      return $http.delete('api/prodmeetings/' + o.meeting._id).success(function () {
+        o.meeting = {};
+        $state.go('production-meeting');
+      })
+    }
 
     return o;
   }]);

@@ -28,6 +28,9 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Prodmeeting.create(req.body, function (err, prodmeeting) {
     if(err) { return handleError(res, err); }
+    Group.update({_id: prodmeeting.group}, {$push : {'prodMeetings' : prodmeeting._id}}, function(err){
+      if(err){ return handleError(res, err); }
+    });
     Prodmeeting.findById(prodmeeting._id).populate('group').exec(function (err, prodmeeting) {
       return res.json(201, prodmeeting);
     });
@@ -58,7 +61,10 @@ exports.destroy = function(req, res) {
     if(!prodmeeting) { return res.send(404); }
     prodmeeting.remove(function(err) {
       if(err) { return handleError(res, err); }
-      return res.send(204);
+      Group.update({_id: prodmeeting.group}, {$pull : {'prodMeetings' : prodmeeting._id}}, function(err){
+        if(err){ return handleError(res, err); }
+        return res.send(204);
+      });
     });
   });
 };

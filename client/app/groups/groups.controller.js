@@ -44,11 +44,13 @@ angular.module('theatreProjApp')
     	socket.unsyncUpdates('group');
     });
 
-    //Function to create a group
+    //Function to create a group, checks illegal characters and if group already exists
     $scope.createGroup = function() {
         $scope.submitted = true;
         if($scope.cGroup.$valid) {
-            if(!$scope.checkArray($scope.groupName, $scope.groupNames)) {
+            if($scope.groupName.indexOf('/') > -1 || $scope.groupName.indexOf('?') > -1 || $scope.groupName.indexOf("%") > -1) {
+                alert("You have included illegal characters (/, ? or %) not permitted in group names. Please try a different name");
+            } else if(!$scope.checkArray($scope.groupName, $scope.groupNames)) {
                 $scope.establishedDate = new Date();
                 $http.post('api/groups', {name: $scope.groupName, websiteURL: $scope.websiteURL, facebookURL: $scope.facebookURL, socialMediaURL: $scope.mediaURL, establishedDate: $scope.establishedDate});
                 alert("Group Created");

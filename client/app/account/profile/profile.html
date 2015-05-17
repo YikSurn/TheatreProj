@@ -1,3 +1,4 @@
+<!--Include the nav bar component-->
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container">
@@ -9,10 +10,12 @@
       <label>Email:</label>
       <div ng-hide="editorEnabledEmail"> 
         {{currProfile.email}}
-        <button class="btn btn-primary btn-xs" ng-click="enableEditorEmail()">Edit</button>
+        <!--The following was a template to produce email changes, it has since been ommitted from our app
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorEmail()">Edit</button>-->
       </div>
+      <!--Included with the above ommitted code.
       <div ng-show="editorEnabledEmail">
-        <form name="email" ng-submit="saveEmail()" novalidate>
+        <form name="email" class="form-inline" ng-submit="saveEmail()" novalidate>
           <div class="form-group">
             <input type="email" class="form-control" name= "uEmail" ng-model="newEmail" ng-show="editorEnabledEmail" required/>
             <div class="form-group has-error">
@@ -25,17 +28,18 @@
             <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
           </div>
         </form>
-      </div> 
+      </div>-->
     </div>
     <div class="col-sm-12">
       <br />
+      <!--Display phone number and appropriate editor with validation catches-->
       <label>Phone:</label>
       <div ng-hide="editorEnabledPhone"> 
         {{currProfile.phone}}
         <button class="btn btn-primary btn-xs" ng-click="enableEditorPhone()">Edit</button>
       </div>
       <div ng-show="editorEnabledPhone">
-        <form name="phone" ng-submit="savePhone()" novalidate>
+        <form name="phone" class="form-inline" ng-submit="savePhone()" novalidate>
           <input ng-pattern="/^(\d)+$/" class="form-control" placeholder="Phone Number" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required=/>
           <div class="form-group has-error">
             <span class="help-block" ng-show="phone.uPhone.$error.required && phoneSubmitted">Tell us your phone number.</span>
@@ -51,13 +55,14 @@
     </div>
     <div class="col-sm-12">
       <br />
+      <!--Display home address details and appropriate editor with validation catches-->
       <label>Home Address:</label>
       <div ng-hide="editorEnabledHome"> 
         {{currProfile.addressHome}}
         <button class="btn btn-primary btn-xs" ng-click="enableEditorHome()">Edit</button>
       </div>
       <div ng-show="editorEnabledHome">
-        <form name="home" ng-submit="saveHome()" novalidate>
+        <form name="home" class="form-inline" ng-submit="saveHome()" novalidate>
           <input class="form-control" name="uHome" ng-model="newHome" ng-show="editorEnabledHome" placeholder="Home Address"required/>
           <div class="form-group has-error">
             <span class="help-block" ng-show="home.uHome.$error.required && homeSubmitted">Tell us your home address.</span>
@@ -71,18 +76,19 @@
     </div>
     <div class="col-sm-12">
       <br />
+      <!--Display term address details and appropriate editor with validation catches-->
       <label>Term Address:</label>
       <div ng-hide="editorEnabledTerm"> 
         {{currProfile.addressTerm}}
         <button class="btn btn-primary btn-xs" ng-click="enableEditorTerm()">Edit</button>
       </div>
       <div ng-show="editorEnabledTerm">
-        <form name="term" ng-submit="saveTerm()" novalidate>
+        <form name="term" class="form-inline" ng-submit="saveTerm()" novalidate>
           <input name="uTerm" class="form-control" ng-model="newTerm" ng-show="editorEnabledTerm" placeholder="Term Address" required/>
           <div class="form-group has-error">
             <span class="help-block" ng-show="term.uTerm.$error.required && termSubmitted">Tell us your term address.</span>
           </div>
-          <div>
+          <div class="form-group">
             <button class="btn btn-primary" type="submit">Save</button>
             <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
           </div>
@@ -91,9 +97,11 @@
     </div>
     <div class="col-sm-12">
       <br />
+      <!--Display role-->
       <label>Role:</label> {{ currProfile.role }}
     </div>
   </div>
 </div>
 
+<!--include footer component-->
 <div ng-include="'components/footer/footer.html'"></div>

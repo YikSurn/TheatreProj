@@ -1,0 +1,244 @@
+<div class="modal-header" id="user-heading">
+    <h3 class="modal-title">{{currProfile.name}}</h3>
+</div>
+<div class="modal-body">
+    <tabset>
+        <tab heading="Contact Details">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Email</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div ng-hide="editorEnabledEmail"> 
+                            <font size=4><strong>{{currProfile.email}}</strong></font>
+                            <button class="btn btn-warning btn-sm" ng-click="enableEditorEmail()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-show="editorEnabledEmail">
+                <form name="email" ng-submit="saveEmail(email,newEmail)" novalidate>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name= "uEmail" ng-model="newEmail" ng-show="editorEnabledEmail" required/>
+                        <div class="form-group has-error">
+                            <span class="help-block" ng-show="email.uEmail.$error.required && emailSubmitted">Tell us your email.</span>
+                            <span class="help-block" ng-show="email.uEmail.$error.email && emailSubmitted">This is not a valid email.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </div>
+                </form>
+            </div> 
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Phone</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div ng-hide="editorEnabledPhone"> 
+                            <font size=4><strong>{{currProfile.phone}}</strong></font>
+                            <button class="btn btn-warning btn-sm" ng-click="enableEditorPhone()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-show="editorEnabledPhone">
+                <form name="phone" ng-submit="savePhone(phone,newPhone)" novalidate>
+                    <input ng-pattern="/^(\d)+$/" class="form-control" placeholder="Phone Number" ng-minlength="10" ng-maxlength="10" name="uPhone" ng-model="newPhone" ng-show="editorEnabledPhone" required/>
+                    <div class="form-group has-error">
+                        <span class="help-block" ng-show="phone.uPhone.$error.required && phoneSubmitted">Tell us your phone number.</span>
+                        <span class="help-block" ng-show="(phone.uPhone.$error.minlength || phone.uPhone.$error.maxlength) && phoneSubmitted">phone number must be 10 digits.</span>
+                        <span class="help-block" ng-show="phone.uPhone.$error.pattern && phoneSubmitted">This is not a valid phone number.</span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </div>
+                </form> 
+            </div>     
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Home Address</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div ng-hide="editorEnabledHome"> 
+                            <font size=4><strong>{{currProfile.addressHome}}</strong></font>
+                            <button class="btn btn-warning btn-sm" ng-click="enableEditorHome()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-show="editorEnabledHome">
+                <form name="home" ng-submit="saveHome(home,newHome)" novalidate>
+                    <input class="form-control" name="uHome" ng-model="newHome" ng-show="editorEnabledHome" placeholder="Home Address"required/>
+                    <div class="form-group has-error">
+                        <span class="help-block" ng-show="home.uHome.$error.required && homeSubmitted">Tell us your home address.</span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>  
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Term Address</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div ng-hide="editorEnabledTerm"> 
+                            <font size=4><strong>{{currProfile.addressTerm}}</strong></font>
+                            <button class="btn btn-warning btn-sm" ng-click="enableEditorTerm()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-show="editorEnabledTerm">
+                <form name="term" ng-submit="saveTerm(term,newTerm)" novalidate>
+                    <input name="uTerm" class="form-control" ng-model="newTerm" ng-show="editorEnabledTerm" placeholder="Term Address" required/>
+                    <div class="form-group has-error">
+                        <span class="help-block" ng-show="term.uTerm.$error.required && termSubmitted">Tell us your term address.</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </tab>
+        <tab heading="Tasks">
+            <ul class="list-group">
+                <li class="list-group-item" ng-show="noTask">
+                    <span><strong>No tasks avalaible!</strong></span>
+                </li>
+                <li class="list-group-item" ng-repeat="task in tasks | orderBy:'deadline' | filter:{assignedToUser_id:currUser._id}">
+                    <button ng-click="enableEditorComments(task)" class="btn btn-success btn-sm"  id="pencil">Comment&nbsp;<span class="glyphicon glyphicon-send"></span></button>
+                    <div>
+                        <strong>Assigned by:</strong>
+                        <span>{{getName(task.assignedByUser_id)}}</span>
+                    </div>
+                    <br>
+                    <button ng-click="enableEditorTask(task)" class="btn btn-warning btn-sm"  id="pencil">Modify &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></button>
+                    <div>
+                        <strong>Deadline:</strong>
+                        <span>{{dateFormatTransform(task.deadline)}}</span>
+                    </div><br>
+                    <button ng-click="completeTask(task)" ng-disabled="task.status=='Complete'" class="btn btn-info btn-sm"  id="pencil">Complete&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                    <div>
+                        <strong>Status:</strong>
+                        <span>{{task.status}}</span>
+                    </div>
+                    <br>
+                    <button ng-click="deleteTask(task)" class="btn btn-danger btn-sm"  id="pencil">Delete &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span></button>
+                    <div>
+                        <strong>Description:</strong>
+                        <span>{{task.description}}</span>
+                    </div><br>
+                    <div>
+                        <strong>Comments:</strong>
+                        <span>{{task.comments}}</span>
+                    </div>
+                    <br>
+                    <div>
+                        <strong>Created at:</strong>
+                        <span>{{dateFormatTransform(task.dateCreated)}}</span>
+                    </div>
+                    <br>
+                    <div collapse="editorEnabledTask||!(task==currTask)">
+                        <form name="tasks" ng-submit="modifyTask(tasks,task,newDescription,newDeadline)" novalidate>
+                            <div class="form-group">
+                                <label>Task Description:</label>
+                                <textarea type="text" name="newDsp" class="form-control" rows="5" ng-model="newDescription" required></textarea>
+                            </div>
+                            <div class="form-group has-error">
+                                <p class="help-block" ng-show="tasks.newDsp.$error.required && modifySubmitted">Please enter the task description.
+                            </p>
+                            </div>
+                            <div class="form-group">
+                                <label>Task Deadline:</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="input-group">
+                                            <input type="date" class="form-control" datepicker-popup ng-model="newDeadline" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div collapse="editorEnabledComments||!(task==currTask)">
+                        <form name="comments" ng-submit="commentTask(task,newComments)" novalidate>
+                            <div class="form-group">
+                                <label>Comments:</label>
+                                <textarea type="text" name="newComm" class="form-control" rows="5" ng-model="newComments" placeholder="Your Comments"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+            <button class="btn btn-primary btn-lg" type="button" ng-click="toggleTaskCreate()" ng-show="createNewTask">Create New Task&nbsp;&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            <div collapse="createNewTask">
+                <div class="well well-lg">
+                    <form name="ntask" ng-submit="saveTask(ntask,description,comments,dt)" nonvalidate>
+                        <div class="form-group">
+                            <label>Task Description:</label>
+                            <textarea type="text" name="nDescription" class="form-control" rows="5" ng-model="description" placeholder="Task Description" required></textarea>
+                        </div>
+                        <div class="form-group has-error">
+                            <p class="help-block" ng-show="ntask.nDescription.$error.required && taskSubmitted">Please enter the task description.
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label>Task Comments:</label>
+                            <textarea type="text" class="form-control" rows="3" name="nComments" ng-model="comments" placeholder="Your Comments"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Task Deadline:</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">Create</button>
+                            <button class="btn btn-warning" type="reset">Reset</button>
+                            <button class="btn btn-danger" type="button" ng-click="toggleTaskCreate()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+</div>
