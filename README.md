@@ -17,12 +17,18 @@ Bootstrap and bootstrap datetimepicker
 Directory structure
 ---------------------
 
-The client side is in the `client` folder and server side is in the `api` folder inside the `server` folder.
+The client side is in the 'client' folder and server side is in the 'api' folder inside the 'server' folder.
 
-The `api` folder is a REST API that has the different endpoints to provide information to the client side.
+The 'api' folder is a REST API that has the different endpoints to provide information to the client side.
 
-Under the `client` folder, 
-- `bower_components` has the bower packages used by this app
-- `components` has the main components
-- `assets` has the static files i.e. images
-- `app` is where the main code for the rendering on the front-end
+Under the 'client' folder, 
+- 'bower_components' has the bower packages used by this app
+- 'components' has the main components
+- 'assets' has the static files i.e. images
+- 'app' is where the main code for the rendering on the front-end
+
+
+Self-written
+-------------
+
+client/app/app.js - only the .run() is written (line 47)
