@@ -151,7 +151,7 @@ angular.module('theatreProjApp')
                 req2.Approved = false;
             }
 
-            else if (req2.StartDate == range.StartDate && req2.EndDate == range.EndDate) {
+            else if (req2.RangeIndex == req.RangeIndex) {
                 req2.Approved = false;
             }
         };
@@ -168,7 +168,9 @@ angular.module('theatreProjApp')
 
         for (var i = 0; i < $scope.requests.length; i++) {
             var req = $scope.requests[i];
-            if (req.Approved) {approvedGroups.push(req.Group.name)};
+            if (req.Approved) {
+                approvedGroups.push(req.Group.name)
+            };
         };
     };
 
@@ -180,7 +182,9 @@ angular.module('theatreProjApp')
     approved. */
     $scope.getRequestBtnClass = function(req) {
         if (req.Approved) {return 'btn-success';}
-        else if (approvedGroups.indexOf(req.Group.name) == -1) {return 'btn-danger';}
+        else if (approvedGroups.indexOf(req.Group.name) == -1) {
+            return 'btn-danger';
+        }
         else return '';
     };
 
