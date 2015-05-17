@@ -417,7 +417,7 @@ angular.module('theatreProjApp')
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform;
 		if ($scope.curtainDragObj.didClose) {
-			var sound = new Audio('assets/applause.mp3');
+			var sound = new Audio('assets/sounds/applause.mp3');
 			sound.play();
 			$scope.curtainDragObj.didClose = false;
 		}
