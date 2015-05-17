@@ -7,7 +7,8 @@ angular.module('theatreProjApp', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'ui.bootstrap.datetimepicker'
+  'ui.bootstrap.datetimepicker',
+  'hmTouchEvents'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

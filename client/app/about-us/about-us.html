@@ -1,14 +1,41 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-<div class="carouselContainer" ng-style="carouselContainerStyle()">
-	<div id="carousel" ng-model="carousel" ng-style="carouselStyle()">
-		<figure ng-repeat="panel in panels" ng-style="panel.style">
-			<img src="assets/images/yeoman.png">
-		</figure>
-	</div>
-</div>
+<div class="about-us-content">
+	<div class="carousel-container" ng-style="carouselContainerStyle()" ng-class="{'hidden': !initialized}">
+		<div class="carousel-translate" ng-style="carouselTranslateStyle()">
 
-<div class="jumbotron container">
-	<button class="btn" ng-click="setRotation(rotation + degDelta)">Prev</button>
-	<button class="btn" ng-click="setRotation(rotation - degDelta)">Next</button>
-	<p>Inspired by <a href="http://desandro.github.io/3dtransforms/docs/carousel.html">http://desandro.github.io/3dtransforms/docs/carousel.html</a></p>
+			<!-- Stage construct -->
+			<div class="floor" ng-style="floorStyle()"></div>
+			<div class="floor" ng-style="floorWallStyle()"></div>
+			<div class="back-wall" ng-style="backWallStyle()"></div>
+			<div class="curtain curtain-left" ng-style="curtainStyles.left" ng-class="curtainDragObj.class" hm-touch="curtainDragStart(true, $event)" hm-drag="curtainDragMove(true, $event)" hm-release="curtainDragEnd(true, $event)"></div>
+			<div class="curtain curtain-right" ng-style="curtainStyles.right" ng-class="curtainDragObj.class" hm-touch="curtainDragStart(false, $event)" hm-drag="curtainDragMove(false, $event)" hm-release="curtainDragEnd(false, $event)"></div>
+			<div class="hang-curtain" ng-style="hangCurtainStyle()"></div>
+
+			<!-- Interactive elements -->
+			<button class="load-button" ng-click="loadBoxes()" ng-hide="boxesLoaded" ng-style="loadButtonStyle()">Load more boxes!</button>
+			<button class="back-button" ng-click="back()" ng-style="backButtonStyle()">Back</button>
+
+			<!-- Carousel -->
+			<div class="carousel" ng-model="carousel" ng-style="carouselStyle()">
+				<div ng-repeat="cube in cubes" hm-tap="switchTo($index)" class="carousel-cube" ng-style="cubeStyle($index)" ng-class="getActivityClass($index)">
+					<div ng-style="panelStyle(cube, 'front', $index)" class="carousel-panel front" ng-class="getActivityClass($index)"></div>
+					<div ng-style="panelStyle(cube, 'back', $index)" class="carousel-panel back" ng-class="getActivityClass($index)"></div>
+					<div ng-style="panelStyle(cube, 'top', $index)" class="carousel-panel top" ng-class="getActivityClass($index)"></div>
+					<div ng-style="panelStyle(cube, 'bottom', $index)" class="carousel-panel bottom" ng-class="getActivityClass($index)"></div>
+					<div ng-style="panelStyle(cube, 'left', $index)" class="carousel-panel left" ng-class="getActivityClass($index)">
+						<img class="link" ng-style="fbStyle($index)" src="assets/images/fb_logo.png" ng-click="link(cube.group.fb)" ng-show="cube.group.fb.length > 0">
+					</div>
+					<div ng-style="panelStyle(cube, 'right', $index)" class="carousel-panel right" ng-class="getActivityClass($index)">
+						<img class="link" ng-style="contactStyle($index)" src="assets/images/gmail_logo.png" ng-click="mailto(cube.group.contact)" ng-show="cube.group.contact.length > 0">
+					</div>
+					<div ng-style="infoStyle(cube, $index)" class="carousel-data info" ng-class="getActivityClass($index)">
+						<span>
+							<h2>{{cube.group.name}}</h2>
+							<h4>{{cube.group.info}}</h4>
+							<a href ng-click="link(cube.group.web)">{{cube.group.web}}</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
