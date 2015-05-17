@@ -4,6 +4,10 @@ angular.module('theatreProjApp')
   .controller('VenueAllocationCtrl', function ($scope, $http, $modal, Auth) {
     $scope.isAdmin = Auth.isAdmin;
 
+    $scope.startDate = new Date();
+    $scope.endDate = new Date();
+    $scope.today = new Date();
+
     var timeDiff = function (startDate, endDate) {
     	var timeDiff = endDate.getTime() - startDate.getTime();
 		return timeDiff;
