@@ -396,15 +396,17 @@ angular.module('theatreProjApp')
 	$scope.curtainDragMove = function (isLeft, $event) {
 		$scope.curtainDragObj.class = 'drag-move';
 		$scope.curtainDragObj.dragging = true;
-		var style = isLeft? $scope.curtainStyles.left : $scope.curtainStyles.right;
-		var leftFactor = isLeft? 1 : -1;
-		var rightFactor = isLeft? -1 : 1;
 		var dx = $event.gesture.deltaX;
-		if (Math.abs(dx) > curtainOpenDist) {
+		var dxTowardsCenter = (isLeft? 1 : -1)*dx;
+		if (dxTowardsCenter > curtainOpenDist) { // prevent dragging curtains more closed than fully closed
 			dx = isLeft? curtainOpenDist : -curtainOpenDist;
 			$scope.curtainDragObj.didClose = true;
+		} else if (dxTowardsCenter < 0) { // prevent dragging curtains more open than at the start
+			dx = 0;
 		}
+		var leftFactor = isLeft? 1 : -1;
 		$scope.curtainDragObj.left.dragTransform = ' translateX(' + (dx * leftFactor) + 'px)';
+		var rightFactor = isLeft? -1 : 1;
 		$scope.curtainDragObj.right.dragTransform = ' translateX(' + (dx * rightFactor) + 'px)';
 		$scope.curtainStyles.left.transform = $scope.curtainDragObj.left.origTransform + $scope.curtainDragObj.left.dragTransform;
 		$scope.curtainStyles.right.transform = $scope.curtainDragObj.right.origTransform + $scope.curtainDragObj.right.dragTransform;
@@ -456,6 +458,8 @@ angular.module('theatreProjApp')
 		$scope.currentCubeIndex = cubeIndex;
 	};
 
+	/* Returns true if the cube at cubeIndex is the one at the front AND the curtains
+	are not being dragged. */
 	$scope.isActive = function (cubeIndex) {
 		return (cubeIndex == $scope.currentCubeIndex) && !$scope.curtainDragObj.dragging;
 	}
