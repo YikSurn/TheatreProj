@@ -13,26 +13,10 @@
                     <li class="list-group-item">
                         <div ng-hide="editorEnabledEmail"> 
                             <font size=4><strong>{{currProfile.email}}</strong></font>
-                            <button class="btn btn-warning btn-sm" ng-click="enableEditorEmail()" id="pencil">Edit <span class="glyphicon glyphicon-pencil"></span></button>
                         </div>
                     </li>
                 </ul>
-                <div ng-show="editorEnabledEmail">
-                <form name="email" ng-submit="saveEmail(email,newEmail)" novalidate>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name= "uEmail" ng-model="newEmail" ng-show="editorEnabledEmail" required/>
-                        <div class="form-group has-error">
-                            <span class="help-block" ng-show="email.uEmail.$error.required && emailSubmitted">Tell us your email.</span>
-                            <span class="help-block" ng-show="email.uEmail.$error.email && emailSubmitted">This is not a valid email.</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                    </div>
-                </form>
             </div> 
-            </div>
         </div>
         <div class="panel panel-info">
             <div class="panel-heading">

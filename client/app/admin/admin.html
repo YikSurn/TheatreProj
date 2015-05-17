@@ -3,7 +3,7 @@
 <br />
 
 <div class="container">
-    <p>The delete user and user index api routes are restricted to users with the 'admin' role.</p>
+    <p>The delete user, contacts & user index api routes are restricted to users with the 'admin' role.</p>
     <div ng-show="isAdmin()">
     	  <div class="form-group">
 			      <div class="input-group">
@@ -24,8 +24,9 @@
     	  <ul class="list-group">
        		  <li class="list-group-item" ng-repeat="user in users | orderBy:userCategory | filter:{name:searchText}">
             	  <strong>{{user.name}}</strong><br>
-            	  <span class="text-muted">{{user.email}}</span>
+                <span class="text-muted">{{user.email}}</span>
             	  <button ng-click="delete(user)" class="btn btn-default btn-xs" id="trash">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                <button ng-click="detail(user)" class="btn btn-info btn-xs" id="contact-btn">Contact <span class="glyphicon glyphicon-envelope"></span></button>
         	  </li>
     	  </ul>
 	  </div>

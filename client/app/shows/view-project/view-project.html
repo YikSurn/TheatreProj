@@ -1,7 +1,11 @@
 <div class="modal-header" id="project-heading">
+    <!--Display the project name with the appropriate editor capabilities-->
     <h3 ng-hide="editorEnabledName" class="modal-title">{{currProject.showName}}
-        <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">Edit Name</button>
+        <button class="btn btn-primary btn-xs" ng-click="enableEditorName()">
+            Edit Name<span class="glyphicon glyphicon-pencil"></span>
+        </button>
     </h3>
+    <!--Display form when edit is clicked with validation on submit-->
     <div ng-show="editorEnabledName">
         <form name="name" class="form-inline" ng-submit="saveName()" novalidate>
             <input type="text" class="form-control" name= "pName" ng-model="newName" ng-show="editorEnabledName" required/>
@@ -15,21 +19,27 @@
         </form>
     </div>
 </div>
+<!--Display some information about project in panels, allow editing for each-->
 <div class="modal-body">
     <div class="panel panel-info">
+        <!--Display group name, with editing capabilities-->
         <div class="panel-heading">
             <h3 class="panel-title">Group</h3>
         </div>
         <div class="panel-body">
             <ul class="list-group">
                 <li class="list-group-item">
+                    <!--Link to group open in new tab-->
                     <a ng-hide="editorEnabledGroup" href="groups/{{projGroup.name}}" target="_blank">
                         <font size=4><strong>{{projGroup.name}}</strong></font>
                     </a>
+                    <!--Open group editor-->
                     <button ng-hide="editorEnabledGroup" class="btn btn-primary btn-sm" ng-click="enableEditorGroup()" id="edit-btn">Change Group</button>
                     <div ng-show="editorEnabledGroup">
                         <form name="group" ng-submit="changeGroup(newGroup)" novalidate>
-                            <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required></select>
+                            <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>
+                                <option value="" selected>--Select a group--</option>
+                            </select>
                             <br/>
                             <button class="btn btn-primary" type="submit">Save</button>
                             <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
@@ -39,6 +49,7 @@
             </ul>
         </div>
     </div>
+    <!--Display status, with editing capabilities-->
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Status</h3>
@@ -50,6 +61,7 @@
                         <font size=4><strong>{{currProject.showStatus}}</strong></font>
                         <button ng-click="enableEditorStatus()" class="btn btn-primary btn-sm" id="edit-btn">Change Status</button>
                     </div>
+                    <!--Open status editor-->
                     <div ng-show="editorEnabledStatus">
                         <form name="status" ng-submit="changeStatus(newStatus)" novalidate>
                             <select name="showStatus" class="form-control" ng-model="newStatus" ng-options="status.status as status.status for status in statusOptions"></select>
@@ -62,6 +74,7 @@
             </ul>
         </div>
     </div>
+    <!--Display production date, with editing capabilities-->
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Production Date</h3>
@@ -73,6 +86,7 @@
                         <font size=4><strong>{{currProject.prodDate | date:'dd/MM/yyyy'}}</strong></font>
                         <button ng-click="enableEditorDate()" class="btn btn-primary btn-sm" id="edit-btn">Change Date</button>
                     </div>
+                    <!--Open datepicker editor-->
                     <div ng-show="editorEnabledDate">
                         <form name="date" ng-submit="changeDate(dt)" novalidate>
                             <div class="form-group">
@@ -98,6 +112,7 @@
         </div>
     </div>
 </div>
+<!--Button to close modal instance-->
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="close()">Close</button>
 </div>

@@ -14,7 +14,7 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
+        <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Users</a></li>
         <li class="dropdown" dropdown>
           <a href="" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Features 
           <span class="caret"></span>
@@ -22,7 +22,7 @@
           <ul class="dropdown-menu" role="menu">
             <li ng-class="{active: isActive('/groups')}"><a href="/groups">Groups</a></li>
             <li ng-class="{active: isActive('/venue-allocation')}"><a href="/venue-allocation">Venue allocation</a></li>
-            <li ng-class="{active: isActive('/shows')}"><a href="/shows">Shows</a></li>
+            <li ng-class="{active: isActive('/shows')}"><a href="/shows">Projects</a></li>
             <li ng-class="{active: isActive('/production-meeting')}"><a href="/production-meeting">Production meeting</a></li>
           </ul>
         </li>

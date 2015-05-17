@@ -19,4 +19,17 @@ angular.module('theatreProjApp')
         });
       }
     };
+
+    $scope.detail = function(user) {
+        var modalInstance = $modal.open({
+            templateUrl: 'app/contacts/individual/individual.html',
+            controller: 'IndividualCtrl',
+            size: "md",
+            resolve: {
+                user: function () {
+                    return user; 
+                }
+            }
+        });
+    };
 });
