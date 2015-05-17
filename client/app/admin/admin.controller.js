@@ -19,18 +19,4 @@ angular.module('theatreProjApp')
         });
       }
     };
-
-    /*Opens modal dialog with new controller*/
-    $scope.open = function(user) {
-        var modalInstance = $modal.open({
-            templateUrl: 'app/admin/view-profile/view-profile.html',
-            controller: 'ViewProfileCtrl',
-            size: "md",
-            resolve: {
-                user: function () {
-                    return user; 
-                }
-            }
-        });
-    };
 });

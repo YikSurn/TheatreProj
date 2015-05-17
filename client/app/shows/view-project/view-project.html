@@ -23,19 +23,20 @@
         <div class="panel-body">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <a ng-hide="editorEnabledGroup" href="groups/{{projGroup.name}}" target="_blank"><font size=4><strong>{{projGroup.name}}</strong></font></a>
-                    <button ng-hide="editorEnabledGroup" class="btn btn-primary" ng-click="enableEditorGroup()" id="edit-btn">Change Group</button>
+                    <a ng-hide="editorEnabledGroup" href="groups/{{projGroup.name}}" target="_blank">
+                        <font size=4><strong>{{projGroup.name}}</strong></font>
+                    </a>
+                    <button ng-hide="editorEnabledGroup" class="btn btn-primary btn-sm" ng-click="enableEditorGroup()" id="edit-btn">Change Group</button>
+                    <div ng-show="editorEnabledGroup">
+                        <form name="group" ng-submit="changeGroup(newGroup)" novalidate>
+                            <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required></select>
+                            <br/>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                        </form>
+                    </div>
                 </li>
             </ul>
-            <div ng-show="editorEnabledGroup">
-                <form name="group" ng-submit="changeGroup(newGroup)" novalidate>
-                    <select name="showGroup" class="form-control" ng-model="newGroup" ng-options="group._id as group.name for group in groups | orderBy:'name'" required>
-                    </select>
-                    <br/>
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-            </div>
         </div>
     </div>
     <div class="panel panel-info">
@@ -47,19 +48,18 @@
                 <li class="list-group-item">
                     <div ng-hide="editorEnabledStatus"> 
                         <font size=4><strong>{{currProject.showStatus}}</strong></font>
-                        <button class="btn btn-primary" ng-click="enableEditorStatus()" id="edit-btn">Change Status</button>
+                        <button ng-click="enableEditorStatus()" class="btn btn-primary btn-sm" id="edit-btn">Change Status</button>
+                    </div>
+                    <div ng-show="editorEnabledStatus">
+                        <form name="status" ng-submit="changeStatus(newStatus)" novalidate>
+                            <select name="showStatus" class="form-control" ng-model="newStatus" ng-options="status.status as status.status for status in statusOptions"></select>
+                            <br/>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                           <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                        </form>
                     </div>
                 </li>
             </ul>
-            <div ng-show="editorEnabledStatus">
-                <form name="status" ng-submit="changeStatus(newStatus)" novalidate>
-                    <select name="showStatus" class="form-control" ng-model="newStatus" ng-options="status.status as status.status for status in statusOptions">
-                    </select>
-                    <br/>
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-            </div>
         </div>
     </div>
     <div class="panel panel-info">
@@ -71,31 +71,30 @@
                 <li class="list-group-item">
                     <div ng-hide="editorEnabledDate"> 
                         <font size=4><strong>{{currProject.prodDate | date:'dd/MM/yyyy'}}</strong></font>
-                        <button class="btn btn-primary" ng-click="enableEditorDate()" id="edit-btn">Change Date</button>
+                        <button ng-click="enableEditorDate()" class="btn btn-primary btn-sm" id="edit-btn">Change Date</button>
+                    </div>
+                    <div ng-show="editorEnabledDate">
+                        <form name="date" ng-submit="changeDate(dt)" novalidate>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="input-group">
+                                            <input type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="open($event)">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                               </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
+                        </form>
                     </div>
                 </li>
             </ul>
-            <div ng-show="editorEnabledDate">
-                <form name="date" ng-submit="changeDate(dt)" novalidate>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="input-group">
-                                    <input type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </button>
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-danger" type="button" ng-click="disableEditor()">Cancel</button>
-                </form>
-            </div>
         </div>
     </div>
 </div>
