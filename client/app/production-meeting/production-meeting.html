@@ -20,6 +20,7 @@
 
 
   <div ng-show="prodMeetings">
+    <!-- Show extra button when there are more than 6 production meetings -->
     <div ng-show="prodMeetings.length > 6" class="row newProdButton">
       <div class="col-xs-12 col-sm-12 col-md-12">
         <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
@@ -46,7 +47,7 @@
     </div>
   </div>
 
-  <div class="row newProdButton">
+  <div class="row center">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <button class="btn btn-default" ng-click="createNewProdMeeting()">New production meeting</button>
       <br /><br />
