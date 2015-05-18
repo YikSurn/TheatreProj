@@ -15,6 +15,10 @@ angular.module('theatreProjApp')
 
     // Create the production meeting and redirect to the details page
     $scope.createNewMeeting = function () {
+      if($scope.newMeeting.title.indexOf('/') > -1 || $scope.newMeeting.title.indexOf('?') > -1 || $scope.newMeeting.title.indexOf("%") > -1) {
+        alert("You have included illegal characters (/, ? or %) not permitted in production meeting titles. Please try a different title.");
+        return;
+      }
       prodMeetings.create($scope.newMeeting);
       $scope.cancel();
       var group = theatreGroups.getOnId($scope.newMeeting.group);
