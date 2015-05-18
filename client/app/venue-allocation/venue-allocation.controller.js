@@ -125,6 +125,51 @@ angular.module('theatreProjApp')
 
 	$scope.origRequests = {};
 	$scope.requests = {};
+
+	$scope.addRequest = function (rangeIndex, range) {
+		var modalInstance = $modal.open({
+			templateUrl: 'app/venue-allocation/add-request/add-request.html',
+			controller: 'AddRequestCtrl',
+			size: 'lg',
+			resolve: {
+				groupsInRange: function () {
+					var ret = [];
+					for (var i = 0; i < $scope.requests.length; i++) {
+						var req = $scope.requests[i];
+
+						if (req.RangeIndex != rangeIndex) {
+							continue;
+						}
+
+						ret.push(req.Group);
+					};
+					return ret;
+				},
+				range: function () {
+					return range;
+				}
+			}
+		});
+
+		modalInstance.result.then(function (group) {
+			var request = {
+				VenueAllocation: $scope.venueallocation._id,
+				RangeIndex: rangeIndex,
+				Approved: false
+			};
+			$http.post('api/venueallocationrequests/' + group._id, request);
+
+			request.Group = {
+				_id: group._id,
+				name: group.name
+			},
+			$scope.origRequests.push(request);
+			$scope.requests.push(request);
+			refreshApprovedGroups();
+		}, function () {
+		});
+	};
+
 	/* Returns the request objects whose date range matches the given range.
 	@param range a json object with StartDate and EndDate (Date strings). */
 	$scope.getRequestsForDateRange = function(rangeIndex) {
@@ -194,7 +239,7 @@ angular.module('theatreProjApp')
 			var req = $scope.requests[i];
 			var origReq = $scope.origRequests[i];
 			if (req.Approved != origReq.Approved) {return true;};
-		};
+		}
 		return false;
 	};
 

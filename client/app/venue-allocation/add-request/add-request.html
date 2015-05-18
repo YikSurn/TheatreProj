@@ -1,0 +1,13 @@
+<div class="modal-header">
+	<h3>Add request for {{range.StartDate | date:dateFormat}} - {{range.EndDate | date:dateFormat}}</h3>
+</div>
+<div class="row modal-body">
+	<div class="well btn-group">
+		<button class="btn btn-default" ng-class="{'btn-success': group == selectedGroup}" ng-repeat="group in groups" ng-click="select(group)">{{group.name}}</button>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-disabled="selectedGroup == null" ng-click="ok()">OK</button>
+	<button class="btn btn-danger" ng-click="cancel()">CANCEL</button>
+</div>

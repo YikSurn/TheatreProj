@@ -7,7 +7,7 @@ var Venueallocationrequest = require('./venueallocationrequest.model');
 exports.index = function(req, res) {
   Venueallocationrequest.find().populate({
     path: 'Group',
-    select: 'name -_id'
+    select: 'name'
   })
   .exec(function (err, venueallocationrequests) {
     if(err) { return handleError(res, err); }
@@ -26,6 +26,7 @@ exports.show = function(req, res) {
 
 // Creates a new venueallocationrequest in the DB.
 exports.create = function(req, res) {
+  req.body.Group = req.params.groupid;
   Venueallocationrequest.create(req.body, function(err, venueallocationrequest) {
     if(err) { return handleError(res, err); }
     return res.json(201, venueallocationrequest);
