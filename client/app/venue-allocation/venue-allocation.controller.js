@@ -214,9 +214,9 @@ angular.module('theatreProjApp')
 		for (var i = 0; i < $scope.requests.length; i++) {
 			var req = $scope.requests[i];
 			if (req.Approved) {
-				approvedGroups.push(req.Group.name)
-			};
-		};
+				approvedGroups.push(req.Group.name);
+			}
+		}
 	};
 
 	/* Returns a string for btn styling based on request status.
@@ -245,6 +245,7 @@ angular.module('theatreProjApp')
 
 	$scope.cancelAllocationChanges = function() {
 		$scope.requests = angular.copy($scope.origRequests);
+		refreshApprovedGroups();
 	};
 
 	/* Updates db records for reqs that have changed. */
