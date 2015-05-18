@@ -1,34 +1,53 @@
-# theatreProjApp
-
+# TheatreProjApp
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular-fullstack)
 
-## Build & development
+# Build & development
+Run grunt for building and grunt serve for preview.
 
-Run `grunt` for building and `grunt serve` for preview.
+Mongo DB might not work across UniWireless but will work on a wired desktop. One zip file of the deployed version with the code but will not run without a local mongodb instance. A link to an openshift deployment which is interactive is also included
 
--- Mongo DB might not work across UniWireless but will work on a wired desktop. One zip file of the deployed version with the code but will not run without a local mongodb instance. A link to an openshift deployment which is interactive is also included
+# Third party libraries used
+Bootstrap,
+Bootstrap datetimepicker,
+Angular-hammer
 
-Third party libraries used
-----------------------
+# Directory structure
+- client
+	- app (All of our app specific components go in here)
+	- assets (Custom assets: fonts, images, etc)
+	- components (Our reusable components, non-specific to to our app)
+- server
+	- api (Our apps server api)
+	- auth (For handling authentication with different auth strategies)
+	- components (Our reusable or app-wide components)
+	- config (Where we do the bulk of our apps configuration)
+		- local.env.js (Keep our environment variables out of source control)
+		- environment (Configuration specific to the node environment)
+		- views (Server rendered views)
 
-Bootstrap and bootstrap datetimepicker
+# Group authored code
+- client
+	- app
+		- about-us/*
+		- account/*
+		- admin/*
+		- contacts/*
+		- groups/*
+		- main/*
+		- production-meeting/*
+		- shows/*
+		- venue-allocation/*
+		- custom.scss
+- server
+	- api/*
+- README.md
 
+# Generated code that we edited
+- server
+	- config
+		- environment/*
+- bower.json
+- Gruntfile.js
 
-Directory structure
----------------------
-
-The client side is in the 'client' folder and server side is in the 'api' folder inside the 'server' folder.
-
-The 'api' folder is a REST API that has the different endpoints to provide information to the client side.
-
-Under the 'client' folder, 
-- 'bower_components' has the bower packages used by this app
-- 'components' has the main components
-- 'assets' has the static files i.e. images
-- 'app' is where the main code for the rendering on the front-end
-
-
-Self-written
--------------
-
-client/app/app.js - only the .run() is written (line 47)
+# Carousel
+There's an easter egg, good luck finding it! ;-)
