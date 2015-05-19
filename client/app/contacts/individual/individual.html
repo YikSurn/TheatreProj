@@ -120,38 +120,36 @@
                     <span><strong>No tasks avalaible!</strong></span>
                 </li>
                 <li class="list-group-item" ng-repeat="task in tasks | orderBy:'deadline' | filter:{assignedToUser_id:currUser._id}">
-                    <button ng-click="enableEditorComments(task)" class="btn btn-success btn-sm"  id="pencil">Comment&nbsp;<span class="glyphicon glyphicon-send"></span></button>
                     <div>
                         <strong>Assigned by:</strong>
                         <span>{{getName(task.assignedByUser_id)}}</span>
                     </div>
-                    <br>
-                    <button ng-click="enableEditorTask(task)" class="btn btn-warning btn-sm"  id="pencil">Modify &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></button>
                     <div>
                         <strong>Deadline:</strong>
                         <span>{{dateFormatTransform(task.deadline)}}</span>
-                    </div><br>
-                    <button ng-click="completeTask(task)" ng-disabled="task.status=='Complete'" class="btn btn-info btn-sm"  id="pencil">Complete&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                    </div>
                     <div>
                         <strong>Status:</strong>
                         <span>{{task.status}}</span>
                     </div>
-                    <br>
-                    <button ng-click="deleteTask(task)" class="btn btn-danger btn-sm"  id="pencil">Delete &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span></button>
                     <div>
                         <strong>Description:</strong>
                         <span>{{task.description}}</span>
-                    </div><br>
+                    </div>
                     <div>
                         <strong>Comments:</strong>
                         <span>{{task.comments}}</span>
                     </div>
-                    <br>
                     <div>
                         <strong>Created at:</strong>
                         <span>{{dateFormatTransform(task.dateCreated)}}</span>
                     </div>
-                    <br>
+                    <div class="btn-group">
+                        <button ng-click="enableEditorComments(task)" class="btn btn-success btn-sm"  id="pencil">Comment&nbsp;<span class="glyphicon glyphicon-send"></span></button>
+                        <button ng-click="enableEditorTask(task)" class="btn btn-warning btn-sm"  id="pencil">Modify &nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span></button>
+                        <button ng-click="completeTask(task)" ng-disabled="task.status=='Complete'" class="btn btn-info btn-sm"  id="pencil">Complete&nbsp;<span class="glyphicon glyphicon-ok"></span></button>
+                        <button ng-click="deleteTask(task)" class="btn btn-danger btn-sm"  id="pencil">Delete &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
                     <div collapse="editorEnabledTask||!(task==currTask)">
                         <form name="tasks" ng-submit="modifyTask(tasks,task,newDescription,newDeadline)" novalidate>
                             <div class="form-group">
@@ -215,12 +213,12 @@
                             <label>Task Deadline:</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="input-group">
+                                    <div class="input-group">
                                         <input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="datep.opened" min-date="minDate" max-date="maxDate" ng-required="true" close-text="Close" />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" ng-click="open($event)"><span class="glyphicon glyphicon-calendar"></span></button>
                                         </span>
-                                    </p>
+                                    </div>
                                 </div>
                             </div> 
                         </div>
