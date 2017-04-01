@@ -1,0 +1,28 @@
+Testing:
+  Nice to Have:
+    ☐ 404 page improvement
+    ☐ Autodeployment to openshift
+  Tests:
+    ☐ Search Function on groups page
+  ☐ kill karma tests
+  	Home
+		Home page should load
+		users should not be able to acess other pages if not logged in
+	Login
+		Login
+		confirmation logged in
+		login via facebook
+		login via google
+		change password
+			logout and log back in wth pwd
+	Sign up
+		Sign up successful with valid details
+		Fails if unsuccessful
+		sign up via facebook
+			via google
+	Logout
+		should log out
+			Give message
+	Groups
+		View groups
+		delete a group
